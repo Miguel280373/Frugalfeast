@@ -17,7 +17,7 @@
 ## 📲 Instalación
 1. Clona este repositorio:
    ```bash
-   git clone https://github.com/tuusuario/frugal-feast.git
+   git clone https://github.com/Miguel280373/Frugalfeast.git
 ## 📌 Análisis de la Necesidad  
 
 ### 🔎 Contexto del Problema  
