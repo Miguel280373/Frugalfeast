@@ -4,7 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/naranja_claro"
+    android:background="@color/Fondo"
     tools:context=".inicio2">
 
     <ImageView
@@ -53,8 +53,8 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="251dp"
-        android:layout_height="205dp"
+        android:layout_width="335dp"
+        android:layout_height="187dp"
         android:gravity="center"
         android:text="Unete a nuestra comunidad de usuarios que estan usando nuestra app a diario"
         android:textColor="#000000"
