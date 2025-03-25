@@ -61,16 +61,16 @@
             android:layout_height="48dp"
             android:autofillHints=""
             android:background="@drawable/roundededittext"
+            android:backgroundTint="@color/CuadrosTexto"
             android:ems="10"
             android:inputType="text"
             android:paddingStart="12dp"
-            android:backgroundTint="@color/CuadrosTexto"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.419"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nombreLabel"
-            app:layout_constraintVertical_bias="0.040"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="HardcodedText,LabelFor,SpeakableTextPresentCheck" />
 
         <TextView
@@ -87,7 +87,7 @@
             app:layout_constraintHorizontal_bias="0.22"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nombreCampo"
-            app:layout_constraintVertical_bias="0.047"
+            app:layout_constraintVertical_bias="0.032"
             tools:ignore="HardcodedText,TextSizeCheck" />
 
         <EditText
@@ -96,9 +96,8 @@
             android:layout_height="48dp"
             android:autofillHints=""
             android:background="@drawable/roundededittext"
-            android:ems="10"
             android:backgroundTint="@color/CuadrosTexto"
-
+            android:ems="10"
             android:inputType="text"
             android:paddingStart="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -106,7 +105,7 @@
             app:layout_constraintHorizontal_bias="0.419"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/apodoLabel"
-            app:layout_constraintVertical_bias="0.040"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="HardcodedText,LabelFor,SpeakableTextPresentCheck" />
 
         <TextView
@@ -132,8 +131,8 @@
             android:layout_height="48dp"
             android:autofillHints=""
             android:background="@drawable/roundededittext"
-            android:ems="10"
             android:backgroundTint="@color/CuadrosTexto"
+            android:ems="10"
             android:inputType="text"
             android:paddingStart="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -141,7 +140,7 @@
             app:layout_constraintHorizontal_bias="0.419"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/correoLabel"
-            app:layout_constraintVertical_bias="0.040"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="DuplicateSpeakableTextCheck,HardcodedText,LabelFor,SpeakableTextPresentCheck" />
 
         <TextView
@@ -158,7 +157,7 @@
             app:layout_constraintHorizontal_bias="0.22"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/correoCampo"
-            app:layout_constraintVertical_bias="0.043"
+            app:layout_constraintVertical_bias="0.032"
             tools:ignore="HardcodedText,TextSizeCheck" />
 
         <EditText
@@ -166,17 +165,17 @@
             android:layout_width="330dp"
             android:layout_height="48dp"
             android:autofillHints=""
-            android:ems="10"
-            android:backgroundTint="@color/CuadrosTexto"
-            android:inputType="textPassword"
             android:background="@drawable/roundededittext"
+            android:backgroundTint="@color/CuadrosTexto"
+            android:ems="10"
+            android:inputType="textPassword"
             android:paddingStart="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.419"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/contraseñaLabel"
-            app:layout_constraintVertical_bias="0.040"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="LabelFor,SpeakableTextPresentCheck" />
 
         <TextView
@@ -193,7 +192,7 @@
             app:layout_constraintHorizontal_bias="0.22"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/contraseñaCampo"
-            app:layout_constraintVertical_bias="0.041"
+            app:layout_constraintVertical_bias="0.032"
             tools:ignore="HardcodedText,TextSizeCheck" />
 
         <EditText
@@ -210,7 +209,7 @@
             app:layout_constraintHorizontal_bias="0.419"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/confirmarContraLabel"
-            app:layout_constraintVertical_bias="0.040"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck" />
 
         <CheckBox
