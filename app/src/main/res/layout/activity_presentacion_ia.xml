@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Fondo"
+        tools:context=".PresentacionIA">
+
+        <ImageView
+            android:id="@+id/imageView16"
+            android:layout_width="180dp"
+            android:layout_height="232dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.144"
+            app:srcCompat="@drawable/bot_removebg_preview" />
+
+        <ImageView
+            android:id="@+id/imageView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.139"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/baseline_arrow_back_24" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="390dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="✨🍽️ ¡Frugby AI: Tu Asistente de Cocina Inteligente! 🍽️✨\n\n ¿Tienes ingredientes pero no sabes qué preparar? Frugby AI te ayuda a encontrar recetas deliciosas y te muestra cómo hacerlas paso a paso.\n\n 🔍 ¿Cómo funciona?\n\n Frugby combina el poder de Gemini y ChatGPT para ofrecerte:\n\n ✅ Recetas personalizadas con los ingredientes que tienes en casa 🍅🥦\n\n✅ Sugerencias inteligentes según tus gustos y necesidades 🌱👩‍🍳\n\n✅ Consejos de cocina para mejorar cada platillo 🍽️✨\n\n✅ Videos tutoriales para que aprendas a cocinar viendo cómo se hace 🎥👀\n\n✅ Ideas creativas y económicas para aprovechar mejor tus alimentos 💰🔥\n\n 💡 Con Frugby AI, cocinar es más fácil, rápido y divertido.\n\n 🔗 Descárgala ahora y cocina como un experto con la ayuda de la IA. 🚀🍕"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView16"
+            app:layout_constraintVertical_bias="0.047" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/Naranja"
+            android:text="Continuar"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TerminosyCondiciones"
+    android:background="@color/Fondo">
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        android:text="Terminos y Condiciones"
+        android:textColor="#000000"
+        android:textSize="28sp"
+        android:textStyle="italic|bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="406dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView13"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="2dp"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/textView29"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:padding="16dp"
+            android:text="1. Aceptación de los términos\n
+        Al descargar y usar Frugal Feast, aceptas estos términos y condiciones. Si no estás de acuerdo, no uses la aplicación.\n\n
+        2. Uso de la aplicación\n
+        Frugal Feast es una aplicación que ayuda a los usuarios a gestionar recetas y calcular calorías de alimentos. No garantizamos que la información nutricional proporcionada sea 100% precisa, ya que depende de los datos ingresados por el usuario.\n\n
+        3. Restricciones\n
+        No puedes:\n
+        - Usar la app con fines ilegales o no autorizados.\n
+        - Modificar, distribuir o explotar comercialmente el contenido de la app sin permiso.\n
+        - Intentar hackear o dañar la aplicación.\n\n
+        4. Propiedad intelectual\n
+        Todos los derechos sobre la aplicación y su contenido pertenecen a Frugal Feast. No puedes copiar ni distribuir el contenido sin autorización.\n\n
+        5. Limitación de responsabilidad\n
+        No nos hacemos responsables por problemas técnicos, errores o pérdidas de datos que puedan ocurrir al usar la app. El uso de la app es bajo tu propio riesgo.\n\n
+        6. Modificaciones en los términos\n
+        Podemos actualizar estos términos en cualquier momento. Si continúas usando la app después de los cambios, significa que los aceptas."
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="italic|normal" />
+
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/imageView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.111"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_arrow_back_24" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

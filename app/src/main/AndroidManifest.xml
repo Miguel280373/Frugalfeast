@@ -13,6 +13,30 @@
         android:theme="@style/Theme.FrugalFeast"
         tools:targetApi="31">
         <activity
+            android:name=".SobreApp"
+            android:exported="false" />
+        <activity
+            android:name=".CaloriasResultado"
+            android:exported="false" />
+        <activity
+            android:name=".MisRecetas"
+            android:exported="false" />
+        <activity
+            android:name=".CalcularCalorias"
+            android:exported="false" />
+        <activity
+            android:name=".TerminosyCondiciones"
+            android:exported="false" />
+        <activity
+            android:name=".Politicadeprivacidad"
+            android:exported="false" />
+        <activity
+            android:name=".ConfiguracionyPrivacidad"
+            android:exported="false" />
+        <activity
+            android:name=".PresentacionIA"
+            android:exported="false" />
+        <activity
             android:name=".Perfil"
             android:exported="false" />
         <activity
