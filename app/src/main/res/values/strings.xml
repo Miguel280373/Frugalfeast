@@ -47,4 +47,24 @@
     </string>
     <string name="buscar_receta">buscar receta\n</string>
     <string name="visto_recientemente">Visto Recientemente</string>
+    <string name="ia_assistant">asistente ia\n</string>
+    <string name="receta_del_d_a">Receta del día:</string>
+    <string name="menu">menu\n</string>
+    <string name="fricas_de_pollo">Fricasé de pollo</string>
+    <string name="_1_hora">1 hora</string>
+    <string name="_4_porciones">4 porciones</string>
+    <string name="f_cil">Fácil</string>
+    <string name="a_ade_tu_receta">Añade tu receta!</string>
+    <string name="cena">Cena:</string>
+    <string name="almuerzo">Almuerzo:</string>
+    <string name="desayuno">Desayuno:</string>
+    <string name="mis_recetas">Mis recetas:</string>
+    <string name="preocupado_por_la_dieta">¿Preocupado por la dieta?</string>
+    <string name="calcular_calor_as">Calcular Calorías</string>
+    <string name="nombre">Nombre</string>
+    <string name="recetas_guardadas">Recetas Guardadas</string>
+    <string name="mi_men">Mi menú</string>
+    <string name="configuraci_n">Configuración</string>
+    <string name="opciones">Opciones</string>
+    <string name="cerrar_sesi_n">Cerrar Sesión</string>
 </resources>
