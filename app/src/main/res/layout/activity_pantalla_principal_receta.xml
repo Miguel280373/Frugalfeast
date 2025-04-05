@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/Fondo">
+
+        <ImageView
+            android:id="@+id/imageView31"
+            android:layout_width="483dp"
+            android:layout_height="273dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/hamburguesa" />
+
+        <EditText
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@color/Naranja"
+            android:text="Fricasé de pollo"
+            android:textColor="#000000"
+            android:textSize="40sp"
+            android:textStyle="italic|bold"
+            app:layout_constraintTop_toBottomOf="@+id/imageView31"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <EditText
+            android:id="@+id/textView79"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n2. Aliquam at dignissim ante. In pretium laoreet accumsan.\n3. In ipsum arcu, pulvinar ac placerat nec, malesuada efficitur tortor.\n4. Fusce dapibus erat mauris. Praesent malesuada urna quis nisi malesuada rutrum.\n5. Sed vulputate bibendum varius."
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="normal"
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="10dp"/>
+
+        <TextView
+            android:id="@+id/textView80"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Ingredientes"
+            android:textColor="@color/Naranja"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/textView79"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <EditText
+            android:id="@+id/textView81"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="8 piezas de pollo (muslos, entremuslos o contramuslos)\n1 cebolla blanca, picada\n3 dientes de ajo, picados\n1 zanahoria, en rodajas\n1 pimentón rojo, en tiras\n1 lata pequeña de arvejas\n1 taza de caldo de pollo 1/2 taza de crema de leche\n2 cucharadas de harina de trigo\n2 cucharadas de aceite vegetal Sal y pimienta al gusto"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="normal"
+            app:layout_constraintTop_toBottomOf="@+id/textView80"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="10dp"/>
+
+        <Button
+            android:id="@+id/button13"
+            android:layout_width="220dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="44dp"
+            android:backgroundTint="@color/Naranja"
+            android:text="Guardar"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@+id/textView81"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ImageView
+            android:id="@+id/imageView26"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.892"
+            app:layout_constraintStart_toStartOf="@+id/textView5"
+            app:srcCompat="@drawable/guardado"
+            tools:layout_editor_absoluteY="299dp"
+            tools:ignore="MissingConstraints" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

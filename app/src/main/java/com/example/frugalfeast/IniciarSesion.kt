@@ -67,7 +67,7 @@ class IniciarSesion : AppCompatActivity() {
                         putBoolean("isLoggedIn", true) // Cambia a true si el inicio de sesión es exitoso
                         apply()
                     }
-                    val intent = Intent(this, Recetas::class.java)
+                    val intent = Intent(this, mis_recetas::class.java)
                     startActivity(intent)
                     finish()
 

@@ -3,7 +3,7 @@
     android:shape="rectangle">
 
     <!-- Color de fondo -->
-    <solid android:color="@color/Naranja" />
+    <solid android:color="@color/CuadrosTexto" />
 
     <!-- Bordes redondeados -->
     <corners android:radius="20dp" />
@@ -11,5 +11,5 @@
     <!-- Borde con color -->
     <stroke
         android:width="2dp"
-        android:color="@color/Naranja" />
+        android:color="@color/CuadrosTexto" />
 </shape>

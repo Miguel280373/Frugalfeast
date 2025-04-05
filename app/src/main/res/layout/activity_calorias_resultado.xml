@@ -22,17 +22,19 @@
 
             <TextView
                 android:id="@+id/textView43"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
                 android:text="Calcular Calorias"
+                android:background="@color/Naranja"
+                android:gravity="center"
                 android:textColor="#000000"
                 android:textSize="30sp"
                 android:textStyle="italic|bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                tools:layout_editor_absoluteY="-1dp"
+                tools:ignore="MissingConstraints" />
 
             <TextView
                 android:id="@+id/textView44"
@@ -50,8 +52,10 @@
 
             <TextView
                 android:id="@+id/totalCaloriesTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="178dp"
+                android:layout_height="85dp"
+                android:gravity="center"
+                android:background="@drawable/roundededittext"
                 android:text="2000Kcal"
                 android:textColor="#000000"
                 android:textSize="30sp"
@@ -80,18 +84,19 @@
 
             <TextView
                 android:id="@+id/carnesTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="375dp"
+                android:layout_height="39dp"
+                android:background="@drawable/roundededittext"
+                android:gravity="center_vertical"
                 android:text="Pollo"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="italic|bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.076"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView46"
-                app:layout_constraintVertical_bias="0.01" />
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/textView53"
@@ -110,18 +115,20 @@
 
             <TextView
                 android:id="@+id/frutasTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="375dp"
+                android:layout_height="39dp"
+                android:background="@drawable/roundededittext"
+                android:gravity="center_vertical"
                 android:text="Manzana"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="italic|bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.087"
+                app:layout_constraintHorizontal_bias="0.444"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView53"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.02" />
 
             <TextView
                 android:id="@+id/textView57"
@@ -140,18 +147,20 @@
 
             <TextView
                 android:id="@+id/lacteosTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="375dp"
+                android:layout_height="39dp"
+                android:background="@drawable/roundededittext"
+                android:gravity="center_vertical"
                 android:text="Jugo"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="italic|bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.081"
+                app:layout_constraintHorizontal_bias="0.444"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView57"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.023" />
 
             <TextView
                 android:id="@+id/textView61"
@@ -170,15 +179,17 @@
 
             <TextView
                 android:id="@+id/cerealesTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Flan"
+                android:layout_width="375dp"
+                android:layout_height="39dp"
+                android:background="@drawable/roundededittext"
+                android:gravity="center_vertical"
+                android:text="Arroz"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="italic|bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.072"
+                app:layout_constraintHorizontal_bias="0.444"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView61"
                 app:layout_constraintVertical_bias="0.0" />
@@ -200,18 +211,20 @@
 
             <TextView
                 android:id="@+id/verdurasTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="375dp"
+                android:layout_height="39dp"
+                android:background="@drawable/roundededittext"
+                android:gravity="center_vertical"
                 android:text="Pepino"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="italic|bold"
                 app:layout_constraintBottom_toTopOf="@+id/textView53"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.085"
+                app:layout_constraintHorizontal_bias="0.444"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView28"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="1.0" />
 
             <Button
                 android:id="@+id/btnAgregarCalorias"
@@ -232,9 +245,9 @@
                 android:id="@+id/imageView21"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.111"
+                app:layout_constraintHorizontal_bias="0.087"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/baseline_arrow_back_24" />

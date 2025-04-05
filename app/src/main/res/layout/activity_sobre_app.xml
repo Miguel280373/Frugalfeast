@@ -39,6 +39,7 @@
         android:layout_width="374dp"
         android:layout_height="134dp"
         android:layout_marginTop="72dp"
+        android:textStyle="italic|normal"
         android:gravity="center"
         android:text="Version 0.000.1.0-android (32145698) 52e3eev65-7b8f-78b7-8736-d7100f6587eb  \n\nFrugafFeast Inc.\n\n  ¡Creando experiencias papilares increibles!"
         android:textColor="#000000"

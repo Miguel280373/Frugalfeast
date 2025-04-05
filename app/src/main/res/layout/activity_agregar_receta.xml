@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="Agregar_Receta"
+    android:background="@color/Fondo">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/textView110"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/Naranja"
+                android:gravity="center"
+                android:text="Agregar Receta"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ImageView
+                android:id="@+id/imageView32"
+                android:layout_width="311dp"
+                android:layout_height="206dp"
+                android:background="@drawable/rounded_image"
+                android:clipToOutline="true"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.512"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/negro"
+                tools:layout_editor_absoluteY="133dp"
+                tools:ignore="MissingConstraints" />
+
+            <EditText
+                android:id="@+id/preparacionCampoAgregar"
+                android:layout_width="300dp"
+                android:layout_height="73dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/roundededittext2"
+                android:hint="Editar"
+                android:inputType="text"
+                android:paddingStart="12dp"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView9"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="15dp"
+                android:text="Nombre de la Receta"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView32" />
+
+            <EditText
+                android:id="@+id/nombreCampoAgregar"
+                android:layout_width="300dp"
+                android:layout_height="46dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/roundededittext2"
+                android:hint="Editar"
+                android:inputType="text"
+                android:paddingStart="12sp"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.505"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView8"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="24dp"
+                android:text="Preparacion"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nombreCampoAgregar" />
+
+            <LinearLayout
+                android:id="@+id/contenedorIngredientes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView10">
+
+                <EditText
+                    android:id="@+id/ingrediente1"
+                    android:layout_width="300dp"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/roundededittext2"
+                    android:hint="Editar"
+                    android:inputType="text"
+                    android:paddingStart="12dp"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView10"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/agregarIngrediente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/circle_btn"
+                android:backgroundTint="@color/Naranja"
+                android:contentDescription="agregar ingrediente"
+                android:src="@drawable/baseline_add_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/contenedorIngredientes" />
+
+
+            <EditText
+                android:id="@+id/tiempoCampoAgregar"
+                android:layout_width="98dp"
+                android:layout_height="38dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/roundededittext2"
+                android:hint="Editar"
+                android:inputType="numberDecimal"
+                android:paddingStart="12dp"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.635"
+                app:layout_constraintStart_toEndOf="@+id/tiempotexto"
+                app:layout_constraintTop_toBottomOf="@+id/agregarIngrediente"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/porcionestexto"
+                android:layout_width="101dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="28dp"
+                android:text="Porciones:"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dificultadtexto" />
+
+            <EditText
+                android:id="@+id/porcionesCampoAgregar"
+                android:layout_width="98dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="88dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/roundededittext2"
+                android:hint="Editar"
+                android:inputType="numberDecimal"
+                android:paddingStart="12dp"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.019"
+                app:layout_constraintStart_toEndOf="@+id/porcionestexto"
+                app:layout_constraintTop_toBottomOf="@+id/dificultadCampoAgregar"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/dificultadtexto"
+                android:layout_width="101dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="20dp"
+                android:text="Dificultad"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tiempotexto" />
+
+            <TextView
+                android:id="@+id/caloriastexto"
+                android:layout_width="101dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="28dp"
+                android:text="Calorias"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/porcionestexto" />
+
+            <EditText
+                android:id="@+id/caloriasCampoAgregar"
+                android:layout_width="98dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="88dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/roundededittext2"
+                android:hint="Editar"
+                android:inputType="numberDecimal"
+                android:paddingStart="12dp"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.019"
+                app:layout_constraintStart_toEndOf="@+id/porcionestexto"
+                app:layout_constraintTop_toBottomOf="@+id/porcionesCampoAgregar"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <EditText
+                android:id="@+id/dificultadCampoAgregar"
+                android:layout_width="98dp"
+                android:layout_height="38dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/roundededittext2"
+                android:hint="Editar"
+                android:inputType="text"
+                android:paddingStart="12dp"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.628"
+                app:layout_constraintStart_toEndOf="@+id/dificultadtexto"
+                app:layout_constraintTop_toBottomOf="@+id/tiempoCampoAgregar"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/tiempotexto"
+                android:layout_width="101dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:text="Tiempo de preparacion"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.122"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/agregarIngrediente" />
+
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="220dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="35dp"
+                android:backgroundTint="@color/Naranja"
+                android:text="Agregar"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/caloriastexto" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="24dp"
+                android:text="Ingredientes:"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/preparacionCampoAgregar"
+                tools:ignore="DuplicateIds" />
+
+            <ImageButton
+                android:id="@+id/agregarImagen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle_btn"
+                android:src="@drawable/baseline_add_24"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView32"
+                app:layout_constraintEnd_toEndOf="@+id/imageView32"
+                app:layout_constraintStart_toStartOf="@+id/imageView32"
+                app:layout_constraintTop_toTopOf="@+id/imageView32"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <ImageView
+                android:id="@+id/imageView25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="336dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView10"
+                app:srcCompat="@drawable/baseline_arrow_back_24"
+                tools:layout_editor_absoluteY="38dp"
+                tools:ignore="MissingConstraints" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
