@@ -1,6 +1,5 @@
 package com.example.frugalfeast
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -12,14 +11,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.frugalfeast.R
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 
 
 class IniciarSesion : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var auth: FirebaseAuth
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -51,26 +49,30 @@ class IniciarSesion : AppCompatActivity() {
         }
     }
     private fun loginUser() {
-        val emailOusuario = findViewById<EditText>(R.id.usuarioOcorreo).text.toString().trim()
-        val contraseña = findViewById<EditText>(R.id.contraseñaCampoInicio).text.toString().trim()
+        val email = findViewById<EditText>(R.id.usuarioOcorreo).text.toString().trim()
+        val password = findViewById<EditText>(R.id.contraseñaCampoInicio).text.toString().trim()
 
-        if (emailOusuario.isEmpty() || contraseña.isEmpty()) {
+        if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Por favor llena todos los campos", Toast.LENGTH_SHORT).show()
             return
         }
 
-        auth.signInWithEmailAndPassword(emailOusuario, contraseña)
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Ingresa un correo válido", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
                     with(sharedPreferences.edit()) {
-                        putBoolean("isLoggedIn", true) // Cambia a true si el inicio de sesión es exitoso
+                        putBoolean("isLoggedIn", true)
                         apply()
                     }
-                    val intent = Intent(this, mis_recetas::class.java)
+                    val intent = Intent(this, PantallaPrincipal::class.java)
                     startActivity(intent)
                     finish()
-
                 } else {
                     Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }

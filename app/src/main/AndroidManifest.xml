@@ -13,16 +13,19 @@
         android:theme="@style/Theme.FrugalFeast"
         tools:targetApi="31">
         <activity
+            android:name=".RecetasGuardasdas"
+            android:exported="false" />
+        <activity
             android:name=".EditarPerfil"
             android:exported="false" />
         <activity
-            android:name=".Pantalla_Principal_Receta"
+            android:name=".PantallaPrincipalReceta"
             android:exported="false" />
         <activity
-            android:name=".Agregar_Receta"
+            android:name=".AgregarReceta"
             android:exported="false" />
         <activity
-            android:name=".Recetas_Guardadas"
+            android:name=".RecetasGuardadas"
             android:exported="false" />
         <activity
             android:name=".RecetasDia"

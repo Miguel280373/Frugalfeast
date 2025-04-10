@@ -67,4 +67,14 @@
     <string name="configuraci_n">Configuración</string>
     <string name="opciones">Opciones</string>
     <string name="cerrar_sesi_n">Cerrar Sesión</string>
+    <string name="men">Menú</string>
+    <string name="receta_del_dia">Receta del dia:\n</string>
+    <string name="menu_del_dia">menu del dia\n</string>
+    <string name="empieza_buscando_algo_rico_para_cocinar">Empieza buscando algo rico para cocinar!\n</string>
+    <string name="mis_recetas1">Mis recetas:\n</string>
+    <string name="agrega_una_de_tus_recetas">Agrega una de tus recetas!\n\n</string>
+    <string name="calcular_calorias">Calcular calorias\n</string>
+    <string name="add">add\n</string>
+    <string name="robot">ia robot\n</string>
+    <string name="selecciona_prompt">Selecciona...\n</string>
 </resources>

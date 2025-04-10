@@ -1,59 +1,54 @@
 package com.example.frugalfeast
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.frugalfeast.MisRecetasAdapter
-import com.example.frugalfeast.R
-import com.example.frugalfeast.Receta
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.toObject
 
-class MisRecetas : AppCompatActivity() {
+class RecetasGuardadas : AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
-    private lateinit var recyclerMisRecetas: RecyclerView
-    private lateinit var adapterMisRecetas: MisRecetasAdapter
-    private val misRecetas = mutableListOf<Receta>()
+    private lateinit var recyclerGuardadas: RecyclerView
+    private lateinit var adapterGuardadas: RecetasGuardadasAdapter
+    private val recetasGuardadas = mutableListOf<Receta>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_mis_recetas)
+        setContentView(R.layout.activity_recetas_guardadas)
 
-        recyclerMisRecetas = findViewById(R.id.recyclerMisRecetas)
-        recyclerMisRecetas.layoutManager = LinearLayoutManager(this)
+        recyclerGuardadas = findViewById(R.id.recyclerRecetasGuardadas)
+        recyclerGuardadas.layoutManager = LinearLayoutManager(this)
 
-        adapterMisRecetas = MisRecetasAdapter(misRecetas) { receta ->
-            Toast.makeText(this, "Receta seleccionada: ${receta.nombre}", Toast.LENGTH_SHORT).show()
-        }
-        recyclerMisRecetas.adapter = adapterMisRecetas
+        adapterGuardadas = RecetasGuardadasAdapter(recetasGuardadas)
+        recyclerGuardadas.adapter = adapterGuardadas
 
-
-        cargarMisRecetas()
+        cargarRecetasGuardadas()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
     }
-    private fun cargarMisRecetas() {
+
+    private fun cargarRecetasGuardadas() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
-        db.collection("usuarios").document(userId).collection("MisRecetas")
+        db.collection("usuarios").document(userId).collection("recetasGuardadas")
             .get()
             .addOnSuccessListener { documents ->
-                misRecetas.clear()
+                recetasGuardadas.clear()
                 for (document in documents) {
                     val receta = document.toObject<Receta>()
-                    misRecetas.add(receta)
+                    recetasGuardadas.add(receta)
                 }
             }
             .addOnFailureListener { e ->

@@ -33,7 +33,7 @@ class Recuperar : AppCompatActivity() {
         }
         val cancelar: Button = findViewById(R.id.enviar)
         cancelar.setOnClickListener {
-            val intent = Intent(this, Principal::class.java)
+            val intent = Intent(this, Login::class.java)
             startActivity(intent)
         }
     }

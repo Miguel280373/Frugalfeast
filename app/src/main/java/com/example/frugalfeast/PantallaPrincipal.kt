@@ -2,215 +2,248 @@ package com.example.frugalfeast
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.Calendar
-import java.util.Random
 
 class PantallaPrincipal : AppCompatActivity() {
 
-    // Views
-    private lateinit var btnIA: ImageButton
-    private lateinit var recetaImagen: ImageView
-    private lateinit var recetaTitulo: TextView
-    private lateinit var recetaTiempo: TextView
-    private lateinit var recetaPorciones: TextView
-    private lateinit var recetaDificultad: TextView
-    private lateinit var desayunoMenu: TextView
-    private lateinit var almuerzoMenu: TextView
-    private lateinit var cenaMenu: TextView
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
+    private lateinit var toolbar: Toolbar
+    private lateinit var searchView: SearchView
+    private lateinit var recyclerRecientemente: RecyclerView
+    private lateinit var recyclerMisRecetas: RecyclerView
+    private lateinit var textoRecientemente: TextView
+    private lateinit var textoMisRecetas: TextView
     private lateinit var btnCalcularCalorias: Button
+    private lateinit var btnAgregar: Button
 
-    // Firebase
     private val db = FirebaseFirestore.getInstance()
+    private val currentUser = FirebaseAuth.getInstance().currentUser
+
+    private lateinit var recienteAdapter: RecetaAdapter
+    private lateinit var misRecetasAdapter: RecetaAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_pantalla_principal)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-
-        initViews()
-
-
+        inicializarViews()
+        configurarListeners()
         cargarRecetaDelDia()
-        cargarRecetasRecientes()
-        cargarMisRecetas()
+        loadVistoRecientemente()
+        loadMisRecetas()
 
-        setupListeners()
+        val headerView = navigationView.getHeaderView(0)
+        val txtNombreUsuario = headerView.findViewById<TextView>(R.id.txtNombreUsuario)
+
+
+        val usuario = FirebaseAuth.getInstance().currentUser
+        txtNombreUsuario.text = usuario?.displayName ?: "Invitado"
+
     }
 
-    private fun initViews() {
-        btnIA = findViewById(R.id.btnIA)
-        recetaImagen = findViewById(R.id.recetaImagen)
-        recetaTitulo = findViewById(R.id.recetaTitulo)
-        recetaTiempo = findViewById(R.id.recetaTiempo)
-        recetaPorciones = findViewById(R.id.recetaPorciones)
-        recetaDificultad = findViewById(R.id.recetaDificultad)
-        desayunoMenu = findViewById(R.id.desayunoMenu)
-        almuerzoMenu = findViewById(R.id.almuerzoMenu)
-        cenaMenu = findViewById(R.id.cenaMenu)
+    private fun inicializarViews() {
+        toolbar = findViewById(R.id.toolbar)
+        drawerLayout = findViewById(R.id.drawerLayout)
+        navigationView = findViewById(R.id.navigationView)
+
+        searchView = findViewById(R.id.buscarRecetaBar)
+        recyclerRecientemente = findViewById(R.id.recyclerRecientemente)
+        recyclerMisRecetas = findViewById(R.id.recyclerMisRecetas)
+        textoRecientemente = findViewById(R.id.textoRecientemente)
+        textoMisRecetas = findViewById(R.id.textoMisRecetas)
         btnCalcularCalorias = findViewById(R.id.btnCalcularCalorias)
+        btnAgregar = findViewById(R.id.agregar)
+
+        recyclerRecientemente.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerMisRecetas.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        recienteAdapter = RecetaAdapter(emptyList()) { receta -> onRecetaClicked(receta) }
+        misRecetasAdapter = RecetaAdapter(emptyList()) { receta -> onRecetaClicked(receta) }
+
+        recyclerRecientemente.adapter = recienteAdapter
+        recyclerMisRecetas.adapter = misRecetasAdapter
+    }
+
+
+    private fun configurarListeners() {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                /*val intent = Intent(this@PantallaPrincipal, BuscarRecetasActivity::class.java)
+                intent.putExtra("query", query)
+                startActivity(intent)*/
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+
+        btnCalcularCalorias.setOnClickListener {
+            startActivity(Intent(this, CalcularCalorias::class.java))
+        }
+
+        btnAgregar.setOnClickListener {
+            startActivity(Intent(this, AgregarReceta::class.java))
+        }
     }
 
     private fun cargarRecetaDelDia() {
-
-        val hoy = Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
-        val random = Random(hoy.toLong())
-
-        db.collection("recetas")
-            .get()
+        db.collection("recipes").get()
             .addOnSuccessListener { result ->
                 if (!result.isEmpty) {
-                    val recetas = result.documents
-                    val recetaAleatoria = recetas[random.nextInt(recetas.size)]
+                    val listaRecetas = result.documents
+                    val randomReceta = listaRecetas.random()
 
+                    val titulo = randomReceta.getString("title") ?: ""
+                    val tiempo = randomReceta.getString("time") ?: ""
+                    val porciones = randomReceta.getString("portions") ?: ""
+                    val dificultad = randomReceta.getString("difficulty") ?: ""
 
-                    recetaTitulo.text = recetaAleatoria.getString("nombre") ?: "Receta del día"
-                    recetaTiempo.text = recetaAleatoria.getString("tiempoPreparacion") ?: "1 hora"
-                    recetaPorciones.text = "${recetaAleatoria.getLong("porciones") ?: 4} porciones"
-                    recetaDificultad.text = recetaAleatoria.getString("dificultad") ?: "Fácil"
-
+                    // falta codigo para actualizar
                 }
             }
             .addOnFailureListener {
-
-                recetaTitulo.text = "Fricasé de pollo"
-                recetaTiempo.text = "1 hora"
-                recetaPorciones.text = "4 porciones"
-                recetaDificultad.text = "Fácil"
+                // Manejo de error
             }
     }
 
-    private fun cargarRecetasRecientes() {
-        // Ejemplo con Firebase Firestore
-        val db = FirebaseFirestore.getInstance()
-        db.collection("recetas")
-            .orderBy("fechaVista", Query.Direction.DESCENDING)
-            .limit(3)
-            .get()
-            .addOnSuccessListener { result ->
-                val layoutRecientes = findViewById<LinearLayout>(R.id.layoutRecientemente)
-                layoutRecientes.removeAllViews()
+    private fun loadVistoRecientemente() {
+        currentUser?.let { user ->
+            db.collection("users").document(user.uid).get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        val viewedList = document.get("viewedRecipes") as? List<String>
+                        if (!viewedList.isNullOrEmpty()) {
+                            val ultimos3 = viewedList.takeLast(3).reversed()
 
-                for (document in result) {
-                    val textView = TextView(this).apply {
-                        text = document.getString("nombre") ?: ""
-                        textSize = 16f
-                        setTypeface(null, Typeface.BOLD)
-                        layoutParams = LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT
-                        ).apply {
-                            bottomMargin = 8.dpToPx()
+                            textoRecientemente.visibility = View.GONE
+                            recyclerRecientemente.visibility = View.VISIBLE
+
+                            db.collection("recipes").whereIn("__name__", ultimos3).get()
+                                .addOnSuccessListener { snapshots ->
+                                    val recetasVistas = snapshots.documents.map { snap ->
+                                        Receta(
+                                            id = snap.id,
+                                            nombre = snap.getString("title") ?: "",
+                                            imageUrl = snap.getString("imageUrl") ?: "",
+                                            tiempo = snap.getString("time") ?: "",
+                                            porciones = snap.getString("portions") ?: "",
+                                            dificultad = snap.getString("difficulty") ?: "",
+                                            preparacion = snap.getString("preparation") ?: "",
+                                            ingredientes = snap.get("ingredients") as? List<String> ?: emptyList()
+                                        )
+                                    }
+                                    recienteAdapter.updateData(recetasVistas)
+                                }
+                        } else {
+                            textoRecientemente.visibility = View.VISIBLE
+                            recyclerRecientemente.visibility = View.GONE
                         }
                     }
-                    layoutRecientes.addView(textView)
                 }
-            }
+        }
     }
 
-    private fun cargarMisRecetas() {
-        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+    private fun loadMisRecetas() {
+        currentUser?.let { user ->
+            db.collection("users").document(user.uid).get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        val myRecipesList = document.get("myRecipes") as? List<String>
+                        if (!myRecipesList.isNullOrEmpty()) {
+                            val ultimas3 = myRecipesList.takeLast(3).reversed()
 
-        val db = FirebaseFirestore.getInstance()
-        db.collection("recetas")
-            .whereEqualTo("usuarioId", userId)
-            .limit(3)
-            .get()
-            .addOnSuccessListener { result ->
-                val layoutMisRecetas = findViewById<LinearLayout>(R.id.layoutMisRecetas)
-                layoutMisRecetas.removeAllViews()
+                            textoMisRecetas.visibility = View.GONE
+                            recyclerMisRecetas.visibility = View.VISIBLE
 
-                for (document in result) {
-                    val textView = TextView(this).apply {
-                        text = document.getString("nombre") ?: ""
-                        textSize = 16f
-                        setTypeface(null, Typeface.BOLD)
-                        layoutParams = LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT
-                        ).apply {
-                            bottomMargin = 8.dpToPx()
+                            db.collection("recipes").whereIn("__name__", ultimas3).get()
+                                .addOnSuccessListener { snapshots ->
+                                    val misRecetas = snapshots.documents.map { snap ->
+                                        Receta(
+                                            id = snap.id,
+                                            nombre = snap.getString("title") ?: "",
+                                            imageUrl = snap.getString("imageUrl") ?: "",
+                                            tiempo = snap.getString("time") ?: "",
+                                            porciones = snap.getString("portions") ?: "",
+                                            dificultad = snap.getString("difficulty") ?: "",
+                                            preparacion = snap.getString("preparation") ?: "",
+                                            ingredientes = snap.get("ingredients") as? List<String> ?: emptyList()
+                                        )
+                                    }
+                                    misRecetasAdapter.updateData(misRecetas)
+                                }
+                        } else {
+                            textoMisRecetas.visibility = View.VISIBLE
+                            recyclerMisRecetas.visibility = View.GONE
                         }
                     }
-                    layoutMisRecetas.addView(textView)
                 }
+        }
+    }
+
+    private fun onRecetaClicked(receta: Receta) {
+        val intent = Intent(this, PantallaPrincipalReceta::class.java)
+        intent.putExtra("RECETA_ID", receta.id)
+        startActivity(intent)
+
+        currentUser?.let { user ->
+            val userRef = db.collection("users").document(user.uid)
+            userRef.get()
+                .addOnSuccessListener { doc ->
+                    if (doc.exists()) {
+                        val viewedList = doc.get("viewedRecipes") as? MutableList<String> ?: mutableListOf()
+                        viewedList.add(receta.id)
+                        if (viewedList.size > 10) {
+                            viewedList.removeAt(0)
+                        }
+                        userRef.update("viewedRecipes", viewedList)
+                    }
+                }
+        }
+    }
+
+    private fun setupToolbarAndDrawer() {
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            val handled = when (menuItem.itemId) {
+                R.id.nav_recetas_guardadas -> {
+                    //startActivity(Intent(this, RecetasGuardadas::class.java))
+                    true
+                }
+                R.id.nav_mi_menu -> {
+                    //startActivity(Intent(this, MiMenu::class.java))
+                    true
+                }
+                R.id.nav_configuracion -> {
+                    //startActivity(Intent(this, Configuracion::class.java))
+                    true
+                }
+                R.id.nav_cerrar_sesion -> {
+                    FirebaseAuth.getInstance().signOut()
+                    val intent = Intent(this, Login::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    true
+                }
+                else -> false
             }
-    }
 
-    private fun setupListeners() {
-        btnIA.setOnClickListener {
-
-            startActivity(Intent(this, PresentacionIA::class.java))
+            drawerLayout.closeDrawer(GravityCompat.START)
+            handled
         }
 
-        desayunoMenu.setOnClickListener { mostrarDialogoSeleccionReceta("Desayuno") }
-        almuerzoMenu.setOnClickListener { mostrarDialogoSeleccionReceta("Almuerzo") }
-        cenaMenu.setOnClickListener { mostrarDialogoSeleccionReceta("Cena") }
-
-
-        btnCalcularCalorias.setOnClickListener {
-
-            startActivity(Intent(this, CalcularCalorias::class.java))
-        }
     }
 
-    private fun mostrarDialogoSeleccionReceta(tipoComida: String) {
-        val intent = Intent(this, RecetaAnadirMenuActivity::class.java).apply {
-            putExtra("TIPO_COMIDA", tipoComida)
-        }
-        startActivityForResult(intent, REQUEST_SELECCION_RECETA)
-    }
 
-    private fun mostrarDialogoConfirmacion(titulo: String, mensaje: String, accionConfirmar: () -> Unit) {
-        AlertDialog.Builder(this)
-            .setTitle(titulo)
-            .setMessage(mensaje)
-            .setPositiveButton("Confirmar") { _, _ -> accionConfirmar() }
-            .setNegativeButton("Cancelar", null)
-            .show()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == REQUEST_SELECCION_RECETA && resultCode == RESULT_OK) {
-            data?.let {
-                val nombreReceta = it.getStringExtra("NOMBRE_RECETA") ?: return@let
-                val tipoComida = it.getStringExtra("TIPO_COMIDA") ?: return@let
-
-                mostrarDialogoConfirmacion(
-                    "Confirmar",
-                    "¿Deseas agregar la receta al menú?",
-                    { actualizarMenu(tipoComida, nombreReceta) }
-                )
-            }
-        }
-    }
-
-    private fun actualizarMenu(tipoComida: String, nombreReceta: String) {
-        when (tipoComida) {
-            "Desayuno" -> desayunoMenu.text = nombreReceta
-            "Almuerzo" -> almuerzoMenu.text = nombreReceta
-            "Cena" -> cenaMenu.text = nombreReceta
-        }
-    }
-
-    companion object {
-        private const val REQUEST_SELECCION_RECETA = 1001
-    }
 }

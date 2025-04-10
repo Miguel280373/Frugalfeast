@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Fondo">
+    android:id="@+id/main"
+    android:background="@color/white">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -19,19 +18,18 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
-            android:text="Recetas Guardadas"
-            android:textColor="#000000"
+            android:text="@string/recetas_guardadas"
+            android:textColor="@color/black"
             android:textSize="30sp"
-            android:textStyle="bold|italic" />
+            android:textStyle="bold|italic"/>
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerRecetasGuardadas"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/relativeLayout"
+        android:layout_height="0dp"
+        android:layout_below="@id/relativeLayout"
+        android:padding="12dp"
         android:clipToPadding="false"
-        android:paddingBottom="16dp"
-        android:scrollbars="vertical" />
-
+        android:scrollbars="vertical"/>
 </RelativeLayout>
