@@ -62,7 +62,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.196"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/correoCampoContra"
+        app:layout_constraintTop_toBottomOf="@+id/correoCampoRecuperar"
         app:layout_constraintVertical_bias="0.25" />
 
     <Button
@@ -76,11 +76,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.817"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/correoCampoContra"
+        app:layout_constraintTop_toBottomOf="@+id/correoCampoRecuperar"
         app:layout_constraintVertical_bias="0.25" />
 
     <EditText
-        android:id="@+id/correoCampoContra"
+        android:id="@+id/correoCampoRecuperar"
         android:layout_width="300dp"
         android:layout_height="45dp"
         android:background="@drawable/roundededittext"

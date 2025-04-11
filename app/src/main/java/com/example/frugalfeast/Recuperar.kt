@@ -41,7 +41,7 @@ class Recuperar : AppCompatActivity() {
 
 
     private fun reestablecerContraseña() {
-        val email = findViewById<EditText>(R.id.correoCampo).text.toString().trim()
+        val email = findViewById<EditText>(R.id.correoCampoRecuperar).text.toString().trim()
 
         if (email.isEmpty()) {
             Toast.makeText(this, "Por favor ingresa tu correo", Toast.LENGTH_SHORT).show()

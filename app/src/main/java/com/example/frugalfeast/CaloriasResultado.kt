@@ -1,6 +1,7 @@
 package com.example.frugalfeast
 
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,8 @@ class CaloriasResultado : AppCompatActivity() {
 
         val total = intent.getDoubleExtra("totalCalorias", 0.0)
         val tvResultado = findViewById<TextView>(R.id.totalCaloriesTextView)
-        tvResultado.text = (total).toString()
+        tvResultado.text = ("Calorías totales: %.2f".format(total))
+
+
     }
 }
