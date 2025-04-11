@@ -2,13 +2,11 @@ package com.example.frugalfeast
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -18,7 +16,6 @@ class PantallaPrincipal : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
-    private lateinit var toolbar: androidx.appcompat.widget.Toolbar
     private lateinit var searchView: SearchView
     private lateinit var recyclerRecientemente: RecyclerView
     private lateinit var recyclerMisRecetas: RecyclerView
@@ -39,7 +36,7 @@ class PantallaPrincipal : AppCompatActivity() {
 
         inicializarViews()
         //configurarListeners()
-        //cargarRecetaDelDia()
+        cargarRecetaDelDia()
         //loadVistoRecientemente()
         //loadMisRecetas()
 
@@ -55,14 +52,16 @@ class PantallaPrincipal : AppCompatActivity() {
         btnAgregar.setOnClickListener {
             startActivity(Intent(this, AgregarReceta::class.java))
         }
-
+        val menuButton: ImageButton = findViewById(R.id.ic_menu)
+        menuButton.setOnClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)  // Abre el DrawerLayout
+        }
         val usuario = FirebaseAuth.getInstance().currentUser
         txtNombreUsuario.text = usuario?.displayName ?: "Invitado"
 
     }
 
     private fun inicializarViews() {
-        toolbar = findViewById(R.id.toolbar)
         drawerLayout = findViewById(R.id.drawerLayout)
         navigationView = findViewById(R.id.navigationView)
 
@@ -115,27 +114,10 @@ class PantallaPrincipal : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
             handled
         }
-
-
-        /*private fun configurarListeners() {
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                /*val intent = Intent(this@PantallaPrincipal, BuscarRecetasActivity::class.java)
-                intent.putExtra("query", query)
-                startActivity(intent)*/
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
-            }
-        })
-
-
     }
 
     private fun cargarRecetaDelDia() {
-        db.collection("recipes").get()
+        db.collection("Receta").get()
             .addOnSuccessListener { result ->
                 if (!result.isEmpty) {
                     val listaRecetas = result.documents
@@ -146,112 +128,161 @@ class PantallaPrincipal : AppCompatActivity() {
                     val porciones = randomReceta.getString("porciones") ?: ""
                     val dificultad = randomReceta.getString("dificultad") ?: ""
 
-                    // falta codigo para actualizar
+                    val tvNombreReceta = findViewById<TextView>(R.id.tvNombreReceta)
+                    val tvTiempo = findViewById<TextView>(R.id.tvTiempo)
+                    val tvPorciones = findViewById<TextView>(R.id.tvPorciones)
+                    val tvDificultad = findViewById<TextView>(R.id.tvDificultad)
+
+                    tvNombreReceta.text = titulo
+                    tvTiempo.text = "Tiempo: $tiempo"
+                    tvPorciones.text = "Porciones: $porciones"
+                    tvDificultad.text = "Dificultad: $dificultad"
                 }
             }
             .addOnFailureListener {
-                // Manejo de error
+                Toast.makeText(this, "Error al cargar la receta", Toast.LENGTH_SHORT).show()
             }
     }
 
-    private fun loadVistoRecientemente() {
-        currentUser?.let { user ->
-            db.collection("users").document(user.uid).get()
-                .addOnSuccessListener { document ->
-                    if (document.exists()) {
-                        val viewedList = document.get("viewedRecipes") as? List<String>
-                        if (!viewedList.isNullOrEmpty()) {
-                            val ultimos3 = viewedList.takeLast(3).reversed()
 
-                            textoRecientemente.visibility = View.GONE
-                            recyclerRecientemente.visibility = View.VISIBLE
 
-                            db.collection("recipes").whereIn("__name__", ultimos3).get()
-                                .addOnSuccessListener { snapshots ->
-                                    val recetasVistas = snapshots.documents.map { snap ->
-                                        Receta(
-                                            id = snap.id,
-                                            nombre = snap.getString("title") ?: "",
-                                            imageUrl = snap.getString("imageUrl") ?: "",
-                                            tiempo = snap.getString("time") ?: "",
-                                            porciones = snap.getString("portions") ?: "",
-                                            dificultad = snap.getString("difficulty") ?: "",
-                                            preparacion = snap.getString("preparation") ?: "",
-                                            ingredientes = snap.get("ingredients") as? List<String> ?: emptyList()
-                                        )
-                                    }
-                                    recienteAdapter.updateData(recetasVistas)
+
+
+    /*private fun configurarListeners() {
+    searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            /*val intent = Intent(this@PantallaPrincipal, BuscarRecetasActivity::class.java)
+            intent.putExtra("query", query)
+            startActivity(intent)*/
+            return false
+        }
+
+        override fun onQueryTextChange(newText: String?): Boolean {
+            return false
+        }
+    })
+
+
+}
+
+private fun cargarRecetaDelDia() {
+    db.collection("recipes").get()
+        .addOnSuccessListener { result ->
+            if (!result.isEmpty) {
+                val listaRecetas = result.documents
+                val randomReceta = listaRecetas.random()
+
+                val titulo = randomReceta.getString("nombre") ?: ""
+                val tiempo = randomReceta.getString("tiempo") ?: ""
+                val porciones = randomReceta.getString("porciones") ?: ""
+                val dificultad = randomReceta.getString("dificultad") ?: ""
+
+                // falta codigo para actualizar
+            }
+        }
+        .addOnFailureListener {
+            // Manejo de error
+        }
+}
+
+private fun loadVistoRecientemente() {
+    currentUser?.let { user ->
+        db.collection("users").document(user.uid).get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val viewedList = document.get("viewedRecipes") as? List<String>
+                    if (!viewedList.isNullOrEmpty()) {
+                        val ultimos3 = viewedList.takeLast(3).reversed()
+
+                        textoRecientemente.visibility = View.GONE
+                        recyclerRecientemente.visibility = View.VISIBLE
+
+                        db.collection("recipes").whereIn("__name__", ultimos3).get()
+                            .addOnSuccessListener { snapshots ->
+                                val recetasVistas = snapshots.documents.map { snap ->
+                                    Receta(
+                                        id = snap.id,
+                                        nombre = snap.getString("title") ?: "",
+                                        imageUrl = snap.getString("imageUrl") ?: "",
+                                        tiempo = snap.getString("time") ?: "",
+                                        porciones = snap.getString("portions") ?: "",
+                                        dificultad = snap.getString("difficulty") ?: "",
+                                        preparacion = snap.getString("preparation") ?: "",
+                                        ingredientes = snap.get("ingredients") as? List<String> ?: emptyList()
+                                    )
                                 }
-                        } else {
-                            textoRecientemente.visibility = View.VISIBLE
-                            recyclerRecientemente.visibility = View.GONE
-                        }
+                                recienteAdapter.updateData(recetasVistas)
+                            }
+                    } else {
+                        textoRecientemente.visibility = View.VISIBLE
+                        recyclerRecientemente.visibility = View.GONE
                     }
                 }
-        }
-    }
-
-    private fun loadMisRecetas() {
-        currentUser?.let { user ->
-            db.collection("users").document(user.uid).get()
-                .addOnSuccessListener { document ->
-                    if (document.exists()) {
-                        val myRecipesList = document.get("myRecipes") as? List<String>
-                        if (!myRecipesList.isNullOrEmpty()) {
-                            val ultimas3 = myRecipesList.takeLast(3).reversed()
-
-                            textoMisRecetas.visibility = View.GONE
-                            recyclerMisRecetas.visibility = View.VISIBLE
-
-                            db.collection("recipes").whereIn("__name__", ultimas3).get()
-                                .addOnSuccessListener { snapshots ->
-                                    val misRecetas = snapshots.documents.map { snap ->
-                                        Receta(
-                                            id = snap.id,
-                                            nombre = snap.getString("title") ?: "",
-                                            imageUrl = snap.getString("imageUrl") ?: "",
-                                            tiempo = snap.getString("time") ?: "",
-                                            porciones = snap.getString("portions") ?: "",
-                                            dificultad = snap.getString("difficulty") ?: "",
-                                            preparacion = snap.getString("preparation") ?: "",
-                                            ingredientes = snap.get("ingredients") as? List<String> ?: emptyList()
-                                        )
-                                    }
-                                    misRecetasAdapter.updateData(misRecetas)
-                                }
-                        } else {
-                            textoMisRecetas.visibility = View.VISIBLE
-                            recyclerMisRecetas.visibility = View.GONE
-                        }
-                    }
-                }
-        }
-    }
-
-    private fun onRecetaClicked(receta: Receta) {
-        val intent = Intent(this, PantallaPrincipalReceta::class.java)
-        intent.putExtra("RECETA_ID", receta.id)
-        startActivity(intent)
-
-        currentUser?.let { user ->
-            val userRef = db.collection("users").document(user.uid)
-            userRef.get()
-                .addOnSuccessListener { doc ->
-                    if (doc.exists()) {
-                        val viewedList = doc.get("viewedRecipes") as? MutableList<String> ?: mutableListOf()
-                        viewedList.add(receta.id)
-                        if (viewedList.size > 10) {
-                            viewedList.removeAt(0)
-                        }
-                        userRef.update("viewedRecipes", viewedList)
-                    }
-                }
-        }
-    }
-
-
-
-    }*/
-
+            }
     }
 }
+
+private fun loadMisRecetas() {
+    currentUser?.let { user ->
+        db.collection("users").document(user.uid).get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val myRecipesList = document.get("myRecipes") as? List<String>
+                    if (!myRecipesList.isNullOrEmpty()) {
+                        val ultimas3 = myRecipesList.takeLast(3).reversed()
+
+                        textoMisRecetas.visibility = View.GONE
+                        recyclerMisRecetas.visibility = View.VISIBLE
+
+                        db.collection("recipes").whereIn("__name__", ultimas3).get()
+                            .addOnSuccessListener { snapshots ->
+                                val misRecetas = snapshots.documents.map { snap ->
+                                    Receta(
+                                        id = snap.id,
+                                        nombre = snap.getString("title") ?: "",
+                                        imageUrl = snap.getString("imageUrl") ?: "",
+                                        tiempo = snap.getString("time") ?: "",
+                                        porciones = snap.getString("portions") ?: "",
+                                        dificultad = snap.getString("difficulty") ?: "",
+                                        preparacion = snap.getString("preparation") ?: "",
+                                        ingredientes = snap.get("ingredients") as? List<String> ?: emptyList()
+                                    )
+                                }
+                                misRecetasAdapter.updateData(misRecetas)
+                            }
+                    } else {
+                        textoMisRecetas.visibility = View.VISIBLE
+                        recyclerMisRecetas.visibility = View.GONE
+                    }
+                }
+            }
+    }
+}
+
+private fun onRecetaClicked(receta: Receta) {
+    val intent = Intent(this, PantallaPrincipalReceta::class.java)
+    intent.putExtra("RECETA_ID", receta.id)
+    startActivity(intent)
+
+    currentUser?.let { user ->
+        val userRef = db.collection("users").document(user.uid)
+        userRef.get()
+            .addOnSuccessListener { doc ->
+                if (doc.exists()) {
+                    val viewedList = doc.get("viewedRecipes") as? MutableList<String> ?: mutableListOf()
+                    viewedList.add(receta.id)
+                    if (viewedList.size > 10) {
+                        viewedList.removeAt(0)
+                    }
+                    userRef.update("viewedRecipes", viewedList)
+                }
+            }
+    }
+}
+
+
+
+}*/
+
+}
+
