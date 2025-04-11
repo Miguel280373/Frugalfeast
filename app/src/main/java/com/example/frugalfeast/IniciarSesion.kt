@@ -1,5 +1,6 @@
 package com.example.frugalfeast
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -11,26 +12,22 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+
 
 
 class IniciarSesion : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var auth: FirebaseAuth
+
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
         auth = FirebaseAuth.getInstance()
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
 
         setContentView(R.layout.activity_iniciar_sesion)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
 
         val iniciarsesion1: Button = findViewById(R.id.iniciarsesion1)
@@ -46,6 +43,18 @@ class IniciarSesion : AppCompatActivity() {
         textViewOlvide.setOnClickListener {
             val intent = Intent(this, Recuperar::class.java)
             startActivity(intent)
+        }
+        val principal = findViewById<Button>(R.id.principal)
+        principal.setOnClickListener(){
+            val intent = Intent(this, PantallaPrincipal::class.java)
+            startActivity(intent)        }
+    }
+
+    public override fun onStart() {
+        super.onStart()
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            currentUser.reload()
         }
     }
     private fun loginUser() {
@@ -66,13 +75,8 @@ class IniciarSesion : AppCompatActivity() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
-                    with(sharedPreferences.edit()) {
-                        putBoolean("isLoggedIn", true)
-                        apply()
-                    }
                     val intent = Intent(this, PantallaPrincipal::class.java)
                     startActivity(intent)
-                    finish()
                 } else {
                     Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }

@@ -1,6 +1,5 @@
 package com.example.frugalfeast
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -14,7 +13,6 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
 
 class Registro : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId")
     private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,8 +59,6 @@ class Registro : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, IniciarSesion::class.java))
-
-                    val intent = Intent(this, Recuperar::class.java)
                     startActivity(intent)
                 } else {
                     Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT).show()

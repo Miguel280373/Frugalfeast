@@ -15,6 +15,6 @@ class CaloriasResultado : AppCompatActivity() {
 
         val total = intent.getDoubleExtra("totalCalorias", 0.0)
         val tvResultado = findViewById<TextView>(R.id.totalCaloriesTextView)
-        tvResultado.text = "Calorías totales: %.2f".format(total)
+        tvResultado.text = (total).toString()
     }
 }

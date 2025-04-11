@@ -31,7 +31,7 @@ class Recuperar : AppCompatActivity() {
         reestablecerContra.setOnClickListener {
             reestablecerContraseña()
         }
-        val cancelar: Button = findViewById(R.id.enviar)
+        val cancelar: Button = findViewById(R.id.cancelar)
         cancelar.setOnClickListener {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)

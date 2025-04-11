@@ -28,15 +28,21 @@
                 android:background="?attr/colorPrimary"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:titleTextColor="@android:color/white">
-
-                <androidx.appcompat.widget.SearchView
-                    android:id="@+id/buscarRecetaBar"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:queryHint="Busca una receta..."
-                    android:iconifiedByDefault="false"
-                    android:background="@drawable/search_bar" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#00FFFFFF"
+                        android:src="@drawable/ic_menu" />
+
+                </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
+
         </com.google.android.material.appbar.AppBarLayout>
 
         <!-- Contenido desplazable (ScrollView) que respeta el comportamiento del AppBar -->
@@ -52,20 +58,20 @@
                 android:layout_height="wrap_content">
 
                 <!-- Receta del día -->
+
+                <!-- Contenedor para la receta aleatoria (puede ser un CardView o FrameLayout) -->
+
                 <TextView
                     android:id="@+id/tvRecetaDelDiaTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:text="@string/receta_del_dia"
                     android:textColor="#905708"
                     android:textSize="28sp"
                     android:textStyle="bold|italic"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="16dp" />
+                    tools:layout_editor_absoluteX="29dp"
+                    tools:layout_editor_absoluteY="89dp" />
 
-                <!-- Contenedor para la receta aleatoria (puede ser un CardView o FrameLayout) -->
                 <FrameLayout
                     android:id="@+id/layoutRecetaDelDia"
                     android:layout_width="0dp"
@@ -75,7 +81,9 @@
                     android:background="@drawable/rounded_corner"
                     app:layout_constraintTop_toBottomOf="@id/tvRecetaDelDiaTitle"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent" >
+
+                </FrameLayout>
 
                 <!-- Menú del día -->
                 <TextView

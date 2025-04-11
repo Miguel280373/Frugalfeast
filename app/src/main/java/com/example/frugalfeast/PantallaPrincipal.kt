@@ -18,14 +18,14 @@ class PantallaPrincipal : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
-    private lateinit var toolbar: Toolbar
+    private lateinit var toolbar: androidx.appcompat.widget.Toolbar
     private lateinit var searchView: SearchView
     private lateinit var recyclerRecientemente: RecyclerView
     private lateinit var recyclerMisRecetas: RecyclerView
     private lateinit var textoRecientemente: TextView
     private lateinit var textoMisRecetas: TextView
     private lateinit var btnCalcularCalorias: Button
-    private lateinit var btnAgregar: Button
+    private lateinit var btnAgregar: ImageButton
 
     private val db = FirebaseFirestore.getInstance()
     private val currentUser = FirebaseAuth.getInstance().currentUser
@@ -38,14 +38,23 @@ class PantallaPrincipal : AppCompatActivity() {
         setContentView(R.layout.activity_pantalla_principal)
 
         inicializarViews()
-        configurarListeners()
-        cargarRecetaDelDia()
-        loadVistoRecientemente()
-        loadMisRecetas()
+        //configurarListeners()
+        //cargarRecetaDelDia()
+        //loadVistoRecientemente()
+        //loadMisRecetas()
 
         val headerView = navigationView.getHeaderView(0)
         val txtNombreUsuario = headerView.findViewById<TextView>(R.id.txtNombreUsuario)
 
+        setupToolbarAndDrawer()
+
+        btnCalcularCalorias.setOnClickListener {
+            startActivity(Intent(this, CalcularCalorias::class.java))
+        }
+
+        btnAgregar.setOnClickListener {
+            startActivity(Intent(this, AgregarReceta::class.java))
+        }
 
         val usuario = FirebaseAuth.getInstance().currentUser
         txtNombreUsuario.text = usuario?.displayName ?: "Invitado"
@@ -57,7 +66,7 @@ class PantallaPrincipal : AppCompatActivity() {
         drawerLayout = findViewById(R.id.drawerLayout)
         navigationView = findViewById(R.id.navigationView)
 
-        searchView = findViewById(R.id.buscarRecetaBar)
+       // searchView = findViewById(R.id.buscarRecetaBar)
         recyclerRecientemente = findViewById(R.id.recyclerRecientemente)
         recyclerMisRecetas = findViewById(R.id.recyclerMisRecetas)
         textoRecientemente = findViewById(R.id.textoRecientemente)
@@ -65,18 +74,50 @@ class PantallaPrincipal : AppCompatActivity() {
         btnCalcularCalorias = findViewById(R.id.btnCalcularCalorias)
         btnAgregar = findViewById(R.id.agregar)
 
-        recyclerRecientemente.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        recyclerMisRecetas.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        //recyclerRecientemente.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        //recyclerMisRecetas.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        recienteAdapter = RecetaAdapter(emptyList()) { receta -> onRecetaClicked(receta) }
-        misRecetasAdapter = RecetaAdapter(emptyList()) { receta -> onRecetaClicked(receta) }
+        //recienteAdapter = RecetaAdapter(emptyList()) { receta -> onRecetaClicked(receta) }
+        //misRecetasAdapter = RecetaAdapter(emptyList()) { receta -> onRecetaClicked(receta) }
 
-        recyclerRecientemente.adapter = recienteAdapter
-        recyclerMisRecetas.adapter = misRecetasAdapter
+       // recyclerRecientemente.adapter = recienteAdapter
+       // recyclerMisRecetas.adapter = misRecetasAdapter
     }
+    private fun setupToolbarAndDrawer() {
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            val handled = when (menuItem.itemId) {
+                R.id.nav_recetas_guardadas -> {
+                    //startActivity(Intent(this, RecetasGuardadas::class.java))
+                    true
+                }
+
+                R.id.nav_mi_menu -> {
+                    //startActivity(Intent(this, MiMenu::class.java))
+                    true
+                }
+
+                R.id.nav_configuracion -> {
+                    //startActivity(Intent(this, Configuracion::class.java))
+                    true
+                }
+
+                R.id.nav_cerrar_sesion -> {
+                    FirebaseAuth.getInstance().signOut()
+                    val intent = Intent(this, Login::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    true
+                }
+
+                else -> false
+            }
+
+            drawerLayout.closeDrawer(GravityCompat.START)
+            handled
+        }
 
 
-    private fun configurarListeners() {
+        /*private fun configurarListeners() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 /*val intent = Intent(this@PantallaPrincipal, BuscarRecetasActivity::class.java)
@@ -90,13 +131,7 @@ class PantallaPrincipal : AppCompatActivity() {
             }
         })
 
-        btnCalcularCalorias.setOnClickListener {
-            startActivity(Intent(this, CalcularCalorias::class.java))
-        }
 
-        btnAgregar.setOnClickListener {
-            startActivity(Intent(this, AgregarReceta::class.java))
-        }
     }
 
     private fun cargarRecetaDelDia() {
@@ -106,10 +141,10 @@ class PantallaPrincipal : AppCompatActivity() {
                     val listaRecetas = result.documents
                     val randomReceta = listaRecetas.random()
 
-                    val titulo = randomReceta.getString("title") ?: ""
-                    val tiempo = randomReceta.getString("time") ?: ""
-                    val porciones = randomReceta.getString("portions") ?: ""
-                    val dificultad = randomReceta.getString("difficulty") ?: ""
+                    val titulo = randomReceta.getString("nombre") ?: ""
+                    val tiempo = randomReceta.getString("tiempo") ?: ""
+                    val porciones = randomReceta.getString("porciones") ?: ""
+                    val dificultad = randomReceta.getString("dificultad") ?: ""
 
                     // falta codigo para actualizar
                 }
@@ -214,36 +249,9 @@ class PantallaPrincipal : AppCompatActivity() {
         }
     }
 
-    private fun setupToolbarAndDrawer() {
-        navigationView.setNavigationItemSelectedListener { menuItem ->
-            val handled = when (menuItem.itemId) {
-                R.id.nav_recetas_guardadas -> {
-                    //startActivity(Intent(this, RecetasGuardadas::class.java))
-                    true
-                }
-                R.id.nav_mi_menu -> {
-                    //startActivity(Intent(this, MiMenu::class.java))
-                    true
-                }
-                R.id.nav_configuracion -> {
-                    //startActivity(Intent(this, Configuracion::class.java))
-                    true
-                }
-                R.id.nav_cerrar_sesion -> {
-                    FirebaseAuth.getInstance().signOut()
-                    val intent = Intent(this, Login::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
-                    true
-                }
-                else -> false
-            }
 
-            drawerLayout.closeDrawer(GravityCompat.START)
-            handled
-        }
+
+    }*/
 
     }
-
-
 }

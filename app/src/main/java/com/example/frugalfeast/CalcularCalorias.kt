@@ -30,7 +30,6 @@ class CalcularCalorias : AppCompatActivity() {
         val spinnerCereales = findViewById<Spinner>(R.id.spinnerCereales)
         val etCerealesCantidad = findViewById<EditText>(R.id.etCerealesCantidad)
 
-        // Datos de los alimentos por categoría
         val carnesList = listOf(
             Alimento("Res", 250),
             Alimento("Pollo", 239),
@@ -57,7 +56,6 @@ class CalcularCalorias : AppCompatActivity() {
             Alimento("Avena", 389)
         )
 
-        // Configurar adaptadores para cada Spinner
         spinnerCarnes.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, carnesList.map { it.nombre }).apply {
             setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         }
@@ -74,13 +72,11 @@ class CalcularCalorias : AppCompatActivity() {
             setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         }
 
-        // Botón para calcular
         val btnCalcular = findViewById<Button>(R.id.btnCalcular)
         btnCalcular.setOnClickListener {
             var countFilled = 0
             var totalCalorias = 0.0
 
-            // Función auxiliar para calcular y sumar las calorías, dado el EditText, Spinner y lista
             fun procesarCategoria(etCantidad: EditText, spinner: Spinner, lista: List<Alimento>) {
                 val cantidad = etCantidad.text.toString().toDoubleOrNull()
                 if (cantidad != null && cantidad > 0) {
