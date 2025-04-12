@@ -6,7 +6,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="AgregarReceta"
     android:background="@color/Fondo">
 
     <ScrollView
@@ -80,7 +79,8 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView32" />
+                app:layout_constraintTop_toBottomOf="@+id/imageView32"
+                tools:ignore="HardcodedText" />
 
             <EditText
                 android:id="@+id/nombreCampoAgregar"
