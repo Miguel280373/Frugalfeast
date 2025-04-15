@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Fondo"
+    tools:context=".InteraccionIA">
+
+    <ImageView
+        android:id="@+id/imageView39"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.111"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_arrow_back_24" />
+
+    <TextView
+        android:id="@+id/textView61"
+        android:layout_width="299dp"
+        android:layout_height="158dp"
+        android:background="@drawable/roundededittext"
+        android:textColor="#000000"
+        android:textStyle="italic|bold"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:text="📌 ¿Te gustaría algo\n rápido? ⏳🍕\n 👉 &quot;Te sugiero recetas en\n menos de 20 minutos.&quot;"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.158" />
+
+    <TextView
+        android:id="@+id/textView62"
+        android:layout_width="299dp"
+        android:layout_height="158dp"
+        android:background="@drawable/roundededittext"
+        android:textColor="#000000"
+        android:textStyle="italic|bold"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:text="📌 ¿Algo saludable hoy?\n 🥗✨\n 👉 &quot;Te ayudo a encontrar\n opciones nutritivas y\n fáciles.&quot;"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.458" />
+
+    <TextView
+        android:id="@+id/textView63"
+        android:layout_width="299dp"
+        android:layout_height="158dp"
+        android:textColor="#000000"
+        android:textStyle="italic|bold"
+        android:gravity="center"
+        android:background="@drawable/roundededittext"
+        android:textSize="24sp"
+        android:text="📌 ¿Quieres ver cómo se\n hace? 🎥👀\n 👉 &quot;Aquí tienes un video\n con el paso a paso.&quot;"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.766" />
+
+    <TextView
+        android:id="@+id/textView64"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FC8C1D"
+        android:textStyle="italic|bold"
+        android:textSize="36sp"
+        android:text="¡Hola, {usuario}!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.887" />
+
+    <TextView
+        android:id="@+id/textView66"
+        android:layout_width="375dp"
+        android:layout_height="59dp"
+        android:background="@drawable/roundededittext2"
+        android:gravity="center_vertical|start"
+        android:text="  +              Escribe tú Prompt..."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976" />
+</androidx.constraintlayout.widget.ConstraintLayout>
