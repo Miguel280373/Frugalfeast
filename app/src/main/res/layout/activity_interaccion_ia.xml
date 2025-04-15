@@ -83,16 +83,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.887" />
 
-    <TextView
-        android:id="@+id/textView66"
+    <EditText
+        android:id="@+id/editTextText8"
         android:layout_width="375dp"
         android:layout_height="59dp"
+        android:ems="10"
+        android:inputType="text"
         android:background="@drawable/roundededittext2"
-        android:gravity="center_vertical|start"
         android:text="  +              Escribe tú Prompt..."
+        android:textColor="#000000"
+        android:textStyle="italic|bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.976" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
