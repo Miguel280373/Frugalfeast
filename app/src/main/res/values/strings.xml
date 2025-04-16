@@ -46,7 +46,7 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="buscar_receta">buscar receta\n</string>
-    <string name="visto_recientemente">Visto Recientemente</string>
+    <string name="visto_recientemente">Visto Recientemente:</string>
     <string name="ia_assistant">asistente ia\n</string>
     <string name="receta_del_d_a">Receta del día:</string>
     <string name="menu">menu\n</string>
@@ -69,7 +69,7 @@
     <string name="cerrar_sesi_n">Cerrar Sesión</string>
     <string name="men">Menú</string>
     <string name="receta_del_dia">Receta del dia:\n</string>
-    <string name="menu_del_dia">menu del dia\n</string>
+    <string name="menu_del_dia">Menú del dia:\n</string>
     <string name="empieza_buscando_algo_rico_para_cocinar">Empieza buscando algo rico para cocinar!\n</string>
     <string name="mis_recetas1">Mis recetas:\n</string>
     <string name="agrega_una_de_tus_recetas">Agrega una de tus recetas!\n\n</string>
@@ -77,4 +77,8 @@
     <string name="add">add\n</string>
     <string name="robot">ia robot\n</string>
     <string name="selecciona_prompt">Selecciona...\n</string>
+    <string name="imagen_placeholder">Imagen Placeholder</string>
+    <string name="no_has_visto_recetas">No has visto recetas!\n</string>
+    <string name="explorar_recetas">Explorar Recetas\n</string>
+    <string name="a_ade_tu_propia_receta">añade tu propia receta!</string>
 </resources>

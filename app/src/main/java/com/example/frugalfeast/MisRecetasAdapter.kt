@@ -28,7 +28,7 @@ class MisRecetasAdapter(
         val receta = listaRecetas[position]
         holder.tituloReceta.text = receta.nombre
 
-        Glide.with(holder.itemView.context).load(receta.imageUrl).into(holder.imagenReceta)
+        Glide.with(holder.itemView.context).load(receta.imagenUrl).into(holder.imagenReceta)
 
         holder.itemView.setOnClickListener {
             onItemClick(receta)

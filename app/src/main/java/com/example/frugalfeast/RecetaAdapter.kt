@@ -35,9 +35,9 @@ class RecetaAdapter(
         fun bind(receta: Receta) {
             tvTitle.text = receta.nombre
             // Cargar imagen con Glide
-            if (receta.imageUrl.isNotEmpty()) {
+            if (receta.imagenUrl.isNotEmpty()) {
                 Glide.with(itemView.context)
-                    .load(receta.imageUrl)
+                    .load(receta.imagenUrl)
                     .into(ivImage)
             }
 

@@ -28,7 +28,7 @@ class RecetasGuardadasAdapter(
         holder.tvTitulo.text = receta.nombre
 
         Glide.with(holder.itemView.context)
-            .load(receta.imageUrl)
+            .load(receta.imagenUrl)
             .placeholder(R.drawable.icono_imagen)
             .error(R.drawable.icono_imagen)
             .into(holder.ivImagen)

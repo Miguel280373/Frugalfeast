@@ -8,6 +8,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:screenOrientation="portrait"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FrugalFeast"
@@ -25,9 +26,6 @@
             android:name=".MiMenu"
             android:exported="false" />
         <activity
-            android:name=".RecetasGuardasdas"
-            android:exported="false" />
-        <activity
             android:name=".EditarPerfil"
             android:exported="false" />
         <activity
@@ -38,9 +36,6 @@
             android:exported="false" />
         <activity
             android:name=".RecetasGuardadas"
-            android:exported="false" />
-        <activity
-            android:name=".RecetasDia"
             android:exported="false" />
         <activity
             android:name=".PantallaPrincipal"
@@ -70,9 +65,7 @@
         <activity
             android:name=".PresentacionIA"
             android:exported="false" />
-        <activity
-            android:name=".Perfil"
-            android:exported="false" />
+
         <activity
             android:name=".Recuperar"
             android:exported="false" />

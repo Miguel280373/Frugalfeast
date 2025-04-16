@@ -2,7 +2,7 @@ package com.example.frugalfeast
 data class Receta(
     val id: String = "",
     val nombre: String = "",
-    val imageUrl: String = "",
+    val imagenUrl: String = "",
     val tiempo: String = "",
     val porciones: String = "",
     val dificultad: String = "",

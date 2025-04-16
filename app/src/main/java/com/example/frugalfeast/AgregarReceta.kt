@@ -1,4 +1,4 @@
-/*
+
 package com.example.frugalfeast
 
 import android.net.Uri

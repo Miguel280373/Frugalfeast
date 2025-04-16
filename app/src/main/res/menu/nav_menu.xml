@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_recetas_guardadas"
-            android:icon="@drawable/guardado"
-            android:title="@string/recetas_guardadas"/>
-        <item
-            android:id="@+id/nav_mi_menu"
-            android:icon="@drawable/menu_libro"
-            android:title="@string/mi_men"/>
-        <item
-            android:id="@+id/nav_configuracion"
-            android:icon="@drawable/opciones"
-            android:title="@string/configuraci_n"/>
-    </group>
 
-    <item android:title="@string/opciones">
+    <item
+        android:id="@+id/nav_recetas_guardadas"
+        android:icon="@drawable/guardado"
+        android:title="@string/recetas_guardadas"/>
+
+    <item
+        android:id="@+id/nav_mi_menu"
+        android:icon="@drawable/menu_libro"
+        android:title="@string/mi_men"/>
+
+    <item
+        android:id="@+id/nav_configuracion"
+        android:icon="@drawable/opciones"
+        android:title="@string/configuraci_n"/>
+
+    <item
+        android:id="@+id/nav_separator"
+        android:title=""
+        android:enabled="false">
         <menu>
             <item
-                android:id="@+id/nav_cerrar_sesion"
-                android:icon="@drawable/ic_puerta"
-                android:title="@string/cerrar_sesi_n"/>
+                android:title=""
+                android:enabled="false"/>
         </menu>
     </item>
+
+    <item
+        android:id="@+id/nav_cerrar_sesion"
+        android:icon="@drawable/ic_puerta"
+        android:title="@string/cerrar_sesi_n"/>
+
 </menu>
