@@ -166,6 +166,9 @@ class PantallaPrincipal : AppCompatActivity() {
         // Configurar items del menú
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
+                R.id.nav_perfil -> {
+                    startActivity(Intent(this, Miperfil::class.java))
+                }
                 R.id.nav_recetas_guardadas -> {
                     startActivity(Intent(this, RecetasGuardadas::class.java))
                 }
@@ -173,7 +176,7 @@ class PantallaPrincipal : AppCompatActivity() {
                     startActivity(Intent(this, MiMenu::class.java))
                 }
                 R.id.nav_configuracion -> {
-                    startActivity(Intent(this,PantallaPrincipal::class.java)) // reemplazar por configuracion
+                    startActivity(Intent(this,ConfiguracionyPrivacidad::class.java))
                 }
                 R.id.nav_cerrar_sesion -> {
                     FirebaseAuth.getInstance().signOut()
