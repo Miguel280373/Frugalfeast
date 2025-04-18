@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/naranja_claro">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center_horizontal">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/roundededittext"
+                    android:hint="Buscar Receta"
+                    android:textColor="#905708"
+                    android:textSize="18sp"
+                    android:paddingStart="12dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/visto_recientemente"
+                    android:textColor="#905708"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginBottom="24dp"
+                    android:weightSum="3">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="78dp"
+                            android:layout_weight="1"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/tacos"
+                            android:scaleType="centerCrop"
+                            android:background="@drawable/rounded_image"/>
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="78dp"
+                            android:layout_weight="1"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/tacos"
+                            android:scaleType="centerCrop"
+                            android:background="@drawable/rounded_image"/>
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="78dp"
+                            android:layout_weight="1"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/tacos"
+                            android:scaleType="centerCrop"
+                            android:background="@drawable/rounded_image"/>
+                </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:text="Mis Recetas"
+                android:textColor="#905708"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginBottom="24dp"
+                    android:weightSum="3">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="78dp"
+                            android:layout_weight="1"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/hamburguesa"
+                            android:scaleType="centerCrop"
+                            android:background="@drawable/rounded_image"/>
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="78dp"
+                            android:layout_weight="1"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/hamburguesa"
+                            android:scaleType="centerCrop"
+                            android:background="@drawable/rounded_image"/>
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="78dp"
+                            android:layout_weight="1"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/hamburguesa"
+                            android:scaleType="centerCrop"
+                            android:background="@drawable/rounded_image"/>
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/preocupado_por_la_dieta"
+                    android:textColor="#905708"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+
+                <Button
+                    android:id="@+id/BotonCalorias"
+                    android:layout_width="220dp"
+                    android:layout_height="50dp"
+                    android:text="calcular calorias"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="@color/naranja_oscuro"
+                    android:layout_marginBottom="32dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="3dp"
+                    android:gravity="center"
+                    android:weightSum="3">
+
+                        <ImageButton
+                            android:layout_width="0dp"
+                            android:padding="5dp"
+                            android:layout_height="67dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/carpeta"
+                            android:background="@null"
+                            android:scaleType="centerCrop"/>
+
+                        <ImageButton
+                            android:layout_width="0dp"
+                            android:layout_height="67dp"
+                            android:padding="5dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/home"
+                            android:background="@null"
+                            android:scaleType="fitCenter"/>
+
+                        <ImageButton
+                            android:layout_width="0dp"
+                            android:layout_height="67dp"
+                            android:padding="5dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/usuario"
+                            android:background="@null"
+                            android:scaleType="fitCenter"/>
+                </LinearLayout>
+
+        </LinearLayout>
+</ScrollView>

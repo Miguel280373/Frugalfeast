@@ -35,6 +35,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@drawable/rounded_corner_gris"
                 android:queryHint="Buscar recetas..."
                 app:iconifiedByDefault="false" />
         </LinearLayout>
@@ -198,7 +199,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="@string/explorar_recetas"/>
+                            android:backgroundTint="@color/Naranja_clarito"
+                            android:text="@string/explorar_recetas"
+                            android:textColor="@color/black"/>
                     </LinearLayout>
 
                     <!-- Layout para contenido (receta vista) -->
@@ -739,8 +742,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textStyle="bold"
-                    android:backgroundTint="@color/Naranja"
-                    android:background="@drawable/rounded_corner_naranja" />
+                    android:backgroundTint="@color/Naranja" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

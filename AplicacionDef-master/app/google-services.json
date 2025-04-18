@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "571548006670",
+    "project_id": "frugalfeast-3a591",
+    "storage_bucket": "frugalfeast-3a591.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:571548006670:android:03e33d2bf545e7e2de3f5f",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCY0aUsPUSWqiD2hpfmdqJd7KNJKA5xS3g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

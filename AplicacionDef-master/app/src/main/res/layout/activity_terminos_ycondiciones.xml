@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Terminos_y_condiciones"
+    android:background="@color/naranja_claro">
+
+    <ImageView
+        android:id="@+id/imageView23"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#00FFFFFF"
+        android:contentDescription="@string/atras"
+        android:scaleType="centerCrop"
+        android:src="@drawable/baseline_arrow_circle_left_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        android:text="Terminos y Condiciones"
+        android:textColor="#000000"
+        android:textSize="28sp"
+        android:textStyle="italic|bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- ScrollView envolviendo el TextView con los Términos y Condiciones -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@id/textView13"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/textView29"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="italic|normal"
+            android:text="Última actualización: [Fecha]\n\n
+                Frugal Feast ofrece una aplicación diseñada para ayudarte a crear recetas con los ingredientes disponibles en tu despensa. Al utilizar esta aplicación, aceptas los siguientes términos:\n
+                1. Aceptación de los Términos\n
+                Al usar Frugal Feast, aceptas estos términos. Si no estás de acuerdo, no utilices la aplicación.\n
+                2. Uso de la Aplicación\n
+                La aplicación está destinada solo para uso personal. Puedes crear, editar y guardar tus recetas, y guardar recetas de otros en tu despensa virtual.\n
+                3. Cuenta de Usuario\n
+                Para usar ciertas funciones, necesitas crear una cuenta. Eres responsable de mantener la seguridad de tu cuenta y de la información que proporcionas.\n
+                4. Propiedad Intelectual\n
+                Todo el contenido de la aplicación (código, diseño, recetas) es propiedad de Frugal Feast. No puedes copiar ni distribuir este contenido sin permiso.\n
+                5. Uso Prohibido\n
+                No puedes usar la aplicación para fines ilegales, subir contenido que infrinja derechos de propiedad intelectual, o dañar el funcionamiento de la aplicación.\n
+                6. Privacidad\n
+                Tu privacidad es importante. Consulta nuestra Política de Privacidad para saber cómo manejamos tus datos.\n
+                7. Modificaciones\n
+                Frugal Feast puede actualizar o modificar estos términos en cualquier momento. Cualquier cambio será publicado aquí.\n
+                8. Responsabilidad Limitada\n
+                Frugal Feast no se responsabiliza por daños que puedan surgir del uso de la aplicación."
+            android:layout_marginBottom="16dp"
+            android:padding="16dp"
+            android:textColor="#000000" />
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

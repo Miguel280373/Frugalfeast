@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".Registro"
+        android:background="@color/naranja_claro">
+
+
+        <TextView
+                android:id="@+id/registroLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="32sp"
+                android:textColor="#000000"
+                android:textStyle="italic|bold"
+                android:text="@string/registroLabel"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.036" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="174dp"
+            android:layout_height="178dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registroLabel"
+            app:layout_constraintVertical_bias="0.01"
+            app:srcCompat="@drawable/logo_frugal_feast"
+            tools:ignore="ContentDescription,ImageContrastCheck" />
+
+        <TextView
+            android:id="@+id/nombreLabel"
+            android:layout_width="257dp"
+            android:layout_height="35dp"
+            android:text="Nombre Completo:"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.22"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView9"
+            app:layout_constraintVertical_bias="0.033"
+            tools:ignore="HardcodedText,TextSizeCheck" />
+
+        <EditText
+            android:id="@+id/nombreCampo"
+            android:layout_width="330dp"
+            android:layout_height="48dp"
+            android:autofillHints=""
+            android:background="@drawable/roundededittext"
+            android:ems="10"
+            android:inputType="text"
+            android:paddingStart="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.419"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nombreLabel"
+            app:layout_constraintVertical_bias="0.040"
+            tools:ignore="HardcodedText,LabelFor,SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/apodoLabel"
+            android:layout_width="257dp"
+            android:layout_height="35dp"
+            android:autofillHints=""
+            android:text="Apodo (opcional):"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.22"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nombreCampo"
+            app:layout_constraintVertical_bias="0.047"
+            tools:ignore="HardcodedText,TextSizeCheck" />
+
+        <EditText
+            android:id="@+id/apodoCampo"
+            android:layout_width="330dp"
+            android:layout_height="48dp"
+            android:autofillHints=""
+            android:background="@drawable/roundededittext"
+            android:ems="10"
+
+            android:inputType="text"
+            android:paddingStart="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.419"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/apodoLabel"
+            app:layout_constraintVertical_bias="0.040"
+            tools:ignore="HardcodedText,LabelFor,SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/correoLabel"
+            android:layout_width="257dp"
+            android:layout_height="35dp"
+            android:autofillHints=""
+            android:text="Correo Electronico:"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.22"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/apodoCampo"
+            app:layout_constraintVertical_bias="0.032"
+            tools:ignore="HardcodedText,TextSizeCheck" />
+
+        <EditText
+            android:id="@+id/correoCampo"
+            android:layout_width="330dp"
+            android:layout_height="48dp"
+            android:autofillHints=""
+            android:background="@drawable/roundededittext"
+            android:ems="10"
+            android:inputType="text"
+            android:paddingStart="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.419"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/correoLabel"
+            app:layout_constraintVertical_bias="0.040"
+            tools:ignore="DuplicateSpeakableTextCheck,HardcodedText,LabelFor,SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/contraseñaLabel"
+            android:layout_width="257dp"
+            android:layout_height="35dp"
+            android:autofillHints=""
+            android:text="Contraseña:"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.22"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/correoCampo"
+            app:layout_constraintVertical_bias="0.043"
+            tools:ignore="HardcodedText,TextSizeCheck" />
+
+        <EditText
+                android:id="@+id/contraseñaCampo"
+                android:layout_width="330dp"
+                android:layout_height="48dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:inputType="textPassword"
+                android:background="@drawable/roundededittext"
+                android:paddingStart="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.419"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/contraseñaLabel"
+                app:layout_constraintVertical_bias="0.040"
+                tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/confirmarContraLabel"
+            android:layout_width="257dp"
+            android:layout_height="35dp"
+            android:autofillHints=""
+            android:text="Confirmar Contraseña:"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.22"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contraseñaCampo"
+            app:layout_constraintVertical_bias="0.041"
+            tools:ignore="HardcodedText,TextSizeCheck" />
+
+        <EditText
+                android:id="@+id/confirmarContraCampo"
+                android:layout_width="330dp"
+                android:layout_height="48dp"
+                android:background="@drawable/roundededittext"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:paddingStart="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.419"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/confirmarContraLabel"
+                app:layout_constraintVertical_bias="0.040"
+                tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck" />
+
+        <CheckBox
+            android:id="@+id/checkBoxTerminos"
+            android:layout_width="268dp"
+            android:layout_height="48dp"
+            android:checked="false"
+            android:gravity="center"
+            android:text="@string/estoy_de_acuerdo_con_los_terminos_y_condiciones"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/confirmarContraCampo"
+            app:layout_constraintVertical_bias="0.20" />
+
+        <Button
+                android:id="@+id/registrarse"
+                android:layout_width="220dp"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/naranja_oscuro"
+                android:text="@string/registrarse"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxTerminos"
+                app:layout_constraintVertical_bias="0.189"
+                tools:ignore="TextContrastCheck" />
+
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="210dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="50dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:padding="1dp"
+            android:text="@string/ya_tienes_cuenta_iniciar_sesion"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registrarse"
+            app:layout_goneMarginBottom="20dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
