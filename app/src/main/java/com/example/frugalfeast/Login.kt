@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -16,12 +17,18 @@ class Login : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
 
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val btnatrastres: ImageView = findViewById(R.id.imageView13)
+        btnatrastres.setOnClickListener {
+            val intent = Intent(this, inicio3::class.java)
+            startActivity(intent)
+        }
+
         val iniciarsesion: Button = findViewById(R.id.iniciarsesion)
         iniciarsesion.setOnClickListener {
             Intent(this, IniciarSesion::class.java)

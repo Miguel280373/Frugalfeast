@@ -43,6 +43,7 @@
         android:layout_width="287dp"
         android:layout_height="wrap_content"
         android:text="Ingresa tu correo electrónico para recibir un enlace y recuperar tu cuenta:"
+        android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -53,8 +54,8 @@
 
     <Button
         android:id="@+id/cancelar"
-        android:layout_width="110dp"
-        android:layout_height="50dp"
+        android:layout_width="122dp"
+        android:layout_height="46dp"
         android:backgroundTint="@color/Naranja"
         android:text="Cancelar"
         android:textColor="#000000"
@@ -67,8 +68,8 @@
 
     <Button
         android:id="@+id/enviar"
-        android:layout_width="110dp"
-        android:layout_height="50dp"
+        android:layout_width="122dp"
+        android:layout_height="46dp"
         android:backgroundTint="@color/Naranja"
         android:text="Enviar"
         android:textColor="#000000"

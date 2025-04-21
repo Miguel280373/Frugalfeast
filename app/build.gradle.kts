@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.frugalfeast"
-        minSdk = 24
+        minSdk = 24 // Mirar si se puede pasar a la 26 Minimo
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -56,4 +56,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.generativeai)
 }

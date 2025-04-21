@@ -3,6 +3,7 @@ package com.example.frugalfeast
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -26,6 +27,12 @@ class inicio2 : AppCompatActivity() {
                     startActivity(welcomeIntent)
                     finish()
                 }
+        }
+
+        val btnatrasuno: ImageView = findViewById(R.id.imageView8)
+        btnatrasuno.setOnClickListener {
+            val intent = Intent(this, inicio1::class.java)
+            startActivity(intent)
         }
     }
 }

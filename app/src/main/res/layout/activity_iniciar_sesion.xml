@@ -75,8 +75,8 @@
 
     <TextView
         android:id="@+id/usuario_o_correo_label"
-        android:layout_width="147dp"
-        android:layout_height="20dp"
+        android:layout_width="191dp"
+        android:layout_height="23dp"
         android:autofillHints=""
         android:importantForAutofill="no"
         android:text="Usuario o Correo electronico"
@@ -84,10 +84,10 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.238"
+        app:layout_constraintHorizontal_bias="0.286"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iniciarsesioninst"
-        app:layout_constraintVertical_bias="0.098" />
+        app:layout_constraintVertical_bias="0.093" />
 
     <EditText
         android:id="@+id/contraseñaCampoInicio"
@@ -108,8 +108,8 @@
 
     <TextView
         android:id="@+id/contraseñaLabelInicio"
-        android:layout_width="147dp"
-        android:layout_height="20dp"
+        android:layout_width="145dp"
+        android:layout_height="27dp"
         android:text="Contraseña"
         android:textColor="#000000"
         android:textSize="18sp"
@@ -122,7 +122,7 @@
 
     <Button
         android:id="@+id/iniciarsesion1"
-        android:layout_width="220dp"
+        android:layout_width="207dp"
         android:layout_height="50dp"
         android:backgroundTint="@color/Naranja"
         android:text="Iniciar Sesion"

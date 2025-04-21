@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -14,6 +15,7 @@ import com.example.frugalfeast.R
 import com.google.firebase.auth.FirebaseAuth
 
 class Recuperar : AppCompatActivity() {
+
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +29,13 @@ class Recuperar : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val atraslogin: ImageView = findViewById(R.id.imageView14)
+        atraslogin.setOnClickListener {
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+        }
+
         val reestablecerContra: Button = findViewById(R.id.enviar)
         reestablecerContra.setOnClickListener {
             reestablecerContraseña()
@@ -37,7 +46,6 @@ class Recuperar : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
 
 
     private fun reestablecerContraseña() {
@@ -57,4 +65,5 @@ class Recuperar : AppCompatActivity() {
                 }
             }
     }
+
 }
