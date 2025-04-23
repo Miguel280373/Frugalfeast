@@ -416,8 +416,7 @@ class PantallaPrincipal : AppCompatActivity() {
                     mostrarEstadoVacioMisRecetas()
                 }
             }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Error al cargar mis recetas", Toast.LENGTH_SHORT).show()
+            .addOnFailureListener {
                 mostrarEstadoVacioMisRecetas()
             }
     }
