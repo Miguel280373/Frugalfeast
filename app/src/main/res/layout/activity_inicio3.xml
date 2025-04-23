@@ -18,9 +18,11 @@
             android:layout_height="404dp"
             android:layout_marginTop="8dp"
             android:src="@drawable/chef"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/botonContinuar3" />
+            app:layout_constraintTop_toBottomOf="@+id/botonContinuar3"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/textView3"
@@ -58,29 +60,19 @@
             app:layout_constraintVertical_bias="0.0"
             tools:ignore="HardcodedText" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/botonContinuar3"
             android:layout_width="220dp"
             android:layout_height="50dp"
-            android:layout_marginTop="8dp"
-            android:backgroundTint="@color/Naranja"
-            android:text="Continuar"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_corner_naranja"
+            android:text="@string/continuar"
+            android:textSize="20sp"
             android:textColor="#000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-        <ImageView
-            android:id="@+id/imageView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.111"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/baseline_arrow_back_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

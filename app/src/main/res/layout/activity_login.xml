@@ -11,11 +11,11 @@
     <TextView
         android:id="@+id/comienzaTexto"
         android:layout_width="wrap_content"
-        android:layout_height="112dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:gravity="center"
-        android:text="¡Comienza en Frugal Feast!"
+        android:text="@string/comienza_en_frugal_feast"
         android:textColor="#000000"
         android:textSize="40sp"
         android:textStyle="italic|bold"
@@ -26,23 +26,24 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.093" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/iniciarsesion"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="203dp"
         android:layout_height="48dp"
         android:layout_marginTop="31dp"
         android:layout_marginBottom="164dp"
-        android:backgroundTint="@color/Naranja"
-        android:text="Iniciar Sesion"
+        android:background="@drawable/rounded_corner_naranja"
+        android:text="@string/iniciar_sesion"
         android:textColor="#000000"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView12"
         app:layout_constraintVertical_bias="0.0"
-        tools:ignore="HardcodedText,TextContrastCheck" />
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/olvideBtnInicio1"
@@ -109,16 +110,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/comienzaTexto"
         app:srcCompat="@drawable/logo" />
-
-    <ImageView
-        android:id="@+id/imageView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.09"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/baseline_arrow_back_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,29 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/header_container"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/colorPrimary"
-    android:orientation="vertical"
+    android:layout_height="180dp"
+    android:background="@color/Naranja"
+    android:orientation="horizontal"
     android:padding="24dp"
-    android:clickable="true"
-    android:focusable="true"
-    android:foreground="?attr/selectableItemBackground">
+    android:gravity="center_vertical">
+
+    <ImageView
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:src="@drawable/avatar1"
+    android:layout_marginEnd="48dp"
+    android:layout_gravity="center_vertical" />
 
     <TextView
-        android:id="@+id/txtNombreUsuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/nombre"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/white"
-        android:alpha="0.2"/>
-
+    android:id="@+id/txtNombreUsuario"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:text="@string/nombre"
+    android:textStyle="italic"
+    android:textSize="18sp"
+    android:textColor="@android:color/black"
+    android:layout_marginTop="8dp"/>
 </LinearLayout>

@@ -23,11 +23,6 @@ class Login : AppCompatActivity() {
             insets
         }
 
-        val btnatrastres: ImageView = findViewById(R.id.imageView13)
-        btnatrastres.setOnClickListener {
-            val intent = Intent(this, inicio3::class.java)
-            startActivity(intent)
-        }
 
         val iniciarsesion: Button = findViewById(R.id.iniciarsesion)
         iniciarsesion.setOnClickListener {

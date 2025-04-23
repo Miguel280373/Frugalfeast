@@ -12,7 +12,7 @@
         android:id="@+id/reestablecerContraTexto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Restablecer Contraseña"
+        android:text="@string/restablecer_contrase_a"
         android:textAllCaps="false"
         android:textColor="#000000"
         android:textSize="28sp"
@@ -42,7 +42,7 @@
         android:id="@+id/textView27"
         android:layout_width="287dp"
         android:layout_height="wrap_content"
-        android:text="Ingresa tu correo electrónico para recibir un enlace y recuperar tu cuenta:"
+        android:text="@string/ingresa_tu_correo_electr_nico_para_recibir_un_enlace_y_recuperar_tu_cuenta"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="18sp"
@@ -52,12 +52,12 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5"
         app:layout_constraintVertical_bias="0.129" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/cancelar"
         android:layout_width="122dp"
-        android:layout_height="46dp"
-        android:backgroundTint="@color/Naranja"
-        android:text="Cancelar"
+        android:layout_height="48dp"
+        android:background="@drawable/rounded_corner_naranja"
+        android:text="@string/cancelar"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,12 +66,12 @@
         app:layout_constraintTop_toBottomOf="@+id/correoCampoRecuperar"
         app:layout_constraintVertical_bias="0.25" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/enviar"
         android:layout_width="122dp"
-        android:layout_height="46dp"
-        android:backgroundTint="@color/Naranja"
-        android:text="Enviar"
+        android:layout_height="48dp"
+        android:background="@drawable/rounded_corner_naranja"
+        android:text="@string/enviar"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +83,8 @@
     <EditText
         android:id="@+id/correoCampoRecuperar"
         android:layout_width="300dp"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
+        android:autofillHints="Ingresa tu correo"
         android:background="@drawable/roundededittext"
         android:backgroundTint="@color/CuadrosTexto"
         android:ems="10"
@@ -97,27 +98,58 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView27"
         app:layout_constraintVertical_bias="0.05"
-        tools:ignore="RtlSymmetry,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        tools:ignore="RtlSymmetry,SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#000000"
-        android:text="USUARIO FRUGAL FEAST"
+        android:text="@string/no_te_quedes_por_fuera"
+        android:textSize="18sp"
         android:textStyle="italic|bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView18" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/reenviarCodigo"
+        android:layout_width="155dp"
+        android:layout_height="48dp"
+        android:background="@drawable/rounded_corner_naranja"
+        android:text="@string/reenviar_codigo"
+        android:textColor="#000000"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textReenviar"
+        app:layout_constraintVertical_bias="0.22" />
 
     <ImageView
         android:id="@+id/imageView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
+        android:contentDescription="@string/atras"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.098"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/baseline_arrow_back_24" />
+
+    <TextView
+        android:id="@+id/textReenviar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="@string/no_recibiste_nada"
+        android:textSize="18sp"
+        android:visibility="invisible"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enviar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -81,4 +81,57 @@
     <string name="no_has_visto_recetas">No has visto recetas!\n</string>
     <string name="explorar_recetas">Explorar Recetas\n</string>
     <string name="a_ade_tu_propia_receta">añade tu propia receta!</string>
+    <string name="iniciar_sesion">Iniciar Sesion</string>
+    <string name="comienza_en_frugal_feast">¡Comienza en Frugal Feast!</string>
+    <string name="continuar">Continuar</string>
+    <string name="inicia_sesion_con_tu_cuenta_de_frugal_feast">Inicia Sesion con tu cuenta de Frugal Feast</string>
+    <string name="logo_frugal_feast">logo frugal feast</string>
+    <string name="contrase_a">Contraseña</string>
+    <string name="correo_electronico">Correo electronico</string>
+    <string name="no_tienes_cuenta_registrate">¿No tienes cuenta? Registrate</string>
+    <string name="olvidaste_tu_contrase_a_recuperar_cuenta">¿Olvidaste tu contraseña? Recuperar cuenta</string>
+    <string name="registro">Registro</string>
+    <string name="nombre_completo">Nombre Completo:</string>
+    <string name="apodo_opcional">Apodo (opcional):</string>
+    <string name="correo_electronico2">Correo Electronico:</string>
+    <string name="contrase_a2">Contraseña:</string>
+    <string name="confirmar_contrase_a">Confirmar Contraseña:</string>
+    <string name="estoy_de_acuerdo_con_los_terminos_y_condiciones">Estoy de acuerdo con los <a href="terminos">términos y condiciones</a></string>
+    <string name="registrarse">Registrarse</string>
+    <string name="ya_tienes_cuenta_iniciar_sesion">¿Ya tienes cuenta? Iniciar Sesion</string>
+    <string name="atras">atras</string>
+    <string name="no_te_quedes_por_fuera">No te quedes por fuera!</string>
+    <string name="ingresa_tu_correo_electr_nico_para_recibir_un_enlace_y_recuperar_tu_cuenta">Ingresa tu correo electrónico para recibir un enlace y recuperar tu cuenta:</string>
+    <string name="restablecer_contrase_a">Restablecer Contraseña</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="enviar">Enviar</string>
+    <string name="reenviar_codigo">Reenviar codigo</string>
+    <string name="no_recibiste_nada">¿No recibiste nada?</string>
+    <string name="terminos_y_condiciones_completo">
+    <![CDATA[
+    <b>1. Aceptación de los términos</b><br/><br/>
+    Al descargar y usar Frugal Feast, aceptas estos términos y condiciones. Si no estás de acuerdo, no uses la aplicación.<br/><br/>
+
+    <b>2. Uso de la aplicación</b><br/><br/>
+    - Frugal Feast es una aplicación que ayuda a los usuarios a gestionar recetas y calcular calorías de alimentos.<br/>
+    - No garantizamos que la información nutricional proporcionada sea 100% precisa, ya que depende de los datos ingresados por el usuario.<br/><br/>
+
+    <b>3. Restricciones</b><br/><br/>
+    No puedes:<br/>
+    - Usar la app con fines ilegales o no autorizados.<br/>
+    - Modificar, distribuir o explotar comercialmente el contenido de la app sin permiso.<br/>
+    - Intentar hackear o dañar la aplicación.<br/><br/>
+
+    <b>4. Propiedad intelectual</b><br/><br/>
+    Todos los derechos sobre la aplicación y su contenido pertenecen a Frugal Feast. No puedes copiar ni distribuir el contenido sin autorización.<br/><br/>
+
+    <b>5. Limitación de responsabilidad</b><br/><br/>
+    - No nos hacemos responsables por problemas técnicos, errores o pérdidas de datos que puedan ocurrir al usar la app.<br/>
+    - El uso de la app es bajo tu propio riesgo.<br/><br/>
+
+    <b>6. Modificaciones en los términos</b><br/><br/>
+    Podemos actualizar estos términos en cualquier momento. Si continúas usando la app después de los cambios, significa que los aceptas.
+    ]]>
+</string>
+    <string name="t_rminos_y_condiciones">Términos y Condiciones</string>
 </resources>

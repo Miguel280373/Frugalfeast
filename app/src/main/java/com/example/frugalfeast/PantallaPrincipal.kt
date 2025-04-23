@@ -88,6 +88,7 @@ class PantallaPrincipal : AppCompatActivity() {
         setupMenuDelDia()
         cargarRecetaDelDia()
         cargarVistoRecientemente()
+        cargarMisRecetas()
 
         btnCalularCalorias.setOnClickListener(){
             val intent = Intent(this, CalcularCalorias::class.java)

@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
@@ -16,7 +18,7 @@
             android:id="@+id/registroLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Registro"
+            android:text="@string/registro"
             android:textColor="#000000"
             android:textSize="32sp"
             android:textStyle="italic|bold"
@@ -30,6 +32,7 @@
             android:id="@+id/imageView9"
             android:layout_width="174dp"
             android:layout_height="178dp"
+            android:contentDescription="@string/logo_frugal_feast"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
@@ -37,13 +40,13 @@
             app:layout_constraintTop_toBottomOf="@+id/registroLabel"
             app:layout_constraintVertical_bias="0.01"
             app:srcCompat="@drawable/logo"
-            tools:ignore="ContentDescription,ImageContrastCheck" />
+            tools:ignore="ImageContrastCheck" />
 
         <TextView
             android:id="@+id/nombreLabel"
             android:layout_width="257dp"
             android:layout_height="35dp"
-            android:text="Nombre Completo:"
+            android:text="@string/nombre_completo"
             android:textColor="#000000"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -53,7 +56,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView9"
             app:layout_constraintVertical_bias="0.033"
-            tools:ignore="HardcodedText,TextSizeCheck" />
+            tools:ignore="TextSizeCheck" />
 
         <EditText
             android:id="@+id/nombreCampo"
@@ -71,14 +74,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nombreLabel"
             app:layout_constraintVertical_bias="0.0"
-            tools:ignore="HardcodedText,LabelFor,SpeakableTextPresentCheck" />
+            tools:ignore="LabelFor,RtlSymmetry,SpeakableTextPresentCheck" />
 
         <TextView
             android:id="@+id/apodoLabel"
             android:layout_width="257dp"
             android:layout_height="35dp"
             android:autofillHints=""
-            android:text="Apodo (opcional):"
+            android:text="@string/apodo_opcional"
             android:textColor="#000000"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -88,7 +91,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nombreCampo"
             app:layout_constraintVertical_bias="0.032"
-            tools:ignore="HardcodedText,TextSizeCheck" />
+            tools:ignore="TextSizeCheck" />
 
         <EditText
             android:id="@+id/apodoCampo"
@@ -106,14 +109,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/apodoLabel"
             app:layout_constraintVertical_bias="0.0"
-            tools:ignore="HardcodedText,LabelFor,SpeakableTextPresentCheck" />
+            tools:ignore="LabelFor,RtlSymmetry,SpeakableTextPresentCheck" />
 
         <TextView
             android:id="@+id/correoLabel"
             android:layout_width="257dp"
             android:layout_height="35dp"
             android:autofillHints=""
-            android:text="Correo Electronico:"
+            android:text="@string/correo_electronico2"
             android:textColor="#000000"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -123,7 +126,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/apodoCampo"
             app:layout_constraintVertical_bias="0.032"
-            tools:ignore="HardcodedText,TextSizeCheck" />
+            tools:ignore="TextSizeCheck" />
 
         <EditText
             android:id="@+id/correoCampo"
@@ -141,14 +144,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/correoLabel"
             app:layout_constraintVertical_bias="0.0"
-            tools:ignore="DuplicateSpeakableTextCheck,HardcodedText,LabelFor,SpeakableTextPresentCheck" />
+            tools:ignore="DuplicateSpeakableTextCheck,HardcodedText,LabelFor,RtlSymmetry,SpeakableTextPresentCheck" />
 
         <TextView
             android:id="@+id/contraseñaLabel"
             android:layout_width="257dp"
             android:layout_height="35dp"
             android:autofillHints=""
-            android:text="Contraseña:"
+            android:text="@string/contrase_a2"
             android:textColor="#000000"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -158,7 +161,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/correoCampo"
             app:layout_constraintVertical_bias="0.032"
-            tools:ignore="HardcodedText,TextSizeCheck" />
+            tools:ignore="TextSizeCheck" />
 
         <EditText
             android:id="@+id/contraseñaCampo"
@@ -176,14 +179,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/contraseñaLabel"
             app:layout_constraintVertical_bias="0.0"
-            tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+            tools:ignore="LabelFor,RtlSymmetry,SpeakableTextPresentCheck" />
 
         <TextView
             android:id="@+id/confirmarContraLabel"
             android:layout_width="257dp"
             android:layout_height="35dp"
             android:autofillHints=""
-            android:text="Confirmar Contraseña:"
+            android:text="@string/confirmar_contrase_a"
             android:textColor="#000000"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -193,7 +196,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/contraseñaCampo"
             app:layout_constraintVertical_bias="0.032"
-            tools:ignore="HardcodedText,TextSizeCheck" />
+            tools:ignore="TextSizeCheck" />
 
         <EditText
             android:id="@+id/confirmarContraCampo"
@@ -210,15 +213,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/confirmarContraLabel"
             app:layout_constraintVertical_bias="0.0"
-            tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck" />
+            tools:ignore="Autofill,LabelFor,RtlSymmetry,SpeakableTextPresentCheck" />
 
         <CheckBox
             android:id="@+id/checkBoxTerminos"
             android:layout_width="268dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:checked="false"
             android:gravity="center"
-            android:text="Estoy de acuerdo con los Terminos y Condiciones."
+            android:text="@string/estoy_de_acuerdo_con_los_terminos_y_condiciones"
             android:textColor="#000000"
             android:textSize="14sp"
             android:textStyle="normal"
@@ -229,12 +232,12 @@
             app:layout_constraintTop_toBottomOf="@+id/confirmarContraCampo"
             app:layout_constraintVertical_bias="0.20" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/registrarse"
             android:layout_width="220dp"
             android:layout_height="50dp"
-            android:backgroundTint="@color/Naranja"
-            android:text="Registrarse"
+            android:background="@drawable/rounded_corner_naranja"
+            android:text="@string/registrarse"
             android:textColor="#000000"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -246,7 +249,7 @@
 
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/textYaTienesCuenta"
             android:layout_width="210dp"
             android:layout_height="48dp"
             android:layout_marginBottom="50dp"
@@ -254,7 +257,7 @@
             android:focusable="true"
             android:gravity="center"
             android:padding="1dp"
-            android:text="¿Ya tienes cuenta? Iniciar Sesion"
+            android:text="@string/ya_tienes_cuenta_iniciar_sesion"
             android:textColor="#000000"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -269,6 +272,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
+            android:contentDescription="@string/atras"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.087"
             app:layout_constraintStart_toStartOf="parent"

@@ -71,7 +71,8 @@
             android:exported="false" />
         <activity
             android:name=".IniciarSesion"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".Registro"
             android:exported="false" />

@@ -29,10 +29,5 @@ class inicio3 : AppCompatActivity() {
                 }
         }
 
-        val btnatrasdos: ImageView = findViewById(R.id.imageView10)
-        btnatrasdos.setOnClickListener {
-            val intent = Intent(this, inicio2::class.java)
-            startActivity(intent)
-        }
     }
 }

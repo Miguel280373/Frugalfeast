@@ -2,7 +2,7 @@
 <resources>
     <color name="black">#000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="Naranja">#FC8C1D</color>
+    <color name="Naranja">#FF9800</color>
     <color name="Fondo">#FBFBFB</color>
     <color name="CuadrosTexto">#E1E1E1</color>
 </resources>
