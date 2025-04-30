@@ -31,12 +31,15 @@ class PantallaPrincipal : AppCompatActivity() {
     private lateinit var btnMenu: ImageButton
 
     // Receta del día
+    private lateinit var cardRecetaDia: CardView
     private lateinit var imgRecetaDia: ImageView
     private lateinit var tvNombreRecetaDia: TextView
+    private lateinit var tvPorcionesRecetaDia: TextView
     private lateinit var tvTiempoRecetaDia: TextView
     private lateinit var tvDificultadRecetaDia: TextView
 
     // Visto recientemente
+    private lateinit var cardRecetaReciente: CardView
     private lateinit var imgVistoRecientemente: ImageView
     private lateinit var tvNombreRecetaReciente: TextView
     private lateinit var tvTiempoRecetaReciente: TextView
@@ -76,6 +79,7 @@ class PantallaPrincipal : AppCompatActivity() {
     private lateinit var tvPorcionesMisRecetas: TextView
     private lateinit var tvDificultadMisRecetas: TextView
     private lateinit var btnAgregarReceta: ImageView
+    private lateinit var btnCrearReceta: Button
     private lateinit var btnCalularCalorias: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,6 +98,17 @@ class PantallaPrincipal : AppCompatActivity() {
             val intent = Intent(this, CalcularCalorias::class.java)
             startActivity(intent)
         }
+        btnAgregarReceta.setOnClickListener {
+            navegarAgregarReceta()
+        }
+
+        btnCrearReceta.setOnClickListener {
+            navegarAgregarReceta()
+        }
+
+
+
+
     }
 
     private fun initViews() {
@@ -105,8 +120,10 @@ class PantallaPrincipal : AppCompatActivity() {
         btnMenu = findViewById(R.id.btn_menu)
 
         // Receta del día
+        cardRecetaDia = findViewById(R.id.card_receta_dia)
         imgRecetaDia = findViewById(R.id.img_receta_dia)
         tvNombreRecetaDia = findViewById(R.id.tv_nombre_receta_dia)
+        tvPorcionesRecetaDia = findViewById(R.id.tv_porciones_receta_dia)
         tvTiempoRecetaDia = findViewById(R.id.tv_tiempo_receta_dia)
         tvDificultadRecetaDia = findViewById(R.id.tv_dificultad_receta_dia)
 
@@ -148,6 +165,7 @@ class PantallaPrincipal : AppCompatActivity() {
         tvPorcionesMisRecetas = findViewById(R.id.tv_porciones_mis_recetas)
         tvDificultadMisRecetas = findViewById(R.id.tv_dificultad_mis_recetas)
         btnAgregarReceta = findViewById(R.id.btn_agregar_receta)
+        btnCrearReceta = findViewById(R.id.btn_crear_receta)
         btnCalularCalorias = findViewById(R.id.btn_calcular_calorias)
     }
 
@@ -279,16 +297,32 @@ class PantallaPrincipal : AppCompatActivity() {
                 if (!querySnapshot.isEmpty) {
                     val document = querySnapshot.documents[0]
                     val receta = document.toObject(Receta::class.java)
-                    receta?.let {
-                        tvNombreRecetaDia.text = it.nombre
-                        tvTiempoRecetaDia.text = it.tiempo
-                        tvDificultadRecetaDia.text = obtenerDificultad(it.dificultad)
+                    receta?.let { r ->  // Cambiamos 'it' por 'r' para mayor claridad
+                        tvNombreRecetaDia.text = r.nombre
+                        tvTiempoRecetaDia.text = r.tiempo.toString() + "\nhoras"
+                        tvPorcionesRecetaDia.text = r.porciones.toString() + "\nporciones"
+                        tvDificultadRecetaDia.text = obtenerDificultad(r.dificultad)
 
-                        if (!it.imagenUrl.isNullOrEmpty()) {
+                        if (!r.imagenUrl.isNullOrEmpty()) {
                             Glide.with(this)
-                                .load(it.imagenUrl)
+                                .load(r.imagenUrl)
                                 .placeholder(R.drawable.baseline_image_24)
                                 .into(imgRecetaDia)
+                        }
+
+                        // Configurar click listener para la card
+                        cardRecetaDia.setOnClickListener {
+                            val intent = Intent(this@PantallaPrincipal, PantallaPrincipalReceta::class.java).apply {
+                                putExtra("receta_id", document.id)
+                                putExtra("receta_nombre", r.nombre)
+                                putExtra("receta_imagen", r.imagenUrl)
+                                putExtra("receta_porciones", r.porciones)
+                                putExtra("receta_tiempo", r.tiempo)
+                                putExtra("receta_dificultad", r.dificultad)
+                                putExtra("receta_preparacion", r.preparacion)
+                                putStringArrayListExtra("receta_ingredientes", ArrayList(r.ingredientes))
+                            }
+                            startActivity(intent)
                         }
                     }
                 }
@@ -297,7 +331,6 @@ class PantallaPrincipal : AppCompatActivity() {
                 Toast.makeText(this, "Error al cargar receta del día: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
-
     private fun cargarMenuDelDia() {
         val sharedPref = getSharedPreferences("menu_del_dia", Context.MODE_PRIVATE)
 
@@ -432,8 +465,8 @@ class PantallaPrincipal : AppCompatActivity() {
                     layoutMisRecetasContenido.visibility = View.VISIBLE
 
                     tvNombreMisRecetas.text = it.nombre
-                    tvTiempoMisRecetas.text = it.tiempo
-                    tvPorcionesMisRecetas.text = it.porciones.toString() + " porciones"
+                    tvTiempoMisRecetas.text = "${it.tiempo}\nhoras"
+                    tvPorcionesMisRecetas.text = "${it.porciones}\nporciones"
                     tvDificultadMisRecetas.text = obtenerDificultad(it.dificultad)
 
                     if (it.imagenUrl.isNotEmpty()) {
@@ -455,6 +488,11 @@ class PantallaPrincipal : AppCompatActivity() {
     private fun mostrarEstadoVacioMisRecetas() {
         layoutMisRecetasVacio.visibility = View.VISIBLE
         layoutMisRecetasContenido.visibility = View.GONE
+    }
+
+    private fun navegarAgregarReceta() {
+        val intent = Intent(this, AgregarReceta::class.java)
+        startActivity(intent)
     }
 
     companion object {

@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 
 class Registro : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -72,6 +73,7 @@ class Registro : AppCompatActivity() {
         val email = findViewById<EditText>(R.id.correoCampo).text.toString().trim()
         val contraseña = findViewById<EditText>(R.id.contraseñaCampo).text.toString().trim()
         val nombre = findViewById<EditText>(R.id.nombreCampo).text.toString().trim()
+        val apodo = findViewById<EditText>(R.id.apodoCampo).text.toString().trim()
         val confirmarContraseña = findViewById<EditText>(R.id.confirmarContraCampo).text.toString().trim()
         val checkBoxTerminos = findViewById<CheckBox>(R.id.checkBoxTerminos)
 
@@ -90,12 +92,25 @@ class Registro : AppCompatActivity() {
             return
         }
 
+        val nombreParaPerfil = if (apodo.isNotEmpty()) apodo else nombre
+
         auth.createUserWithEmailAndPassword(email, contraseña)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, IniciarSesion::class.java))
-                    finish()
+                    val user = auth.currentUser
+                    val profileUpdates = UserProfileChangeRequest.Builder()
+                        .setDisplayName(nombreParaPerfil)
+                        .build()
+
+                    user?.updateProfile(profileUpdates)?.addOnCompleteListener { updateTask ->
+                        if (updateTask.isSuccessful) {
+                            Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this, IniciarSesion::class.java))
+                            finish()
+                        } else {
+                            Toast.makeText(this, "No se pudo guardar el nombre", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 } else {
                     Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }

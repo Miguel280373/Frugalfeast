@@ -1,4 +1,4 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <corners android:radius="20dp" />
-    <solid android:color="@android:color/white" /> <!-- o transparente -->
+    <corners android:radius="50dp" />
+    <solid android:color="@android:color/transparent"/>
 </shape>

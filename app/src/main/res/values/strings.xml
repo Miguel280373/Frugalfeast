@@ -134,4 +134,25 @@
     ]]>
 </string>
     <string name="t_rminos_y_condiciones">Términos y Condiciones</string>
+    <string name="subir_receta">Subir Receta</string>
+    <string name="cuadro_receta">Cuadro Receta</string>
+    <string name="a_adir_imagen">Añadir Imagen</string>
+    <string name="nombre_de_la_receta">Nombre de la Receta</string>
+    <string name="editar">Editar</string>
+    <string name="preparaci_n">Preparación:</string>
+    <string name="ingredientes">Ingredientes:</string>
+    <string name="agregar_ingrediente">Agregar ingrediente</string>
+    <string name="tiempo_horas">Tiempo (Horas):</string>
+    <string name="dificultad">Dificultad:</string>
+    <string name="porciones">Porciones:</string>
+    <string name="calor_as">Calorías:</string>
+    <string name="receta">Receta</string>
+    <string name="Preparacion">Hierve el arroz con agua hasta que esté cocido. Escúrrelo.\nEn una olla, calienta la leche con la canela y agrega el arroz cocido.\nCocina a fuego medio, revolviendo constantemente hasta que espese.\nAñade la leche condensada y mezcla bien.\nSirve caliente o frío, espolvoreado con canela.</string>
+    <string name="preparaciontitulo">Preparacion</string>
+    <string name="ingredientesTitulo">Ingredientes</string>
+    <string name="ingredientesTexto">8 piezas de pollo (muslos, entremuslos o contramuslos)\n1 cebolla blanca, picada\n3 dientes de ajo, picados\n1 zanahoria, en rodajas\n1 pimentón rojo, en tiras\n1 lata pequeña de arvejas\n1 taza de caldo de pollo 1/2 taza de crema de leche\n2 cucharadas de harina de trigo\n2 cucharadas de aceite vegetal Sal y pimienta al gusto</string>
+    <string name="calorias_por_porcion">Calorias por\n porcion:</string>
+    <string name="_2000kcal">2000Kcal</string>
+    <string name="crear_receta">Crear Receta!</string>
+    <string name="no_tienes_recetas">No tienes recetas\n :(</string>
 </resources>

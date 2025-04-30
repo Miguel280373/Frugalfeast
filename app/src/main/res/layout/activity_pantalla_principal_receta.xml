@@ -1,103 +1,233 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
+    <ImageView
+        android:id="@+id/imgReceta"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/Fondo">
-
-        <ImageView
-            android:id="@+id/imageView31"
-            android:layout_width="483dp"
-            android:layout_height="273dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/hamburguesa" />
-
-        <EditText
-            android:id="@+id/textView5"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@color/Naranja"
-            android:text="Fricasé de pollo"
-            android:textColor="#000000"
-            android:textSize="40sp"
-            android:textStyle="italic|bold"
-            app:layout_constraintTop_toBottomOf="@+id/imageView31"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <EditText
-            android:id="@+id/textView79"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n2. Aliquam at dignissim ante. In pretium laoreet accumsan.\n3. In ipsum arcu, pulvinar ac placerat nec, malesuada efficitur tortor.\n4. Fusce dapibus erat mauris. Praesent malesuada urna quis nisi malesuada rutrum.\n5. Sed vulputate bibendum varius."
-            android:textColor="#000000"
-            android:textSize="24sp"
-            android:textStyle="normal"
-            app:layout_constraintTop_toBottomOf="@+id/textView5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:padding="10dp"/>
+        android:layout_height="275dp"
+        app:srcCompat="@drawable/hamburguesa" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/Naranja"
+        android:gravity="center_vertical"
+        >
 
         <TextView
-            android:id="@+id/textView80"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Ingredientes"
-            android:textColor="@color/Naranja"
-            android:textSize="24sp"
+            android:id="@+id/nombreReceta"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/fricas_de_pollo"
+            android:gravity="center_vertical"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/textView79"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <EditText
-            android:id="@+id/textView81"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="8 piezas de pollo (muslos, entremuslos o contramuslos)\n1 cebolla blanca, picada\n3 dientes de ajo, picados\n1 zanahoria, en rodajas\n1 pimentón rojo, en tiras\n1 lata pequeña de arvejas\n1 taza de caldo de pollo 1/2 taza de crema de leche\n2 cucharadas de harina de trigo\n2 cucharadas de aceite vegetal Sal y pimienta al gusto"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            android:textStyle="normal"
-            app:layout_constraintTop_toBottomOf="@+id/textView80"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:padding="10dp"/>
-
-        <Button
-            android:id="@+id/button13"
-            android:layout_width="220dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="44dp"
-            android:backgroundTint="@color/Naranja"
-            android:text="Guardar"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@+id/textView81"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:textColor="@color/black"
+            android:textSize="26sp"
+            android:paddingStart="18dp"
+            tools:ignore="RtlSymmetry">
+        </TextView>
 
         <ImageView
-            android:id="@+id/imageView26"
+            android:id="@+id/btn_agregar_receta"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.892"
-            app:layout_constraintStart_toStartOf="@+id/textView5"
-            app:srcCompat="@drawable/guardado"
-            tools:layout_editor_absoluteY="299dp"
-            tools:ignore="MissingConstraints" />
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="20dp"
+            android:contentDescription="@string/a_ade_tu_receta"
+            android:src="@drawable/guardado"
+            app:tint="@color/black" />
+    </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:paddingBottom="24dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="80dp"
+            android:background="@color/Fondo">
+
+            <LinearLayout
+                android:id="@+id/layoutInformacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:showDividers="middle"
+                android:divider="@drawable/divider_vertical"
+                android:weightSum="3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_tiempo_receta_dia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="65dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:drawablePadding="8dp"
+                    android:paddingStart="4dp"
+                    android:text="@string/_1_hora"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:drawableTint="@color/Naranja"
+                    app:drawableTopCompat="@drawable/baseline_access_time_24" />
+
+                <TextView
+                    android:id="@+id/tv_porciones_receta_dia"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="65dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:drawablePadding="8dp"
+                    android:paddingStart="4dp"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/_4_porciones"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:drawableTint="@color/Naranja"
+                    app:drawableTopCompat="@drawable/baseline_person_24" />
+
+                <TextView
+                    android:id="@+id/tv_dificultad_receta_dia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="65dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:drawablePadding="8dp"
+                    android:paddingStart="4dp"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/f_cil"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:drawableTint="@color/Naranja"
+                    app:drawableTopCompat="@drawable/baseline_query_stats_24" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/preparacionTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/preparaciontitulo"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/Naranja"
+                android:textSize="24sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutInformacion" />
+
+            <TextView
+                android:id="@+id/preparacionReceta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Preparacion"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:textStyle="normal"
+                android:layout_marginTop="20dp"
+                android:lineSpacingExtra="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/preparacionTitulo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:padding="10dp"/>
+
+            <TextView
+                android:id="@+id/ingredientesTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/ingredientesTitulo"
+                android:textColor="@color/Naranja"
+                android:textSize="24sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintTop_toBottomOf="@+id/preparacionReceta"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/listaIngredientes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:lineSpacingExtra="8dp"
+                android:text="@string/ingredientesTexto"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:textStyle="normal"
+                app:layout_constraintTop_toBottomOf="@+id/ingredientesTitulo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:padding="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="50dp"
+                app:layout_constraintTop_toBottomOf="@+id/listaIngredientes"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="85dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/calorias_por_porcion"
+                android:minLines="2"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="italic|bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/listaIngredientes"
+                app:layout_constraintVertical_bias="0.25" />
+            <TextView
+                android:id="@+id/totalCaloriesTextView"
+                android:layout_width="178dp"
+                android:layout_height="85dp"
+                android:background="@drawable/roundededittext"
+                android:gravity="center"
+                android:text="@string/_2000kcal"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="italic|bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/listaIngredientes"
+                app:layout_constraintVertical_bias="0.25" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</LinearLayout>
