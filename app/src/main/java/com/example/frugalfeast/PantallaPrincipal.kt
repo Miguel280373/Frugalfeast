@@ -17,6 +17,8 @@ import androidx.core.content.edit
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -105,8 +107,6 @@ class PantallaPrincipal : AppCompatActivity() {
         btnCrearReceta.setOnClickListener {
             navegarAgregarReceta()
         }
-
-
 
 
     }
@@ -296,41 +296,56 @@ class PantallaPrincipal : AppCompatActivity() {
             .addOnSuccessListener { querySnapshot ->
                 if (!querySnapshot.isEmpty) {
                     val document = querySnapshot.documents[0]
-                    val receta = document.toObject(Receta::class.java)
-                    receta?.let { r ->  // Cambiamos 'it' por 'r' para mayor claridad
-                        tvNombreRecetaDia.text = r.nombre
-                        tvTiempoRecetaDia.text = r.tiempo.toString() + "\nhoras"
-                        tvPorcionesRecetaDia.text = r.porciones.toString() + "\nporciones"
-                        tvDificultadRecetaDia.text = obtenerDificultad(r.dificultad)
+                    // Obtener los campos específicos: nombre, imagen, porciones, tiempo y dificultad
+                    val nombreReceta = document.getString("nombre")
+                    val imagenUrl = document.getString("imagenUrl")
+                    val porciones = document.getLong("porciones")?.toInt() // Asegúrate de que el valor sea de tipo Int
+                    val tiempo = document.getLong("tiempo")?.toInt()
+                    val dificultad = document.getLong("dificultad")?.toInt()
 
-                        if (!r.imagenUrl.isNullOrEmpty()) {
-                            Glide.with(this)
-                                .load(r.imagenUrl)
-                                .placeholder(R.drawable.baseline_image_24)
-                                .into(imgRecetaDia)
-                        }
-
-                        // Configurar click listener para la card
-                        cardRecetaDia.setOnClickListener {
-                            val intent = Intent(this@PantallaPrincipal, PantallaPrincipalReceta::class.java).apply {
-                                putExtra("receta_id", document.id)
-                                putExtra("receta_nombre", r.nombre)
-                                putExtra("receta_imagen", r.imagenUrl)
-                                putExtra("receta_porciones", r.porciones)
-                                putExtra("receta_tiempo", r.tiempo)
-                                putExtra("receta_dificultad", r.dificultad)
-                                putExtra("receta_preparacion", r.preparacion)
-                                putStringArrayListExtra("receta_ingredientes", ArrayList(r.ingredientes))
-                            }
-                            startActivity(intent)
-                        }
+                    // Verificar si los campos no son nulos
+                    nombreReceta?.let {
+                        tvNombreRecetaDia.text = it  // Actualizar el nombre en el TextView
                     }
+
+                    porciones?.let {
+                        tvPorcionesRecetaDia.text = "$it porc."  // Actualizar las porciones en el TextView
+                    }
+
+                    tiempo?.let {
+                        tvTiempoRecetaDia.text = "$it h"  // Actualizar el tiempo en el TextView
+                    }
+
+                    // Asignar la dificultad
+                    dificultad?.let {
+                        val dificultadTexto = when (it) {
+                            1 -> "Fácil"
+                            2 -> "Media"
+                            3 -> "Difícil"
+                            else -> "Desconocida"  // En caso de que la dificultad sea un valor diferente
+                        }
+                        tvDificultadRecetaDia.text = dificultadTexto  // Actualizar el TextView de dificultad
+                    }
+
+                    // Verificar si la URL de la imagen es válida
+                    imagenUrl?.let {
+                        Glide.with(this)
+                            .load(it)
+                            .transform(CenterCrop(), RoundedCorners(30)) // o CircleCrop()
+                            .placeholder(R.drawable.baseline_image_24)
+                            .into(imgRecetaDia)
+                    }
+
+                } else {
+                    Toast.makeText(this, "No hay receta del día disponible", Toast.LENGTH_SHORT).show()
                 }
             }
             .addOnFailureListener { e ->
+                // Mostrar un mensaje de error si algo sale mal
                 Toast.makeText(this, "Error al cargar receta del día: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
     private fun cargarMenuDelDia() {
         val sharedPref = getSharedPreferences("menu_del_dia", Context.MODE_PRIVATE)
 
@@ -499,3 +514,52 @@ class PantallaPrincipal : AppCompatActivity() {
         private const val REQUEST_SELECCIONAR_RECETA = 1001
     }
 }
+
+// PRUEBA
+
+/**
+private fun cargarRecetaDelDia() {
+db.collection("Receta")
+.limit(1)
+.get()
+.addOnSuccessListener { querySnapshot ->
+if (!querySnapshot.isEmpty) {
+val document = querySnapshot.documents[0]
+val receta = document.toObject(Receta::class.java)
+receta?.let { r ->  // Cambiamos 'it' por 'r' para mayor claridad
+tvNombreRecetaDia.text = r.nombre
+tvTiempoRecetaDia.text = r.tiempo.toString() + "\nhoras"
+tvPorcionesRecetaDia.text = r.porciones.toString() + "\nporciones"
+tvDificultadRecetaDia.text = obtenerDificultad(r.dificultad)
+
+if (!r.imagenUrl.isNullOrEmpty()) {
+Glide.with(this)
+.load(r.imagenUrl)
+.placeholder(R.drawable.baseline_image_24)
+.into(imgRecetaDia)
+}
+
+// Configurar click listener para la card
+cardRecetaDia.setOnClickListener {
+val intent = Intent(this@PantallaPrincipal, PantallaPrincipalReceta::class.java).apply {
+putExtra("receta_id", document.id)
+putExtra("receta_nombre", r.nombre)
+putExtra("receta_imagen", r.imagenUrl)
+putExtra("receta_porciones", r.porciones)
+putExtra("receta_tiempo", r.tiempo)
+putExtra("receta_dificultad", r.dificultad)
+putExtra("receta_preparacion", r.preparacion)
+putStringArrayListExtra("receta_ingredientes", ArrayList(r.ingredientes))
+}
+startActivity(intent)
+}
+}
+}
+}
+.addOnFailureListener { e ->
+Toast.makeText(this, "Error al cargar receta del día: ${e.message}", Toast.LENGTH_SHORT).show()
+}
+}
+
+ */
+

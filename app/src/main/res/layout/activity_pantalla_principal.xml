@@ -142,19 +142,17 @@
                                 <TextView
                                     android:id="@+id/tv_porciones_receta_dia"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="80dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
                                     android:text="@string/_4_porciones"
-                                    android:textAlignment="center"
-                                    android:singleLine="false"
-                                    android:lines="2"
-                                    android:maxLines="2"
                                     android:textColor="@color/black"
-                                    android:textSize="11sp"
+                                    android:textSize="12sp"
                                     android:textStyle="bold"
                                     app:drawableTint="@color/black"
-                                    android:layout_marginStart="8dp"
-                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"
                                     app:drawableTopCompat="@drawable/baseline_person_24" />
+
 
                                 <TextView
                                     android:id="@+id/tv_dificultad_receta_dia"
@@ -170,6 +168,7 @@
                                     android:textStyle="bold"
                                     android:textSize="12sp"
                                     app:drawableTopCompat="@drawable/baseline_query_stats_24" />
+
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -216,7 +215,7 @@
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btn_explorar_recetas"
-                            android:layout_width="150dp"
+                            android:layout_width="205dp"
                             android:layout_height="48dp"
                             android:textSize="18sp"
                             android:gravity="center"
@@ -275,13 +274,20 @@
                                 <TextView
                                     android:id="@+id/tv_tiempo_receta_reciente"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:drawablePadding="8dp"
+                                    android:layout_height="80dp"
+                                    android:drawablePadding="4dp"
+                                    android:layout_marginTop="4dp"
+                                    android:textAlignment="center"
+                                    android:paddingStart="4dp"
+                                    android:singleLine="false"
+                                    android:lines="2"
+                                    android:maxLines="2"
+                                    android:ellipsize="none"
                                     android:text="@string/_1_hora"
                                     android:textColor="@color/black"
                                     android:textSize="12sp"
                                     android:textStyle="bold"
-                                    android:layout_marginEnd="12dp"
+                                    android:layout_marginEnd="8dp"
                                     app:drawableTint="@color/black"
                                     app:drawableTopCompat="@drawable/baseline_access_time_24" />
 
@@ -680,7 +686,7 @@
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btn_crear_receta"
-                            android:layout_width="150dp"
+                            android:layout_width="170dp"
                             android:layout_height="48dp"
                             android:textSize="18sp"
                             android:gravity="center"

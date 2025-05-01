@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.ScrollView
+import android.widget.TextView
+import com.google.firebase.auth.FirebaseAuth
 
 class InteraccionIA : AppCompatActivity() {
 
@@ -79,6 +81,11 @@ class InteraccionIA : AppCompatActivity() {
         firstCard.setOnClickListener { sendSuggested("¿Qué puedo cocinar en 20 minutos?") }
         secondCard.setOnClickListener { sendSuggested("Dame opciones saludables para hoy.") }
         thirdCard.setOnClickListener { sendSuggested("¿Sugiereme platos fáciles de preparar y deliciosos?") }
+
+        // Configurar nombre de usuario
+        val txtNombreUsuario = findViewById<TextView>(R.id.textWelcome)
+        val usuario = FirebaseAuth.getInstance().currentUser
+        txtNombreUsuario.text = "¡Hola ${usuario?.displayName ?: "Invitado"}!"
     }
 
     private fun sendSuggested(prompt: String) {

@@ -30,7 +30,7 @@
 
         <TextView
             android:id="@+id/textFrugby"
-            android:layout_width="322dp"
+            android:layout_width="294dp"
             android:layout_height="wrap_content"
             android:text="Frugby"
             android:textAlignment="center"
