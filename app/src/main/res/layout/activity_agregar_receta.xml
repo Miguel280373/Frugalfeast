@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/baseline_arrow_back_24"
         app:navigationIconTint="@color/black"
-        app:title="Iniciar Sesión"
+        app:title="Agregar Receta"
         app:titleCentered="true"/>
 
     <ScrollView
