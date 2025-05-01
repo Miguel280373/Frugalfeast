@@ -52,12 +52,14 @@ class AgregarReceta: AppCompatActivity() {
         btnSubir = findViewById(R.id.btnSubirReceta)
         btnSubir.setOnClickListener {
             subirRecetaFirestore()
+
         }
         btnAñadirCampo = findViewById(R.id.agregarIngrediente)
         btnAñadirCampo.setOnClickListener {
             añadirCampoIngrediente()
         }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
@@ -69,7 +71,8 @@ class AgregarReceta: AppCompatActivity() {
 
     private fun subirRecetaFirestore() {
         val nombre = findViewById<EditText>(R.id.nombreCampoAgregar).text.toString().trim()
-        val preparacion = findViewById<EditText>(R.id.preparacionCampoAgregar).text.toString().trim()
+        val preparacion =
+            findViewById<EditText>(R.id.preparacionCampoAgregar).text.toString().trim()
         val tiempo = findViewById<EditText>(R.id.tiempoCampoAgregar).text.toString().trim()
         val porciones = findViewById<EditText>(R.id.porcionesCampoAgregar).text.toString().trim()
         val calorias = findViewById<EditText>(R.id.caloriasCampoAgregar).text.toString().trim()
@@ -83,13 +86,15 @@ class AgregarReceta: AppCompatActivity() {
         }
 
         if (nombre.isEmpty() || preparacion.isEmpty() || tiempo.isEmpty() || porciones.isEmpty() || calorias.isEmpty()
-            || dificultad.isEmpty() || imageUri == null || ingredientes.isEmpty()) {
+            || dificultad.isEmpty() || imageUri == null || ingredientes.isEmpty()
+        ) {
             Toast.makeText(this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show()
             return
         }
 
         if (dificultad.toIntOrNull() !in 1..3) {
-            Toast.makeText(this, "Dificultad debe ser un número entre 1 y 3", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Dificultad debe ser un número entre 1 y 3", Toast.LENGTH_SHORT)
+                .show()
             return
         }
 
@@ -120,6 +125,7 @@ class AgregarReceta: AppCompatActivity() {
 
                     db.collection("Receta").add(receta).addOnSuccessListener {
                         Toast.makeText(this, "Receta agregada", Toast.LENGTH_SHORT).show()
+                        limpiarCampos()
                     }.addOnFailureListener {
                         Toast.makeText(this, "Error al subir receta", Toast.LENGTH_SHORT).show()
                     }
@@ -131,25 +137,44 @@ class AgregarReceta: AppCompatActivity() {
     }
 
     private fun añadirCampoIngrediente() {
+        val contenedor = findViewById<LinearLayout>(R.id.contenedorIngredientes)
+        val base = findViewById<EditText>(R.id.ingrediente1)
+
         val nuevoIngrediente = EditText(this).apply {
-
-            layoutParams = LinearLayout.LayoutParams(
-                300,
-                46
-            ).apply {
-                topMargin = 8
-            }
-
-            background = ContextCompat.getDrawable(context, R.drawable.roundededittext2)
-            hint = "Editar"
-            setTextColor(Color.BLACK)
-            setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
-            inputType = InputType.TYPE_CLASS_TEXT
-            setPadding(12, 0, 0, 0)
-
-            layoutDirection = View.LAYOUT_DIRECTION_LTR
+            layoutParams = base.layoutParams
+            background = base.background
+            hint = base.hint
+            setTextColor(base.currentTextColor)
+            setTextSize(TypedValue.COMPLEX_UNIT_PX, base.textSize)
+            inputType = base.inputType
+            setPaddingRelative(
+                base.paddingStart,
+                base.paddingTop,
+                base.paddingEnd,
+                base.paddingBottom
+            )
+            layoutDirection = base.layoutDirection
         }
 
-        findViewById<LinearLayout>(R.id.contenedorIngredientes).addView(nuevoIngrediente)
+        contenedor.addView(nuevoIngrediente)
     }
+
+    private fun limpiarCampos() {
+        findViewById<EditText>(R.id.nombreCampoAgregar).text.clear()
+        findViewById<EditText>(R.id.preparacionCampoAgregar).text.clear()
+        findViewById<EditText>(R.id.tiempoCampoAgregar).text.clear()
+        findViewById<EditText>(R.id.porcionesCampoAgregar).text.clear()
+        findViewById<EditText>(R.id.caloriasCampoAgregar).text.clear()
+        findViewById<EditText>(R.id.dificultadCampoAgregar).text.clear()
+        findViewById<ImageView>(R.id.imageView32).setImageDrawable(null)
+        imageUri = null
+
+        val contenedor = findViewById<LinearLayout>(R.id.contenedorIngredientes)
+        contenedor.removeAllViews()
+
+        // Agregar un campo vacío inicial si lo deseas
+        añadirCampoIngrediente()
+    }
+
+
 }
