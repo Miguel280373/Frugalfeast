@@ -295,14 +295,14 @@
                                     android:id="@+id/tv_porciones_receta_reciente"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
                                     android:layout_marginTop="4dp"
+                                    android:layout_marginEnd="10dp"
                                     android:text="@string/_4_porciones"
                                     android:textColor="@color/black"
                                     android:textSize="12sp"
                                     android:textStyle="bold"
                                     app:drawableTint="@color/black"
-                                    android:layout_marginStart="10dp"
-                                    android:layout_marginEnd="10dp"
                                     app:drawableTopCompat="@drawable/baseline_person_24" />
 
                                 <TextView

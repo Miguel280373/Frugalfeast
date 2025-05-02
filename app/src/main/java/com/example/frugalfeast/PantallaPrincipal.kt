@@ -442,60 +442,56 @@ class PantallaPrincipal : AppCompatActivity() {
     //MIS RECETAS
 
     private fun cargarMisRecetas() {
-        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
-
-        db.collection("usuarios")
-            .document(userId)
-            .collection("mis_recetas")
-            .orderBy("fechaAgregada", Query.Direction.DESCENDING)
+        db.collection("Receta")
+            .orderBy("fechaCreacion", Query.Direction.DESCENDING)
             .limit(1)
             .get()
             .addOnSuccessListener { querySnapshot ->
                 if (!querySnapshot.isEmpty) {
                     val document = querySnapshot.documents[0]
-                    val recetaId = document.getString("recetaId")
+                    val nombreReceta = document.getString("nombre")
+                    val imagenUrl = document.getString("imagenUrl")
+                    val porciones = document.getLong("porciones")?.toInt()
+                    val tiempo = document.getLong("tiempo")?.toInt()
+                    val dificultad = document.getLong("dificultad")?.toInt()
 
-                    recetaId?.let { id ->
-                        cargarDetallesReceta(id)
-                    } ?: run {
-                        mostrarEstadoVacioMisRecetas()
+                    layoutMisRecetasVacio.visibility = View.GONE
+                    layoutMisRecetasContenido.visibility = View.VISIBLE
+
+                    nombreReceta?.let {
+                        tvNombreMisRecetas.text = it
+                    }
+
+                    tiempo?.let {
+                        tvTiempoMisRecetas.text = "$it h"
+                    }
+
+                    porciones?.let {
+                        tvPorcionesMisRecetas.text = "$it porc."
+                    }
+
+                    dificultad?.let {
+                        val dificultadTexto = when (it) {
+                            1 -> "Fácil"
+                            2 -> "Media"
+                            3 -> "Difícil"
+                            else -> "Desconocida"
+                        }
+                        tvDificultadMisRecetas.text = dificultadTexto
+                    }
+
+                    imagenUrl?.let {
+                        Glide.with(this)
+                            .load(it)
+                            .transform(CenterCrop(), RoundedCorners(30))
+                            .placeholder(R.drawable.baseline_image_24)
+                            .into(imgMisRecetas)
                     }
                 } else {
                     mostrarEstadoVacioMisRecetas()
                 }
             }
             .addOnFailureListener {
-                mostrarEstadoVacioMisRecetas()
-            }
-    }
-
-    private fun cargarDetallesReceta(recetaId: String) {
-        db.collection("Receta")
-            .document(recetaId)
-            .get()
-            .addOnSuccessListener { document ->
-                val receta = document.toObject(Receta::class.java)
-                receta?.let {
-                    layoutMisRecetasVacio.visibility = View.GONE
-                    layoutMisRecetasContenido.visibility = View.VISIBLE
-
-                    tvNombreMisRecetas.text = it.nombre
-                    tvTiempoMisRecetas.text = "${it.tiempo}\nhoras"
-                    tvPorcionesMisRecetas.text = "${it.porciones}\nporciones"
-                    tvDificultadMisRecetas.text = obtenerDificultad(it.dificultad)
-
-                    if (it.imagenUrl.isNotEmpty()) {
-                        Glide.with(this)
-                            .load(it.imagenUrl)
-                            .placeholder(R.drawable.baseline_image_24)
-                            .into(imgMisRecetas)
-                    }
-                } ?: run {
-                    mostrarEstadoVacioMisRecetas()
-                }
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Error al cargar detalles de receta", Toast.LENGTH_SHORT).show()
                 mostrarEstadoVacioMisRecetas()
             }
     }
@@ -562,4 +558,40 @@ Toast.makeText(this, "Error al cargar receta del día: ${e.message}", Toast.LENG
 }
 
  */
+
+// DETALLE RECETAS
+
+/**
+private fun cargarDetallesReceta(recetaId: String) {
+    db.collection("Receta")
+        .document(recetaId)
+        .get()
+        .addOnSuccessListener { document ->
+            val receta = document.toObject(Receta::class.java)
+            receta?.let {
+                layoutMisRecetasVacio.visibility = View.GONE
+                layoutMisRecetasContenido.visibility = View.VISIBLE
+
+                tvNombreMisRecetas.text = it.nombre
+                tvTiempoMisRecetas.text = "${it.tiempo}\nhoras"
+                tvPorcionesMisRecetas.text = "${it.porciones}\nporciones"
+                tvDificultadMisRecetas.text = obtenerDificultad(it.dificultad)
+
+                if (it.imagenUrl.isNotEmpty()) {
+                    Glide.with(this)
+                        .load(it.imagenUrl)
+                        .placeholder(R.drawable.baseline_image_24)
+                        .into(imgMisRecetas)
+                }
+            } ?: run {
+                mostrarEstadoVacioMisRecetas()
+            }
+        }
+        .addOnFailureListener { e ->
+            Toast.makeText(this, "Error al cargar detalles de receta", Toast.LENGTH_SHORT).show()
+            mostrarEstadoVacioMisRecetas()
+        }
+}
+
+*/
 
