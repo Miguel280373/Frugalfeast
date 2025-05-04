@@ -82,8 +82,8 @@
                 android:layout_height="46dp"
                 android:layout_marginTop="8dp"
                 android:autofillHints="Editar"
-                android:hint="@string/editar"
                 android:background="@drawable/roundededittext2"
+                android:hint="@string/editar"
                 android:inputType="text"
                 android:paddingStart="12dp"
                 android:textColor="#000000"
@@ -91,7 +91,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView8"
-                tools:ignore="RtlSymmetry" />
+                tools:ignore="RtlSymmetry,TouchTargetSizeCheck" />
 
             <!-- Preparación -->
 
@@ -153,14 +153,14 @@
                     android:layout_width="300dp"
                     android:layout_height="46dp"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/roundededittext2"
                     android:autofillHints="Editar"
+                    android:background="@drawable/roundededittext2"
                     android:hint="@string/editar"
                     android:inputType="text"
                     android:paddingStart="12dp"
                     android:textColor="#000000"
                     android:textSize="18sp"
-                    tools:ignore="RtlSymmetry" />
+                    tools:ignore="RtlSymmetry,TouchTargetSizeCheck" />
             </LinearLayout>
 
             <ImageButton

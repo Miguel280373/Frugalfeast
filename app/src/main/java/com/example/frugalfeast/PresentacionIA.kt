@@ -3,6 +3,7 @@ package com.example.frugalfeast
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -28,5 +29,11 @@ class PresentacionIA : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+        val imgVolver = findViewById<ImageView>(R.id.imageView17)
+
+        imgVolver.setOnClickListener {
+            finish()
+        }
+
     }
 }

@@ -2,6 +2,7 @@ package com.example.frugalfeast
 
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,11 @@ class CaloriasResultado : AppCompatActivity() {
         val tvResultado = findViewById<TextView>(R.id.totalCaloriesTextView)
         tvResultado.text = ("Calorías totales: %.2f".format(total))
 
+        val imgVolver = findViewById<ImageView>(R.id.imageView21)
+
+        imgVolver.setOnClickListener {
+            finish()
+        }
 
     }
 }

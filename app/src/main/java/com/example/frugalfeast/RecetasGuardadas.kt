@@ -1,6 +1,7 @@
 package com.example.frugalfeast
 
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -54,5 +55,12 @@ class RecetasGuardadas : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Error al cargar las recetas: $e", Toast.LENGTH_SHORT).show()
             }
+
+        val imgVolver = findViewById<ImageView>(R.id.imageView8)
+
+        imgVolver.setOnClickListener {
+            finish()
+        }
+
     }
 }

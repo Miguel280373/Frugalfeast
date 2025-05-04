@@ -33,6 +33,8 @@
         app:layout_constraintHorizontal_bias="0.067"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:clickable="true"
+        android:focusable="true"
         app:srcCompat="@drawable/baseline_arrow_back_24" />
 
     <ImageView

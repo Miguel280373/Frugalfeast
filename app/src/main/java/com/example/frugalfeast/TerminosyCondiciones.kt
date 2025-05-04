@@ -3,6 +3,7 @@ package com.example.frugalfeast
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -25,13 +26,22 @@ class TerminosyCondiciones : AppCompatActivity() {
         val textViewTerminos = findViewById<TextView>(R.id.textView29)
         val btnatras = findViewById<ImageView>(R.id.btn_atras_terminos)
 
-        btnatras.setOnClickListener(){
+        btnatras.setOnClickListener() {
             finish()
         }
 
         // Configurar el texto con formato HTML
-        textViewTerminos.text = Html.fromHtml(getString(R.string.terminos_y_condiciones_completo), Html.FROM_HTML_MODE_COMPACT)
+        textViewTerminos.text = Html.fromHtml(
+            getString(R.string.terminos_y_condiciones_completo),
+            Html.FROM_HTML_MODE_COMPACT
+        )
+
+        val btnVolver = findViewById<ImageButton>(R.id.btn_atras_terminos)
+
+        btnVolver.setOnClickListener {
+            finish()
 
 
+        }
     }
 }

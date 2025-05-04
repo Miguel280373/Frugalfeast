@@ -131,12 +131,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
+        android:clickable="true"
         android:contentDescription="@string/atras"
+        android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.098"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/baseline_arrow_back_24" />
+        app:srcCompat="@drawable/baseline_arrow_back_24"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/textReenviar"

@@ -28,5 +28,11 @@ class Busqueda : AppCompatActivity() {
                     finish()
                 }
         }
+        val imgVolver = findViewById<ImageView>(R.id.imageView57)
+
+        imgVolver.setOnClickListener {
+            finish()
+        }
+
     }
 }

@@ -48,7 +48,7 @@ class Recuperar : AppCompatActivity() {
         }
 
         reenviarCorreoBtn.setOnClickListener {
-            if (correoEnviado){
+            if (correoEnviado) {
                 correoCampo.text.clear()
                 reenviarCorreo()
 
@@ -77,14 +77,19 @@ class Recuperar : AppCompatActivity() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     correoEnviado = true
-                    Toast.makeText(this, "Correo de recuperación enviado a $emailIngresado", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Correo de recuperación enviado a $emailIngresado",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
                     Handler(Looper.getMainLooper()).postDelayed({
                         reenviarText.visibility = View.VISIBLE
                         reenviarCorreoBtn.visibility = View.VISIBLE
                     }, 3000)
                 } else {
-                    Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
     }
@@ -98,7 +103,8 @@ class Recuperar : AppCompatActivity() {
         auth.sendPasswordResetEmail(emailIngresado)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "Correo reenviado a $emailIngresado", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Correo reenviado a $emailIngresado", Toast.LENGTH_SHORT)
+                        .show()
 
                     reenviarText.visibility = View.GONE
                     reenviarCorreoBtn.visibility = View.GONE
@@ -107,9 +113,18 @@ class Recuperar : AppCompatActivity() {
                         reenviarText.visibility = View.VISIBLE
                     }, 3000)
                 } else {
-                    Toast.makeText(this, "Error al reenviar: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Error al reenviar: ${task.exception?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
+        val imgVolver = findViewById<ImageView>(R.id.imageView14)
+
+        imgVolver.setOnClickListener {
+            finish()
+        }
     }
 
 }

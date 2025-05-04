@@ -76,6 +76,11 @@ class InteraccionIA : AppCompatActivity() {
                 )
             }
         }
+        val imgVolver = findViewById<ImageView>(R.id.imageView57)
+
+        imgVolver.setOnClickListener {
+            finish() // Regresa a la actividad anterior
+        }
 
         // Cards predefinidas con los prompts
         firstCard.setOnClickListener { sendSuggested("¿Qué puedo cocinar en 20 minutos?") }

@@ -101,5 +101,11 @@ class CalcularCalorias : AppCompatActivity() {
             intent.putExtra("totalCalorias", totalCalorias)
             startActivity(intent)
         }
+        val imgVolver = findViewById<ImageView>(R.id.ivBack)
+
+        imgVolver.setOnClickListener {
+            finish()
+        }
+
     }
 }

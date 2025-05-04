@@ -135,6 +135,11 @@ class Registro : AppCompatActivity() {
                     Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
+        val imgVolver = findViewById<ImageView>(R.id.imageView11)
+
+        imgVolver.setOnClickListener {
+            finish()
+        }
     }
 }
 
