@@ -39,11 +39,14 @@
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:layout_marginTop="48dp"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.92"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/opciones" />
+        app:srcCompat="@drawable/opciones"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/textView66"
