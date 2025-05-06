@@ -3,6 +3,7 @@
     import android.content.Context
     import android.content.Intent
     import android.os.Bundle
+    import android.widget.ImageButton
     import android.widget.ImageView
     import android.widget.Toast
     import androidx.activity.enableEdgeToEdge
@@ -49,7 +50,7 @@
                 insets
             }
 
-            val imgVolver = findViewById<ImageView>(R.id.imageView8)
+            val imgVolver = findViewById<ImageButton>(R.id.btn_atras_guardadas)
             imgVolver.setOnClickListener { finish() }
         }
 
@@ -67,7 +68,7 @@
         private fun cargarRecetasGuardadas() {
             val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
-            db.collection("usuarios").document(userId).collection("recetas_favoritas")
+            db.collection("favoritos").document(userId).collection("recetas_favoritas")
                 .get()
                 .addOnSuccessListener { documents ->
                     recetasGuardadas.clear()

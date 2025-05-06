@@ -69,7 +69,7 @@ class PantallaPrincipalReceta : AppCompatActivity() {
 
         tvTiempoReceta.text = tiempo.toString() + " horas"
         tvPorcionesReceta.text = porciones.toString() + " porciones"
-        tvDificultadReceta.text = dificultad
+        tvDificultadReceta.text = obtenerDificultad(dificultad)
         preparacionReceta.text = preparacion
 
         val ingredientesTexto = ingredientes.joinToString("\n• ", "• ")
@@ -93,7 +93,7 @@ class PantallaPrincipalReceta : AppCompatActivity() {
     private fun verificarRecetaFavorita(recetaId: String) {
         val userId = auth.currentUser?.uid ?: return
 
-        db.collection("usuarios")
+        db.collection("favoritos")
             .document(userId)
             .collection("recetas_favoritas")
             .document(recetaId)
@@ -158,7 +158,14 @@ class PantallaPrincipalReceta : AppCompatActivity() {
                 Toast.makeText(this, "Error al eliminar receta: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
-
+    private fun obtenerDificultad(dificultad: String): String {
+        return when(dificultad.toInt()) {
+            1 -> "Fácil"
+            2 -> "Media"
+            3 -> "Difícil"
+            else -> ""
+        }
+    }
     private fun actualizarBotonFavorito() {
         if (isFavorite) {
             btnAgregarReceta.setImageResource(R.drawable.bookmark_remove_24dp_e3e3e3_fill0_wght400_grad0_opsz24)
