@@ -20,7 +20,6 @@ class IniciarSesion : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var auth: FirebaseAuth
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -44,10 +43,7 @@ class IniciarSesion : AppCompatActivity() {
             val intent = Intent(this, Recuperar::class.java)
             startActivity(intent)
         }
-        val principal = findViewById<Button>(R.id.principal)
-        principal.setOnClickListener(){
-            val intent = Intent(this, PantallaPrincipal::class.java)
-            startActivity(intent)        }
+
     }
 
     public override fun onStart() {

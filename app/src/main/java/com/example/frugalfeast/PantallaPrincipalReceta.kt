@@ -1,5 +1,6 @@
 package com.example.frugalfeast
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
@@ -7,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
@@ -43,8 +45,8 @@ class PantallaPrincipalReceta : AppCompatActivity() {
         btnAgregarReceta = findViewById(R.id.btn_agregar_receta)
 
         auth = FirebaseAuth.getInstance()
+        val currentUserId = auth.currentUser?.uid ?: ""
 
-        // Obtener datos de la receta del intent
         val recetaId = intent.getStringExtra("receta_id") ?: ""
         val nombre = intent.getStringExtra("receta_nombre") ?: ""
         val porciones = intent.getStringExtra("receta_porciones") ?: ""
@@ -53,8 +55,8 @@ class PantallaPrincipalReceta : AppCompatActivity() {
         val dificultad = intent.getStringExtra("receta_dificultad") ?: ""
         val preparacion = intent.getStringExtra("receta_preparacion") ?: ""
         val ingredientes = intent.getStringArrayListExtra("receta_ingredientes") ?: emptyList()
+        val recetaUserId = intent.getStringExtra("receta_userId") ?: ""
 
-        // Configurar UI con los datos de la receta
         nombreReceta.text = nombre
 
         if (imagenUrl.isNotEmpty()) {
@@ -73,10 +75,12 @@ class PantallaPrincipalReceta : AppCompatActivity() {
         val ingredientesTexto = ingredientes.joinToString("\n• ", "• ")
         listaIngredientes.text = ingredientesTexto
 
-        // Verificar si la receta está guardada como favorita
         verificarRecetaFavorita(recetaId)
 
-        // Configurar botón de guardar
+        if (recetaUserId != currentUserId) {
+            guardarRecetaVista(recetaId)
+        }
+
         btnAgregarReceta.setOnClickListener {
             if (isFavorite) {
                 eliminarRecetaFavorita(recetaId)
@@ -122,7 +126,7 @@ class PantallaPrincipalReceta : AppCompatActivity() {
             "fechaGuardado" to FieldValue.serverTimestamp()
         )
 
-        db.collection("usuarios")
+        db.collection("favoritos")
             .document(userId)
             .collection("recetas_favoritas")
             .document(recetaId)
@@ -140,7 +144,7 @@ class PantallaPrincipalReceta : AppCompatActivity() {
     private fun eliminarRecetaFavorita(recetaId: String) {
         val userId = auth.currentUser?.uid ?: return
 
-        db.collection("usuarios")
+        db.collection("favoritos")
             .document(userId)
             .collection("recetas_favoritas")
             .document(recetaId)
@@ -162,6 +166,14 @@ class PantallaPrincipalReceta : AppCompatActivity() {
         } else {
             btnAgregarReceta.setImageResource(R.drawable.guardado)
             btnAgregarReceta.setColorFilter(ContextCompat.getColor(this, R.color.black))
+        }
+    }
+
+    private fun guardarRecetaVista(recetaId: String) {
+        val sharedPref = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        sharedPref.edit {
+            putString("ultima_receta_vista", recetaId)
+            apply()
         }
     }
 }

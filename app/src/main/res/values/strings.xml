@@ -155,4 +155,5 @@
     <string name="_2000kcal">2000Kcal</string>
     <string name="crear_receta">Crear Receta!</string>
     <string name="no_tienes_recetas">No tienes recetas\n :(</string>
+    <string name="buscar_receta2">Buscar receta...</string>
 </resources>

@@ -14,6 +14,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -27,154 +28,234 @@ import com.google.firebase.storage.StorageReference
 import java.util.UUID
 
 
-class AgregarReceta: AppCompatActivity() {
+class AgregarReceta : AppCompatActivity() {
 
-    private val currentUser = FirebaseAuth.getInstance().currentUser
     private val PICK_IMAGE_REQUEST = 1
     private var imageUri: Uri? = null
     private lateinit var storageRef: StorageReference
     private lateinit var db: FirebaseFirestore
 
-    private lateinit var btnSubir: Button
-    private lateinit var btnAñadirCampo: ImageButton
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agregar_receta)
 
+        try {
+            initFirebase()
+            setupViews()
+            añadirCampoIngrediente() // Campo inicial
+
+        } catch (e: Exception) {
+            Log.e("AgregarReceta", "Error en onCreate: ${e.stackTraceToString()}")
+            showToast("Error al inicializar la pantalla")
+            finish()
+        }
+    }
+
+    private fun initFirebase() {
         storageRef = FirebaseStorage.getInstance().reference
         db = FirebaseFirestore.getInstance()
+    }
 
-        findViewById<ImageButton>(R.id.agregarImagen).setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivityForResult(intent, PICK_IMAGE_REQUEST)
+    private fun setupViews() {
+        findViewById<ImageButton>(R.id.agregarImagen)?.setOnClickListener {
+            openImagePicker()
         }
-        btnSubir = findViewById(R.id.btnSubirReceta)
-        btnSubir.setOnClickListener {
+
+        findViewById<Button>(R.id.btnSubirReceta)?.setOnClickListener {
             subirRecetaFirestore()
-
         }
-        btnAñadirCampo = findViewById(R.id.agregarIngrediente)
-        btnAñadirCampo.setOnClickListener {
+
+        findViewById<ImageButton>(R.id.agregarIngrediente)?.setOnClickListener {
             añadirCampoIngrediente()
+        }
+    }
+
+    private fun openImagePicker() {
+        try {
+            val intent = Intent(Intent.ACTION_PICK).apply {
+                type = "image/*"
+            }
+            startActivityForResult(intent, PICK_IMAGE_REQUEST)
+        } catch (e: Exception) {
+            Log.e("AgregarReceta", "Error al abrir selector: ${e.stackTraceToString()}")
+            showToast("Error al abrir galería")
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
-            imageUri = data.data
-            findViewById<ImageView>(R.id.imageView32).setImageURI(imageUri)
-        }
 
-    }
-
-    private fun subirRecetaFirestore() {
-        val nombre = findViewById<EditText>(R.id.nombreCampoAgregar).text.toString().trim()
-        val preparacion =
-            findViewById<EditText>(R.id.preparacionCampoAgregar).text.toString().trim()
-        val tiempo = findViewById<EditText>(R.id.tiempoCampoAgregar).text.toString().trim()
-        val porciones = findViewById<EditText>(R.id.porcionesCampoAgregar).text.toString().trim()
-        val calorias = findViewById<EditText>(R.id.caloriasCampoAgregar).text.toString().trim()
-        val dificultad = findViewById<EditText>(R.id.dificultadCampoAgregar).text.toString().trim()
-        val ingredientes = mutableListOf<String>()
-        val contenedor = findViewById<LinearLayout>(R.id.contenedorIngredientes)
-        for (i in 0 until contenedor.childCount) {
-            val editText = contenedor.getChildAt(i) as EditText
-            val texto = editText.text.toString().trim()
-            if (texto.isNotEmpty()) ingredientes.add(texto)
-        }
-
-        if (nombre.isEmpty() || preparacion.isEmpty() || tiempo.isEmpty() || porciones.isEmpty() || calorias.isEmpty()
-            || dificultad.isEmpty() || imageUri == null || ingredientes.isEmpty()
-        ) {
-            Toast.makeText(this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        if (dificultad.toIntOrNull() !in 1..3) {
-            Toast.makeText(this, "Dificultad debe ser un número entre 1 y 3", Toast.LENGTH_SHORT)
-                .show()
-            return
-        }
-
-        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: run {
-            Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val recetaId = UUID.randomUUID().toString()
-        val imageRef = storageRef.child("recetas/$recetaId.jpg")
-
-        imageUri?.let {
-            imageRef.putFile(it).addOnSuccessListener {
-                imageRef.downloadUrl.addOnSuccessListener { uri ->
-                    val receta = hashMapOf(
-                        "nombre" to nombre,
-                        "preparacion" to preparacion,
-                        "tiempo" to tiempo.toInt(),
-                        "porciones" to porciones.toInt(),
-                        "calorias" to calorias.toInt(),
-                        "dificultad" to dificultad.toInt(),
-                        "ingredientes" to ingredientes,
-                        "imagenUrl" to uri.toString(),
-                        "fechaCreacion" to FieldValue.serverTimestamp(),
-                        "userId" to userId,
-                        "esPersonalizada" to true
-                    )
-
-                    db.collection("Receta").add(receta).addOnSuccessListener {
-                        Toast.makeText(this, "Receta agregada", Toast.LENGTH_SHORT).show()
-                        limpiarCampos()
-                    }.addOnFailureListener {
-                        Toast.makeText(this, "Error al subir receta", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }.addOnFailureListener {
-                Toast.makeText(this, "Error al subir imagen", Toast.LENGTH_SHORT).show()
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
+            try {
+                imageUri = data?.data
+                imageUri?.let {
+                    findViewById<ImageView>(R.id.imageView32)?.setImageURI(it)
+                } ?: showToast("No se pudo cargar la imagen")
+            } catch (e: Exception) {
+                Log.e("AgregarReceta", "Error al cargar imagen: ${e.stackTraceToString()}")
+                showToast("Error al procesar imagen")
             }
         }
     }
 
-    private fun añadirCampoIngrediente() {
-        val contenedor = findViewById<LinearLayout>(R.id.contenedorIngredientes)
-        val base = findViewById<EditText>(R.id.ingrediente1)
+    private fun subirRecetaFirestore() {
+        try {
+            if (!validarCampos()) return
 
-        val nuevoIngrediente = EditText(this).apply {
-            layoutParams = base.layoutParams
-            background = base.background
-            hint = base.hint
-            setTextColor(base.currentTextColor)
-            setTextSize(TypedValue.COMPLEX_UNIT_PX, base.textSize)
-            inputType = base.inputType
-            setPaddingRelative(
-                base.paddingStart,
-                base.paddingTop,
-                base.paddingEnd,
-                base.paddingBottom
-            )
-            layoutDirection = base.layoutDirection
+            val userId = FirebaseAuth.getInstance().currentUser?.uid ?: run {
+                showToast("Usuario no autenticado")
+                return
+            }
+
+            val recetaId = UUID.randomUUID().toString()
+            val imageRef = storageRef.child("recetas/$recetaId.jpg")
+
+            imageUri?.let { uri ->
+                // Mostrar progreso
+                showToast("Subiendo receta...")
+
+                // Subir imagen primero
+                imageRef.putFile(uri)
+                    .addOnSuccessListener { task ->
+                        task.storage.downloadUrl.addOnSuccessListener { downloadUri ->
+                            subirDatosReceta(userId, recetaId, downloadUri.toString())
+                        }
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("AgregarReceta", "Error subir imagen: ${e.stackTraceToString()}")
+                        showToast("Error al subir imagen")
+                    }
+            }
+        } catch (e: Exception) {
+            Log.e("AgregarReceta", "Error inesperado: ${e.stackTraceToString()}")
+            showToast("Error inesperado")
+        }
+    }
+
+    private fun validarCampos(): Boolean {
+        val nombre = findViewById<EditText>(R.id.nombreCampoAgregar)?.text?.toString()?.trim() ?: ""
+        val preparacion = findViewById<EditText>(R.id.preparacionCampoAgregar)?.text?.toString()?.trim() ?: ""
+        val tiempo = findViewById<EditText>(R.id.tiempoCampoAgregar)?.text?.toString()?.trim() ?: ""
+        val porciones = findViewById<EditText>(R.id.porcionesCampoAgregar)?.text?.toString()?.trim() ?: ""
+        val calorias = findViewById<EditText>(R.id.caloriasCampoAgregar)?.text?.toString()?.trim() ?: ""
+        val dificultad = findViewById<EditText>(R.id.dificultadCampoAgregar)?.text?.toString()?.trim() ?: ""
+        val ingredientes = obtenerIngredientes()
+
+        if (nombre.isEmpty() || preparacion.isEmpty() || tiempo.isEmpty() ||
+            porciones.isEmpty() || calorias.isEmpty() || dificultad.isEmpty() ||
+            imageUri == null || ingredientes.isEmpty()) {
+            showToast("Complete todos los campos")
+            return false
         }
 
-        contenedor.addView(nuevoIngrediente)
+        if (dificultad.toIntOrNull() !in 1..3) {
+            showToast("Dificultad debe ser 1, 2 o 3")
+            return false
+        }
+
+        return true
+    }
+
+    private fun obtenerIngredientes(): List<String> {
+        val ingredientes = mutableListOf<String>()
+        val contenedor = findViewById<LinearLayout>(R.id.contenedorIngredientes) ?: return ingredientes
+
+        for (i in 0 until contenedor.childCount) {
+            val view = contenedor.getChildAt(i)
+            if (view is EditText) {
+                view.text?.toString()?.trim()?.takeIf { it.isNotEmpty() }?.let {
+                    ingredientes.add(it)
+                }
+            }
+        }
+        return ingredientes
+    }
+
+    private fun subirDatosReceta(userId: String, recetaId: String, imageUrl: String) {
+        try {
+            val receta = hashMapOf<String, Any>(
+                "nombre" to (findViewById<EditText>(R.id.nombreCampoAgregar)?.text?.toString()?.trim() ?: ""),
+                "preparacion" to (findViewById<EditText>(R.id.preparacionCampoAgregar)?.text?.toString()?.trim() ?: ""),
+                "tiempo" to (findViewById<EditText>(R.id.tiempoCampoAgregar)?.text?.toString()?.toIntOrNull()?.takeIf { it >= 0 } ?: 0),
+                "porciones" to (findViewById<EditText>(R.id.porcionesCampoAgregar)?.text?.toString()?.toIntOrNull()?.takeIf { it > 0 } ?: 1),
+                "calorias" to (findViewById<EditText>(R.id.caloriasCampoAgregar)?.text?.toString()?.toIntOrNull() ?: 0),
+                "dificultad" to (findViewById<EditText>(R.id.dificultadCampoAgregar)?.text?.toString()?.toIntOrNull()?.coerceIn(1, 3) ?: 1),
+                "ingredientes" to obtenerIngredientes().filter { it.isNotBlank() },
+                "imagenUrl" to imageUrl,
+                "fechaCreacion" to FieldValue.serverTimestamp(),
+                "userId" to userId,
+                "esPersonalizada" to true
+            )
+
+            db.collection("Receta").document(recetaId).set(receta)
+                .addOnSuccessListener {
+                    showToast("¡Receta agregada!")
+                    limpiarCampos()
+                }
+                .addOnFailureListener { e ->
+                    Log.e("AgregarReceta", "Error Firestore: ${e.stackTraceToString()}")
+                    showToast("Error al guardar receta")
+                }
+        } catch (e: Exception) {
+            Log.e("AgregarReceta", "Error al preparar datos: ${e.stackTraceToString()}")
+            showToast("Error al preparar datos")
+        }
+    }
+
+    private fun añadirCampoIngrediente() {
+        try {
+            val contenedor = findViewById<LinearLayout>(R.id.contenedorIngredientes) ?: return
+            val base = findViewById<EditText>(R.id.ingrediente1) ?: return
+
+            val nuevoIngrediente = EditText(this).apply {
+                layoutParams = base.layoutParams
+                background = base.background
+                hint = base.hint
+                setTextColor(base.currentTextColor)
+                setTextSize(TypedValue.COMPLEX_UNIT_PX, base.textSize)
+                inputType = base.inputType
+                setPaddingRelative(
+                    base.paddingStart,
+                    base.paddingTop,
+                    base.paddingEnd,
+                    base.paddingBottom
+                )
+            }
+
+            contenedor.addView(nuevoIngrediente)
+        } catch (e: Exception) {
+            Log.e("AgregarReceta", "Error añadir campo: ${e.stackTraceToString()}")
+            showToast("Error al agregar campo")
+        }
     }
 
     private fun limpiarCampos() {
-        findViewById<EditText>(R.id.nombreCampoAgregar).text.clear()
-        findViewById<EditText>(R.id.preparacionCampoAgregar).text.clear()
-        findViewById<EditText>(R.id.tiempoCampoAgregar).text.clear()
-        findViewById<EditText>(R.id.porcionesCampoAgregar).text.clear()
-        findViewById<EditText>(R.id.caloriasCampoAgregar).text.clear()
-        findViewById<EditText>(R.id.dificultadCampoAgregar).text.clear()
-        findViewById<ImageView>(R.id.imageView32).setImageDrawable(null)
-        imageUri = null
+        try {
+            findViewById<EditText>(R.id.nombreCampoAgregar)?.text?.clear()
+            findViewById<EditText>(R.id.preparacionCampoAgregar)?.text?.clear()
+            findViewById<EditText>(R.id.tiempoCampoAgregar)?.text?.clear()
+            findViewById<EditText>(R.id.porcionesCampoAgregar)?.text?.clear()
+            findViewById<EditText>(R.id.caloriasCampoAgregar)?.text?.clear()
+            findViewById<EditText>(R.id.dificultadCampoAgregar)?.text?.clear()
+            findViewById<ImageView>(R.id.imageView32)?.setImageDrawable(null)
+            imageUri = null
 
-        val contenedor = findViewById<LinearLayout>(R.id.contenedorIngredientes)
-        contenedor.removeAllViews()
+            val contenedor = findViewById<LinearLayout>(R.id.contenedorIngredientes)
+            contenedor?.removeAllViews()
+            añadirCampoIngrediente() // Campo inicial
 
-        // Agregar un campo vacío inicial si lo deseas
-        añadirCampoIngrediente()
+        } catch (e: Exception) {
+            Log.e("AgregarReceta", "Error limpiar campos: ${e.stackTraceToString()}")
+        }
     }
 
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        // Limpiar referencias
+        imageUri = null
+    }
 }

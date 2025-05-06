@@ -1,6 +1,6 @@
 package com.example.frugalfeast
 data class Receta(
-    val id: String = "",
+    var id: String = "",
     val nombre: String = "",
     val imagenUrl: String = "",
     val tiempo: String = "",
