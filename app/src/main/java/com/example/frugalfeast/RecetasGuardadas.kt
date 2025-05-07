@@ -78,9 +78,14 @@
                         }
                         recetasGuardadas.add(receta)
                     }
+                    adapterGuardadas.notifyDataSetChanged()
+
+                    if (recetasGuardadas.isEmpty()) {
+                        Toast.makeText(this, "No tienes recetas guardadas aún", Toast.LENGTH_SHORT).show()
+                    }
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Error al cargar las recetas: $e", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Error al cargar las recetas: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
         }
 
@@ -89,7 +94,12 @@
                 putExtra("receta_id", receta.id)
                 putExtra("receta_nombre", receta.nombre)
                 putExtra("receta_imagen", receta.imagenUrl)
-                // Agregar más datos según necesites
+                putExtra("receta_tiempo", receta.tiempo ?: "0")
+                putExtra("receta_porciones", receta.porciones ?: "0")
+                putExtra("receta_dificultad", receta.dificultad ?: "1")
+                putExtra("receta_preparacion", receta.preparacion ?: "")
+                putStringArrayListExtra("receta_ingredientes", ArrayList(receta.ingredientes ?: emptyList()))
+                putExtra("receta_userId", receta.userId ?: "")
             }
             startActivity(intent)
         }

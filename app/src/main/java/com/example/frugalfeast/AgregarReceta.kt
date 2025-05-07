@@ -191,6 +191,7 @@ class AgregarReceta : AppCompatActivity() {
                 .addOnSuccessListener {
                     showToast("¡Receta agregada!")
                     limpiarCampos()
+                    finish()
                 }
                 .addOnFailureListener { e ->
                     Log.e("AgregarReceta", "Error Firestore: ${e.stackTraceToString()}")

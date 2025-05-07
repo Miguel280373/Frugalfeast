@@ -191,12 +191,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:minHeight="100dp"
                     android:backgroundTint="@color/Naranja"
                     app:cardElevation="8dp"
+                    android:minHeight="100dp"
                     app:cardCornerRadius="12dp">
 
-                    <!-- Layout para estado vacío -->
+                    <!-- Layout para estado vacío (se mantiene igual) -->
                     <LinearLayout
                         android:id="@+id/layout_visto_recientemente_vacio"
                         android:layout_width="match_parent"
@@ -225,7 +225,7 @@
                             android:text="@string/explorar_recetas"/>
                     </LinearLayout>
 
-                    <!-- Layout para contenido (receta vista) -->
+                    <!-- Layout para contenido (nuevo diseño igual a Receta del Día) -->
                     <LinearLayout
                         android:id="@+id/layout_visto_recientemente_contenido"
                         android:layout_width="match_parent"
@@ -233,20 +233,23 @@
                         android:orientation="horizontal"
                         android:padding="16dp">
 
+                        <!-- Imagen de la receta -->
                         <ImageView
                             android:id="@+id/img_visto_recientemente"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/baseline_image_24"
                             android:background="@drawable/rounded_image"
+                            android:src="@drawable/baseline_image_24"
                             android:contentDescription="@string/imagen_placeholder"
-                            android:layout_marginEnd="16dp"/>
+                            android:layout_marginEnd="8dp"/>
 
+                        <!-- Contenido de la receta -->
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:padding="8dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -255,7 +258,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/fricas_de_pollo"
                                 android:textColor="@color/black"
-                                android:textSize="20sp"
+                                android:textSize="18sp"
                                 android:textAlignment="center"
                                 android:textStyle="bold"
                                 android:layout_marginBottom="8dp"/>
@@ -267,8 +270,7 @@
                                 android:gravity="center_horizontal"
                                 android:orientation="horizontal"
                                 android:showDividers="middle"
-                                android:paddingStart="8dp"
-                                android:layout_marginEnd="8dp"
+                                android:minHeight="85dp"
                                 android:weightSum="3">
 
                                 <TextView
@@ -289,40 +291,39 @@
                                     android:textStyle="bold"
                                     android:layout_marginEnd="8dp"
                                     app:drawableTint="@color/black"
-                                    app:drawableTopCompat="@drawable/baseline_access_time_24" />
+                                    app:drawableTopCompat="@drawable/baseline_access_time_24"/>
 
                                 <TextView
                                     android:id="@+id/tv_porciones_receta_reciente"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="10dp"
                                     android:layout_marginTop="4dp"
-                                    android:layout_marginEnd="10dp"
                                     android:text="@string/_4_porciones"
                                     android:textColor="@color/black"
                                     android:textSize="12sp"
                                     android:textStyle="bold"
                                     app:drawableTint="@color/black"
-                                    app:drawableTopCompat="@drawable/baseline_person_24" />
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"
+                                    app:drawableTopCompat="@drawable/baseline_person_24"/>
 
                                 <TextView
                                     android:id="@+id/tv_dificultad_receta_reciente"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="80dp"
                                     android:layout_marginTop="4dp"
-                                    android:drawablePadding="8dp"
+                                    android:drawablePadding="4dp"
                                     app:drawableTint="@color/black"
                                     android:text="@string/f_cil"
-                                    android:layout_marginStart="12dp"
+                                    android:layout_marginStart="8dp"
                                     android:textColor="@color/black"
                                     android:textStyle="bold"
                                     android:textSize="12sp"
-                                    app:drawableTopCompat="@drawable/baseline_query_stats_24" />
+                                    app:drawableTopCompat="@drawable/baseline_query_stats_24"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
-
                 <!-- Menú del día -->
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -667,7 +668,7 @@
                     app:cardElevation="8dp"
                     app:cardCornerRadius="12dp">
 
-                    <!-- Layout para estado vacío -->
+                    <!-- Layout para estado vacío (se mantiene igual) -->
                     <LinearLayout
                         android:id="@+id/layout_mis_recetas_vacio"
                         android:layout_width="match_parent"
@@ -696,7 +697,7 @@
                             android:text="@string/crear_receta"/>
                     </LinearLayout>
 
-                    <!-- Layout para contenido -->
+                    <!-- Layout para contenido (nuevo diseño igual a Receta del Día) -->
                     <LinearLayout
                         android:id="@+id/layout_mis_recetas_contenido"
                         android:layout_width="match_parent"
@@ -704,6 +705,7 @@
                         android:orientation="horizontal"
                         android:padding="16dp">
 
+                        <!-- Imagen de la receta -->
                         <ImageView
                             android:id="@+id/img_mis_recetas"
                             android:layout_width="100dp"
@@ -714,6 +716,7 @@
                             android:contentDescription="@string/imagen_placeholder"
                             android:layout_marginEnd="8dp"/>
 
+                        <!-- Contenido de la receta -->
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -745,10 +748,15 @@
                                 <TextView
                                     android:id="@+id/tv_tiempo_mis_recetas"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="65dp"
+                                    android:layout_height="80dp"
                                     android:drawablePadding="4dp"
                                     android:layout_marginTop="4dp"
+                                    android:textAlignment="center"
                                     android:paddingStart="4dp"
+                                    android:singleLine="false"
+                                    android:lines="2"
+                                    android:maxLines="2"
+                                    android:ellipsize="none"
                                     android:text="@string/_1_hora"
                                     android:textColor="@color/black"
                                     android:textSize="12sp"
@@ -760,22 +768,22 @@
                                 <TextView
                                     android:id="@+id/tv_porciones_mis_recetas"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="65dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
                                     android:text="@string/_4_porciones"
                                     android:textColor="@color/black"
-                                    android:textSize="11sp"
+                                    android:textSize="12sp"
                                     android:textStyle="bold"
                                     app:drawableTint="@color/black"
-                                    android:layout_marginStart="8dp"
-                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"
                                     app:drawableTopCompat="@drawable/baseline_person_24"/>
 
                                 <TextView
                                     android:id="@+id/tv_dificultad_mis_recetas"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="65dp"
+                                    android:layout_height="80dp"
                                     android:layout_marginTop="4dp"
-                                    android:layout_marginBottom="12dp"
                                     android:drawablePadding="4dp"
                                     app:drawableTint="@color/black"
                                     android:text="@string/f_cil"

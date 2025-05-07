@@ -34,8 +34,8 @@ class RecetasGuardadasAdapter(
     override fun onBindViewHolder(holder: RecetaViewHolder, position: Int) {
         val receta = recetas[position]
         holder.tvTitulo.text = receta.nombre
-        holder.tvTiempo.text = receta.tiempo
-        holder.tvPorciones.text = receta.porciones
+        holder.tvTiempo.text = "${receta.tiempo} h."
+        holder.tvPorciones.text = "${receta.porciones} porc."
         holder.tvDificultad.text = obtenerDificultad(receta.dificultad)
 
         Glide.with(holder.itemView.context)

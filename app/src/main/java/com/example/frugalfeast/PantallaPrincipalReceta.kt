@@ -67,8 +67,8 @@ class PantallaPrincipalReceta : AppCompatActivity() {
                 .into(imgReceta)
         }
 
-        tvTiempoReceta.text = tiempo.toString() + " horas"
-        tvPorcionesReceta.text = porciones.toString() + " porciones"
+        tvTiempoReceta.text = tiempo.toString() + " h."
+        tvPorcionesReceta.text = porciones.toString() + " porc."
         tvDificultadReceta.text = obtenerDificultad(dificultad)
         preparacionReceta.text = preparacion
 
@@ -159,11 +159,15 @@ class PantallaPrincipalReceta : AppCompatActivity() {
             }
     }
     private fun obtenerDificultad(dificultad: String): String {
-        return when(dificultad.toInt()) {
-            1 -> "Fácil"
-            2 -> "Media"
-            3 -> "Difícil"
-            else -> ""
+        return try {
+            when(dificultad.trim().toIntOrNull() ?: 0) {
+                1 -> "Fácil"
+                2 -> "Media"
+                3 -> "Difícil"
+                else -> "No especificada"
+            }
+        } catch (e: Exception) {
+            "No especificada"
         }
     }
     private fun actualizarBotonFavorito() {
