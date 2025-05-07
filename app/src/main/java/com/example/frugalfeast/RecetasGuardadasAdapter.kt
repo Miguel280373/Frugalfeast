@@ -36,7 +36,7 @@ class RecetasGuardadasAdapter(
         holder.tvTitulo.text = receta.nombre
         holder.tvTiempo.text = "${receta.tiempo} h."
         holder.tvPorciones.text = "${receta.porciones} porc."
-        holder.tvDificultad.text = obtenerDificultad(receta.dificultad)
+        holder.tvDificultad.text = obtenerDificultad(receta.dificultad.toString())
 
         Glide.with(holder.itemView.context)
             .load(receta.imagenUrl)

@@ -457,21 +457,21 @@ class PantallaPrincipal : AppCompatActivity() {
                             layoutDesayunoConReceta.visibility = View.VISIBLE
                             tvDesayunoNombre.text = r.nombre
                             tvDesayunoTiempo.text = "${r.tiempo} h."
-                            tvDesayunoDificultad.text = obtenerDificultad(r.dificultad)
+                            tvDesayunoDificultad.text = obtenerDificultad(r.dificultad.toString())
                         }
                         "almuerzo" -> {
                             layoutAlmuerzoVacio.visibility = View.GONE
                             layoutAlmuerzoConReceta.visibility = View.VISIBLE
                             tvAlmuerzoNombre.text = r.nombre
                             tvAlmuerzoTiempo.text = "${r.tiempo} h."
-                            tvAlmuerzoDificultad.text = obtenerDificultad(r.dificultad)
+                            tvAlmuerzoDificultad.text = obtenerDificultad(r.dificultad.toString())
                         }
                         "cena" -> {
                             layoutCenaVacio.visibility = View.GONE
                             layoutCenaConReceta.visibility = View.VISIBLE
                             tvCenaNombre.text = r.nombre
                             tvCenaTiempo.text = "${r.tiempo} h."
-                            tvCenaDificultad.text = obtenerDificultad(r.dificultad)
+                            tvCenaDificultad.text = obtenerDificultad(r.dificultad.toString())
                         }
                     }
                 }
