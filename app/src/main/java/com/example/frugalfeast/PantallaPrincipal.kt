@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -31,7 +32,7 @@ class PantallaPrincipal : AppCompatActivity() {
     // Views principales
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
-    private lateinit var searchView: SearchView
+    private lateinit var searchView: EditText
     private lateinit var btnMenu: ImageButton
 
     // Receta del día
@@ -92,6 +93,7 @@ class PantallaPrincipal : AppCompatActivity() {
         setContentView(R.layout.activity_pantalla_principal)
 
         initViews()
+        setupSearchView()
         setupNavigationDrawer()
         setupMenuDelDia()
         cargarRecetaDelDia()
@@ -119,7 +121,7 @@ class PantallaPrincipal : AppCompatActivity() {
         // Views principales
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_drawer)
-        searchView = findViewById(R.id.search_view)
+        searchView = findViewById(R.id.edit_text_busqueda)
         btnMenu = findViewById(R.id.btn_menu)
 
         // Receta del día
@@ -173,14 +175,19 @@ class PantallaPrincipal : AppCompatActivity() {
         btnCrearReceta = findViewById(R.id.btn_crear_receta)
         btnCalularCalorias = findViewById(R.id.btn_calcular_calorias)
 
-        //Busqueda
+    }
+    // BUSQUEDA
+    private fun setupSearchView() {
+        val editTextBusqueda = findViewById<EditText>(R.id.edit_text_busqueda)
 
-        searchView.setOnClickListener() {
-            val intent = Intent(this, Busqueda::class.java)
-            startActivity(intent)
+        editTextBusqueda.setOnClickListener {
+            try {
+                val intent = Intent(this@PantallaPrincipal, BusquedaActivity::class.java)
+                startActivity(intent)
+            } catch (e: Exception) {
+                Toast.makeText(this, "Error al iniciar búsqueda", Toast.LENGTH_SHORT).show()
+            }
         }
-
-
     }
 
     //BARRA LATERAL
@@ -349,7 +356,7 @@ class PantallaPrincipal : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.btn_explorar_recetas)?.setOnClickListener {
-            startActivity(Intent(this, Busqueda::class.java))
+            startActivity(Intent(this, BusquedaActivity::class.java))
         }
     }
 
@@ -676,35 +683,34 @@ Toast.makeText(this, "Error al cargar receta del día: ${e.message}", Toast.LENG
 
 /**
 private fun cargarDetallesReceta(recetaId: String) {
-    db.collection("Receta")
-        .document(recetaId)
-        .get()
-        .addOnSuccessListener { document ->
-            val receta = document.toObject(Receta::class.java)
-            receta?.let {
-                layoutMisRecetasVacio.visibility = View.GONE
-                layoutMisRecetasContenido.visibility = View.VISIBLE
+db.collection("Receta")
+.document(recetaId)
+.get()
+.addOnSuccessListener { document ->
+val receta = document.toObject(Receta::class.java)
+receta?.let {
+layoutMisRecetasVacio.visibility = View.GONE
+layoutMisRecetasContenido.visibility = View.VISIBLE
 
-                tvNombreMisRecetas.text = it.nombre
-                tvTiempoMisRecetas.text = "${it.tiempo}\nhoras"
-                tvPorcionesMisRecetas.text = "${it.porciones}\nporciones"
-                tvDificultadMisRecetas.text = obtenerDificultad(it.dificultad)
+tvNombreMisRecetas.text = it.nombre
+tvTiempoMisRecetas.text = "${it.tiempo}\nhoras"
+tvPorcionesMisRecetas.text = "${it.porciones}\nporciones"
+tvDificultadMisRecetas.text = obtenerDificultad(it.dificultad)
 
-                if (it.imagenUrl.isNotEmpty()) {
-                    Glide.with(this)
-                        .load(it.imagenUrl)
-                        .placeholder(R.drawable.baseline_image_24)
-                        .into(imgMisRecetas)
-                }
-            } ?: run {
-                mostrarEstadoVacioMisRecetas()
-            }
-        }
-        .addOnFailureListener { e ->
-            Toast.makeText(this, "Error al cargar detalles de receta", Toast.LENGTH_SHORT).show()
-            mostrarEstadoVacioMisRecetas()
-        }
+if (it.imagenUrl.isNotEmpty()) {
+Glide.with(this)
+.load(it.imagenUrl)
+.placeholder(R.drawable.baseline_image_24)
+.into(imgMisRecetas)
+}
+} ?: run {
+mostrarEstadoVacioMisRecetas()
+}
+}
+.addOnFailureListener { e ->
+Toast.makeText(this, "Error al cargar detalles de receta", Toast.LENGTH_SHORT).show()
+mostrarEstadoVacioMisRecetas()
+}
 }
 
-*/
-
+ */

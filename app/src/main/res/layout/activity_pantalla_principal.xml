@@ -32,13 +32,16 @@
                 android:contentDescription="@string/menu"
                 android:src="@drawable/material_symbols__menu_rounded__1_" />
 
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/search_view"
+            <EditText
+                android:id="@+id/edit_text_busqueda"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:queryHint="Buscar recetas..."
-                app:iconifiedByDefault="false" />
+                android:hint="Buscar recetas..."
+                android:background="@drawable/roundededittext2"
+                android:padding="12dp"
+                android:inputType="text"
+                android:imeOptions="actionSearch"/>
         </LinearLayout>
 
         <ScrollView

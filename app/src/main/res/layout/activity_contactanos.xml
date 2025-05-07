@@ -37,9 +37,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="Si quieres contactarte con nuestro soporte te brindamos estos canales de comunicacion:\n\n📧 Correo electrónico: contacto@ejemplo.com
+        android:text="Si quieres contactarte con nuestro soporte te brindamos estos canales de comunicacion:\n\n📧 Correo electrónico: contacto@ejemplo.com\n
 
-☎️ Número telefónico: +57 301 234 5678
+☎️ Número telefónico: +57 301 234 5678\n
 
 🕒 Horario de atención: Lunes a viernes, 9:00 a.m. – 6:00 p.m."
         android:textColor="#000000"

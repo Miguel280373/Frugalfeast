@@ -1,145 +1,92 @@
 package com.example.frugalfeast
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.frugalfeast.databinding.ActivityBusquedaBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
-class Busqueda : AppCompatActivity(), adaptadorBusqueda.OnItemClickListener {
+class BusquedaActivity : AppCompatActivity(), Adaptador.OnItemClickListener {
 
-    private lateinit var recyclerViewBusqueda: RecyclerView
-    private lateinit var editTextBusqueda: EditText
-    private lateinit var botonIA: ImageView
-    private lateinit var adaptador: adaptadorBusqueda
-    private var listaOriginal = ArrayList<BarraBusqueda>()
-    private var listaFiltrada = ArrayList<BarraBusqueda>()
+    private lateinit var binding: ActivityBusquedaBinding
+    private lateinit var adaptador: Adaptador
+    private var listaBusquedaOriginal = ArrayList<BarraBusqueda>()
+    private var listaBusquedaFiltrada = ArrayList<BarraBusqueda>()
     private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_busqueda)
 
-        if (!::recyclerViewBusqueda.isInitialized) {
-            initViews()
-            setupRecyclerView()
-            cargarRecetasDesdeFirebase()
-            setupListeners()
+        binding = ActivityBusquedaBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setupRecyclerView()
+        cargarRecetasDesdeFirebase()
+
+        val botonIA: ImageView = findViewById(R.id.imageView58)
+        botonIA.setOnClickListener {
+            val intent = Intent(this, PresentacionIA::class.java)
+            startActivity(intent)
         }
-    }
 
-    private fun initViews() {
-        try {
-            recyclerViewBusqueda = findViewById(R.id.recyclerViewBusqueda)
-            editTextBusqueda = findViewById(R.id.editTextText9)
-            botonIA = findViewById(R.id.imageView58)
-
-            // Verificar que las vistas no sean nulas
-            if (::recyclerViewBusqueda.isInitialized &&
-                ::editTextBusqueda.isInitialized &&
-                ::botonIA.isInitialized) {
-
-                adaptador = adaptadorBusqueda(listaFiltrada, this)
-            } else {
-                throw IllegalStateException("Alguna vista no se inicializó correctamente")
+        binding.editTextText9.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val query = s.toString().trim().lowercase()
+                filterList(query)
             }
-        } catch (e: Exception) {
-            Toast.makeText(this, "Error al inicializar vistas: ${e.message}", Toast.LENGTH_LONG).show()
-            finish()
-        }
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
 
     private fun setupRecyclerView() {
-        recyclerViewBusqueda.apply {
-            layoutManager = LinearLayoutManager(this@Busqueda)
-            addItemDecoration(DividerItemDecoration(this@Busqueda, DividerItemDecoration.VERTICAL))
-            adapter = adaptador
-            setHasFixedSize(true)
-        }
+        binding.recyclerViewBusqueda.layoutManager = LinearLayoutManager(this)
+        adaptador = Adaptador(listaBusquedaFiltrada, this)
+        binding.recyclerViewBusqueda.adapter = adaptador
     }
 
     private fun cargarRecetasDesdeFirebase() {
         db.collection("Receta")
             .get()
             .addOnSuccessListener { result ->
-                listaOriginal.clear()
+                listaBusquedaOriginal.clear()
                 for (document in result) {
-                    try {
-                        val receta = document.toObject(BarraBusqueda::class.java).apply {
-                            id = document.id
-                            nombre = nombre ?: "Sin nombre"
-                            imagenUrl = imagenUrl ?: ""
-                        }
-                        listaOriginal.add(receta)
-                    } catch (e: Exception) {
-                        Log.e("Busqueda", "Error al parsear receta: ${e.message}")
-                    }
+                    val receta = document.toObject(BarraBusqueda::class.java)?.copy(id = document.id) ?: BarraBusqueda()
+                    listaBusquedaOriginal.add(receta)
                 }
-                actualizarListaFiltrada("")
+                listaBusquedaFiltrada.clear()
+                listaBusquedaFiltrada.addAll(listaBusquedaOriginal)
+                adaptador.notifyDataSetChanged()
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Error al cargar recetas: ${e.message}", Toast.LENGTH_SHORT).show()
-                Log.e("Busqueda", "Firestore error: ${e.stackTraceToString()}")
             }
     }
 
-    private fun setupListeners() {
-        botonIA.setOnClickListener {
-            startActivity(Intent(this, PresentacionIA::class.java))
-        }
-
-        editTextBusqueda.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                actualizarListaFiltrada(s?.toString() ?: "")
-            }
-            override fun afterTextChanged(s: Editable?) {}
-        })
-    }
-
-    private fun actualizarListaFiltrada(query: String) {
-        listaFiltrada.clear()
-
+    private fun filterList(query: String) {
+        listaBusquedaFiltrada.clear()
         if (query.isEmpty()) {
-            listaFiltrada.addAll(listaOriginal)
+            listaBusquedaFiltrada.addAll(listaBusquedaOriginal)
         } else {
-            val queryLower = query.lowercase()
-            listaFiltrada.addAll(listaOriginal.filter {
-                it.nombre?.lowercase()?.contains(queryLower) == true
-            })
+            for (receta in listaBusquedaOriginal) {
+                if (receta.nombre?.lowercase()?.contains(query) == true) {
+                    listaBusquedaFiltrada.add(receta)
+                }
+            }
         }
-
-        adaptador.actualizarLista(listaFiltrada)
-
-        if (listaFiltrada.isEmpty() && query.isNotEmpty()) {
-            Toast.makeText(this, "No se encontraron recetas", Toast.LENGTH_SHORT).show()
-        }
+        adaptador.notifyDataSetChanged()
     }
 
     override fun onItemClick(receta: BarraBusqueda) {
-        try {
-            val intent = Intent(this, PantallaPrincipalReceta::class.java).apply {
-                putExtra("recetaId", receta.id ?: "")
-                putExtra("recetaNombre", receta.nombre ?: "Sin nombre")
-                putExtra("recetaImagen", receta.imagenUrl ?: "")
-            }
-            startActivity(intent)
-        } catch (e: Exception) {
-            Toast.makeText(this, "Error al abrir receta", Toast.LENGTH_SHORT).show()
-            Log.e("Busqueda", "Error en onItemClick: ${e.stackTraceToString()}")
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        recyclerViewBusqueda.adapter = null
+        val intent = Intent(this, PantallaPrincipalReceta::class.java)
+        intent.putExtra("recetaId", receta.id)
+        startActivity(intent)
     }
 }
