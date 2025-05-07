@@ -1,10 +1,7 @@
 package com.example.frugalfeast
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import android.view.View
 import android.widget.LinearLayout
 import androidx.lifecycle.ViewModelProvider
@@ -76,7 +73,7 @@ class InteraccionIA : AppCompatActivity() {
                 )
             }
         }
-        val imgVolver = findViewById<ImageView>(R.id.imageView57)
+        val imgVolver = findViewById<ImageView>(R.id.btnAtrasBusqueda)
 
         imgVolver.setOnClickListener {
             finish() // Regresa a la actividad anterior

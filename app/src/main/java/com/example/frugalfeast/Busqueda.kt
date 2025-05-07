@@ -5,27 +5,30 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.frugalfeast.databinding.ActivityBusquedaBinding
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 
-class BusquedaActivity : AppCompatActivity(), Adaptador.OnItemClickListener {
+class Busqueda : AppCompatActivity(), AdaptadorBusqueda.OnItemClickListener {
 
-    private lateinit var binding: ActivityBusquedaBinding
-    private lateinit var adaptador: Adaptador
+    private lateinit var recyclerViewBusqueda: RecyclerView
+    private lateinit var barraBusqueda: EditText
+    private lateinit var adaptador: AdaptadorBusqueda
     private var listaBusquedaOriginal = ArrayList<BarraBusqueda>()
     private var listaBusquedaFiltrada = ArrayList<BarraBusqueda>()
     private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_busqueda)
 
-        binding = ActivityBusquedaBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        // Inicializar vistas con findViewById
+        recyclerViewBusqueda = findViewById(R.id.recyclerViewBusqueda)
+        barraBusqueda = findViewById(R.id.barraBusqueda)
 
         setupRecyclerView()
         cargarRecetasDesdeFirebase()
@@ -36,7 +39,12 @@ class BusquedaActivity : AppCompatActivity(), Adaptador.OnItemClickListener {
             startActivity(intent)
         }
 
-        binding.editTextText9.addTextChangedListener(object : TextWatcher {
+        val btnAtras: ImageView = findViewById(R.id.btnAtrasBusqueda)
+        btnAtras.setOnClickListener {
+            onBackPressed()
+        }
+
+        barraBusqueda.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val query = s.toString().trim().lowercase()
@@ -47,9 +55,9 @@ class BusquedaActivity : AppCompatActivity(), Adaptador.OnItemClickListener {
     }
 
     private fun setupRecyclerView() {
-        binding.recyclerViewBusqueda.layoutManager = LinearLayoutManager(this)
-        adaptador = Adaptador(listaBusquedaFiltrada, this)
-        binding.recyclerViewBusqueda.adapter = adaptador
+        recyclerViewBusqueda.layoutManager = LinearLayoutManager(this)
+        adaptador = AdaptadorBusqueda(listaBusquedaFiltrada, this)
+        recyclerViewBusqueda.adapter = adaptador
     }
 
     private fun cargarRecetasDesdeFirebase() {

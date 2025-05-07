@@ -38,7 +38,7 @@
 
             <!-- Imagen de la receta -->
             <ImageView
-                android:id="@+id/imageView32"
+                android:id="@+id/imgAgregarReceta"
                 android:layout_width="311dp"
                 android:layout_height="206dp"
                 android:background="@drawable/rounded_image"
@@ -56,10 +56,10 @@
                 android:background="@drawable/circle_btn"
                 android:contentDescription="@string/a_adir_imagen"
                 android:src="@drawable/baseline_add_24"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView32"
-                app:layout_constraintEnd_toEndOf="@+id/imageView32"
-                app:layout_constraintStart_toStartOf="@+id/imageView32"
-                app:layout_constraintTop_toTopOf="@+id/imageView32" />
+                app:layout_constraintBottom_toBottomOf="@+id/imgAgregarReceta"
+                app:layout_constraintEnd_toEndOf="@+id/imgAgregarReceta"
+                app:layout_constraintStart_toStartOf="@+id/imgAgregarReceta"
+                app:layout_constraintTop_toTopOf="@+id/imgAgregarReceta" />
 
             <!-- Nombre de la receta -->
 
@@ -74,7 +74,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView32" />
+                app:layout_constraintTop_toBottomOf="@+id/imgAgregarReceta" />
 
             <EditText
                 android:id="@+id/nombreCampoAgregar"
@@ -333,7 +333,7 @@
                 android:layout_width="220dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="24dp"
-                android:backgroundTint="@color/Naranja"
+                android:background="@drawable/rounded_corner_naranja"
                 android:text="@string/subir_receta"
                 android:textColor="#000000"
                 android:textSize="18sp"

@@ -5,14 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-
-    >
-    <ImageView
-        android:id="@+id/imgReceta"
+    android:orientation="vertical">
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="275dp"
-        app:srcCompat="@drawable/hamburguesa" />
+        android:layout_height="275dp">
+
+        <ImageView
+            android:id="@+id/imgReceta"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/imagen_receta"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/hamburguesa" />
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="16dp"
+            android:padding="8dp"
+            android:background="@drawable/rounded_circle"
+            android:contentDescription="@string/atras"
+            android:src="@drawable/baseline_arrow_back_24"
+            app:tint="@color/black" />
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"

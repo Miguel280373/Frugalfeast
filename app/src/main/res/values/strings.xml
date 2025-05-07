@@ -156,4 +156,5 @@
     <string name="crear_receta">Crear Receta!</string>
     <string name="no_tienes_recetas">No tienes recetas\n :(</string>
     <string name="buscar_receta2">Buscar receta...</string>
+    <string name="imagen_receta">imagen receta</string>
 </resources>

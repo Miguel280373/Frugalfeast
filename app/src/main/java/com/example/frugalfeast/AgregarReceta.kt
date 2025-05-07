@@ -1,19 +1,13 @@
 
 package com.example.frugalfeast
 
-import android.os.Build
-import android.text.InputType
-import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
-import android.graphics.Color
 import android.util.TypedValue
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
@@ -42,7 +36,7 @@ class AgregarReceta : AppCompatActivity() {
         try {
             initFirebase()
             setupViews()
-            añadirCampoIngrediente() // Campo inicial
+            añadirCampoIngrediente()
 
         } catch (e: Exception) {
             Log.e("AgregarReceta", "Error en onCreate: ${e.stackTraceToString()}")
@@ -89,7 +83,7 @@ class AgregarReceta : AppCompatActivity() {
             try {
                 imageUri = data?.data
                 imageUri?.let {
-                    findViewById<ImageView>(R.id.imageView32)?.setImageURI(it)
+                    findViewById<ImageView>(R.id.imgAgregarReceta)?.setImageURI(it)
                 } ?: showToast("No se pudo cargar la imagen")
             } catch (e: Exception) {
                 Log.e("AgregarReceta", "Error al cargar imagen: ${e.stackTraceToString()}")
@@ -111,10 +105,8 @@ class AgregarReceta : AppCompatActivity() {
             val imageRef = storageRef.child("recetas/$recetaId.jpg")
 
             imageUri?.let { uri ->
-                // Mostrar progreso
                 showToast("Subiendo receta...")
 
-                // Subir imagen primero
                 imageRef.putFile(uri)
                     .addOnSuccessListener { task ->
                         task.storage.downloadUrl.addOnSuccessListener { downloadUri ->
@@ -190,6 +182,7 @@ class AgregarReceta : AppCompatActivity() {
             db.collection("Receta").document(recetaId).set(receta)
                 .addOnSuccessListener {
                     showToast("¡Receta agregada!")
+                    setResult(Activity.RESULT_OK)
                     limpiarCampos()
                     finish()
                 }
@@ -238,7 +231,7 @@ class AgregarReceta : AppCompatActivity() {
             findViewById<EditText>(R.id.porcionesCampoAgregar)?.text?.clear()
             findViewById<EditText>(R.id.caloriasCampoAgregar)?.text?.clear()
             findViewById<EditText>(R.id.dificultadCampoAgregar)?.text?.clear()
-            findViewById<ImageView>(R.id.imageView32)?.setImageDrawable(null)
+            findViewById<ImageView>(R.id.imgAgregarReceta)?.setImageDrawable(null)
             imageUri = null
 
             val contenedor = findViewById<LinearLayout>(R.id.contenedorIngredientes)

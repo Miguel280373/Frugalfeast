@@ -11,7 +11,7 @@ data class Receta(
     val dificultad: Long = 0,
     val preparacion: String = "",
     val userId: String = "",
-    val fechaCreacion: Date? = null,
+    var fechaCreacion: Date? = null,
     val ingredientes: List<String> = emptyList()
 )
 
