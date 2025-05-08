@@ -51,5 +51,11 @@ class ConfiguracionyPrivacidad : AppCompatActivity() {
         btnVolver.setOnClickListener {
             finish()
         }
+
+        val botonEditar = findViewById<Button>(R.id.button19)
+        botonEditar.setOnClickListener {
+            val intent = Intent(this, EditarPerfil::class.java)
+            startActivity(intent)
+        }
     }
 }
