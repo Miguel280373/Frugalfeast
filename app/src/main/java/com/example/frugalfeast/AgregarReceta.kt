@@ -13,7 +13,9 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.auth.FirebaseAuth
@@ -40,7 +42,7 @@ class AgregarReceta : AppCompatActivity() {
 
         } catch (e: Exception) {
             Log.e("AgregarReceta", "Error en onCreate: ${e.stackTraceToString()}")
-            showToast("Error al inicializar la pantalla")
+            mostrarToast("Error al inicializar la pantalla")
             finish()
         }
     }
@@ -62,6 +64,9 @@ class AgregarReceta : AppCompatActivity() {
         findViewById<ImageButton>(R.id.agregarIngrediente)?.setOnClickListener {
             añadirCampoIngrediente()
         }
+        findViewById<MaterialToolbar>(R.id.topAppBar).setNavigationOnClickListener {
+            mostrarDialogoConfirmacionSalida()
+        }
     }
 
     private fun openImagePicker() {
@@ -72,7 +77,7 @@ class AgregarReceta : AppCompatActivity() {
             startActivityForResult(intent, PICK_IMAGE_REQUEST)
         } catch (e: Exception) {
             Log.e("AgregarReceta", "Error al abrir selector: ${e.stackTraceToString()}")
-            showToast("Error al abrir galería")
+            mostrarToast("Error al abrir galería")
         }
     }
 
@@ -84,10 +89,10 @@ class AgregarReceta : AppCompatActivity() {
                 imageUri = data?.data
                 imageUri?.let {
                     findViewById<ImageView>(R.id.imgAgregarReceta)?.setImageURI(it)
-                } ?: showToast("No se pudo cargar la imagen")
+                } ?: mostrarToast("No se pudo cargar la imagen")
             } catch (e: Exception) {
                 Log.e("AgregarReceta", "Error al cargar imagen: ${e.stackTraceToString()}")
-                showToast("Error al procesar imagen")
+                mostrarToast("Error al procesar imagen")
             }
         }
     }
@@ -97,7 +102,7 @@ class AgregarReceta : AppCompatActivity() {
             if (!validarCampos()) return
 
             val userId = FirebaseAuth.getInstance().currentUser?.uid ?: run {
-                showToast("Usuario no autenticado")
+                mostrarToast("Usuario no autenticado")
                 return
             }
 
@@ -105,7 +110,7 @@ class AgregarReceta : AppCompatActivity() {
             val imageRef = storageRef.child("recetas/$recetaId.jpg")
 
             imageUri?.let { uri ->
-                showToast("Subiendo receta...")
+                mostrarToast("Subiendo receta...")
 
                 imageRef.putFile(uri)
                     .addOnSuccessListener { task ->
@@ -115,12 +120,12 @@ class AgregarReceta : AppCompatActivity() {
                     }
                     .addOnFailureListener { e ->
                         Log.e("AgregarReceta", "Error subir imagen: ${e.stackTraceToString()}")
-                        showToast("Error al subir imagen")
+                        mostrarToast("Error al subir imagen")
                     }
             }
         } catch (e: Exception) {
             Log.e("AgregarReceta", "Error inesperado: ${e.stackTraceToString()}")
-            showToast("Error inesperado")
+            mostrarToast("Error inesperado")
         }
     }
 
@@ -136,12 +141,12 @@ class AgregarReceta : AppCompatActivity() {
         if (nombre.isEmpty() || preparacion.isEmpty() || tiempo.isEmpty() ||
             porciones.isEmpty() || calorias.isEmpty() || dificultad.isEmpty() ||
             imageUri == null || ingredientes.isEmpty()) {
-            showToast("Complete todos los campos")
+            mostrarToast("Complete todos los campos")
             return false
         }
 
         if (dificultad.toIntOrNull() !in 1..3) {
-            showToast("Dificultad debe ser 1, 2 o 3")
+            mostrarToast("Dificultad debe ser 1, 2 o 3")
             return false
         }
 
@@ -181,18 +186,18 @@ class AgregarReceta : AppCompatActivity() {
 
             db.collection("Receta").document(recetaId).set(receta)
                 .addOnSuccessListener {
-                    showToast("¡Receta agregada!")
+                    mostrarToast("¡Receta agregada!")
                     setResult(Activity.RESULT_OK)
                     limpiarCampos()
                     finish()
                 }
                 .addOnFailureListener { e ->
                     Log.e("AgregarReceta", "Error Firestore: ${e.stackTraceToString()}")
-                    showToast("Error al guardar receta")
+                    mostrarToast("Error al guardar receta")
                 }
         } catch (e: Exception) {
             Log.e("AgregarReceta", "Error al preparar datos: ${e.stackTraceToString()}")
-            showToast("Error al preparar datos")
+            mostrarToast("Error al preparar datos")
         }
     }
 
@@ -219,7 +224,7 @@ class AgregarReceta : AppCompatActivity() {
             contenedor.addView(nuevoIngrediente)
         } catch (e: Exception) {
             Log.e("AgregarReceta", "Error añadir campo: ${e.stackTraceToString()}")
-            showToast("Error al agregar campo")
+            mostrarToast("Error al agregar campo")
         }
     }
 
@@ -236,20 +241,30 @@ class AgregarReceta : AppCompatActivity() {
 
             val contenedor = findViewById<LinearLayout>(R.id.contenedorIngredientes)
             contenedor?.removeAllViews()
-            añadirCampoIngrediente() // Campo inicial
+            añadirCampoIngrediente()
 
         } catch (e: Exception) {
             Log.e("AgregarReceta", "Error limpiar campos: ${e.stackTraceToString()}")
         }
     }
 
-    private fun showToast(message: String) {
+    private fun mostrarToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun mostrarDialogoConfirmacionSalida() {
+        AlertDialog.Builder(this)
+            .setTitle("¿Salir sin guardar?")
+            .setMessage("Tienes cambios sin guardar. ¿Estás seguro de que quieres salir?")
+            .setPositiveButton("Salir") { _, _ ->
+                finish()
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        // Limpiar referencias
         imageUri = null
     }
 }

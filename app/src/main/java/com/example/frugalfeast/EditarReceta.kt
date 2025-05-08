@@ -269,9 +269,6 @@ class EditarReceta : AppCompatActivity() {
                 finish()
             }
             .setNegativeButton("Cancelar", null)
-            .setNeutralButton("Guardar y salir") { _, _ ->
-                guardarCambios()
-            }
             .show()
     }
 }
