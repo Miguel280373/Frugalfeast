@@ -23,6 +23,7 @@ class PantallaPrincipalReceta : AppCompatActivity() {
     private lateinit var tvTiempoReceta: TextView
     private lateinit var tvPorcionesReceta: TextView
     private lateinit var tvDificultadReceta: TextView
+    private lateinit var tvCaloriasReceta: TextView
     private lateinit var preparacionReceta: TextView
     private lateinit var listaIngredientes: TextView
     private lateinit var btnAgregarReceta: ImageView
@@ -42,11 +43,16 @@ class PantallaPrincipalReceta : AppCompatActivity() {
         initViews()
         auth = FirebaseAuth.getInstance()
 
-        currentReceta = obtenerRecetaDesdeIntent()
+        val recetaId = intent.getStringExtra("receta_id") ?: intent.getStringExtra("recetaId") ?: ""
 
-        setupViews()
-        setupButtonActions()
+        if (recetaId.isNotEmpty()) {
+            cargarRecetaDesdeFirestore(recetaId)
+        } else {
+            Toast.makeText(this, "No se encontró la receta", Toast.LENGTH_SHORT).show()
+            finish()
+        }
     }
+
 
     private fun initViews() {
         imgReceta = findViewById(R.id.imgReceta)
@@ -54,35 +60,47 @@ class PantallaPrincipalReceta : AppCompatActivity() {
         tvTiempoReceta = findViewById(R.id.tv_tiempo_receta_dia)
         tvPorcionesReceta = findViewById(R.id.tv_porciones_receta_dia)
         tvDificultadReceta = findViewById(R.id.tv_dificultad_receta_dia)
+        tvCaloriasReceta = findViewById(R.id.totalCaloriesTextView)
         preparacionReceta = findViewById(R.id.preparacionReceta)
         listaIngredientes = findViewById(R.id.listaIngredientes)
         btnAgregarReceta = findViewById(R.id.btn_agregar_receta)
         btnBack = findViewById(R.id.btn_back)
     }
 
-    private fun obtenerRecetaDesdeIntent(): Receta {
-        return Receta(
-            id = intent.getStringExtra("receta_id") ?: "",
-            nombre = intent.getStringExtra("receta_nombre") ?: "",
-            imagenUrl = intent.getStringExtra("receta_imagen") ?: "",
-            tiempo = intent.getLongExtra("receta_tiempo", 0),
-            porciones = intent.getLongExtra("receta_porciones", 0),
-            dificultad = intent.getLongExtra("receta_dificultad", 1),
-            preparacion = intent.getStringExtra("receta_preparacion") ?: "",
-            userId = intent.getStringExtra("receta_userId") ?: "",
-            ingredientes = intent.getStringArrayListExtra("receta_ingredientes") ?: emptyList()
-        )
-    }
 
+    private fun cargarRecetaDesdeFirestore(recetaId: String) {
+        db.collection("Receta").document(recetaId).get()
+            .addOnSuccessListener { document ->
+                currentReceta = Receta(
+                    id = document.id,
+                    nombre = document.getString("nombre") ?: "",
+                    imagenUrl = document.getString("imagenUrl") ?: "",
+                    tiempo = document.getLong("tiempo")?.toInt() ?: 0,
+                    porciones = document.getLong("porciones")?.toInt() ?: 0,
+                    dificultad = document.getLong("dificultad")?.toInt() ?: 1,
+                    calorias = document.getLong("calorias")?.toInt() ?: 0,
+                    preparacion = document.getString("preparacion") ?: "",
+                    userId = document.getString("userId") ?: "",
+                    ingredientes = document.get("ingredientes") as? List<String> ?: emptyList()
+                )
+                setupViews()
+                configurarBotones()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Error al cargar receta", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+    }
     private fun setupViews() {
-        isMyRecipe = currentReceta.userId == auth.currentUser?.uid
+        val currentUser = auth.currentUser
+        isMyRecipe = currentUser != null && currentReceta.userId == currentUser.uid
 
         nombreReceta.text = currentReceta.nombre.ifEmpty { "Sin nombre" }
-        tvTiempoReceta.text = "${currentReceta.tiempo} min."
+        tvTiempoReceta.text = "${currentReceta.tiempo} h"
         tvPorcionesReceta.text = "${currentReceta.porciones} porc."
         tvDificultadReceta.text = obtenerTextoDificultad(currentReceta.dificultad)
+        tvCaloriasReceta.text = "${currentReceta.calorias} kcal"
         preparacionReceta.text = currentReceta.preparacion.ifEmpty { "No hay instrucciones" }
-
 
         listaIngredientes.text = if (currentReceta.ingredientes.isNotEmpty()) {
             currentReceta.ingredientes.joinToString("\n• ", "• ")
@@ -102,7 +120,7 @@ class PantallaPrincipalReceta : AppCompatActivity() {
         }
     }
 
-    private fun setupButtonActions() {
+    private fun configurarBotones() {
         btnBack.setOnClickListener { finish() }
 
         if (isMyRecipe) {
@@ -125,16 +143,9 @@ class PantallaPrincipalReceta : AppCompatActivity() {
     }
 
     private fun abrirPantallaEdicion() {
-        Intent(this, EditarReceta::class.java).apply {
-            putExtra("receta_id", currentReceta.id)
-            putExtra("receta_nombre", currentReceta.nombre)
-            putExtra("receta_imagen", currentReceta.imagenUrl)
-            putExtra("receta_tiempo", currentReceta.tiempo)
-            putExtra("receta_dificultad", currentReceta.dificultad)
-            putExtra("receta_porciones", currentReceta.porciones)
-            putExtra("receta_preparacion", currentReceta.preparacion)
-            putStringArrayListExtra("receta_ingredientes", ArrayList(currentReceta.ingredientes))
-        }.also { startActivity(it) }
+        val intent = Intent(this, EditarReceta::class.java)
+        intent.putExtra("receta_id", currentReceta.id)
+        startActivity(intent)
     }
 
     private fun verificarRecetaFavorita() {
@@ -206,11 +217,11 @@ class PantallaPrincipalReceta : AppCompatActivity() {
             }
     }
 
-    private fun obtenerTextoDificultad(nivel: Long): String {
+    private fun obtenerTextoDificultad(nivel: Int): String {
         return when (nivel) {
-            1L -> "Fácil"
-            2L -> "Media"
-            3L -> "Difícil"
+            1 -> "Fácil"
+            2 -> "Media"
+            3 -> "Difícil"
             else -> "No especificada"
         }
     }

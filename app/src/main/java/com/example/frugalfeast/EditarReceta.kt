@@ -27,8 +27,11 @@ class EditarReceta : AppCompatActivity() {
     private lateinit var editIngredientes: EditText
     private lateinit var editTiempo: EditText
     private lateinit var editPorciones: EditText
+    private lateinit var editCalorias: EditText
     private lateinit var botonTerminado: ImageView
     private lateinit var botonCambiarImagen: ImageButton
+    private lateinit var botonAtras: ImageView
+    private lateinit var nombreReceta: TextView
 
     // Variables de control
     private var hayCambios = false
@@ -62,7 +65,7 @@ class EditarReceta : AppCompatActivity() {
         setContentView(R.layout.activity_editar_receta)
 
         inicializarVistas()
-        cargarDatosIniciales()
+        obtenerIdReceta()
         configurarListeners()
     }
 
@@ -73,30 +76,58 @@ class EditarReceta : AppCompatActivity() {
         editIngredientes = findViewById(R.id.et_ingredientes)
         editTiempo = findViewById(R.id.etTiempo)
         editPorciones = findViewById(R.id.etPorciones)
+        editCalorias = findViewById(R.id.etCalorias)
         botonTerminado = findViewById(R.id.btn_terminado)
         botonCambiarImagen = findViewById(R.id.btnEditarImg)
+        botonAtras = findViewById(R.id.btnAtrasEditar)
+        nombreReceta = findViewById(R.id.nombreReceta)
     }
 
-    private fun cargarDatosIniciales() {
+    private fun obtenerIdReceta() {
         idReceta = intent.getStringExtra("receta_id") ?: ""
-        urlImagen = intent.getStringExtra("receta_imagen") ?: ""
-        val tiempo = intent.getLongExtra("receta_tiempo", 0)
-        val dificultad = intent.getLongExtra("receta_dificultad", 0)
-        val porciones = intent.getLongExtra("receta_porciones", 0)
-        val preparacion = intent.getStringExtra("receta_preparacion") ?: ""
-        val ingredientes = intent.getStringArrayListExtra("receta_ingredientes") ?: emptyList()
-
-        // Configurar vistas con datos iniciales
-        findViewById<TextView>(R.id.nombreReceta).text = intent.getStringExtra("receta_nombre") ?: ""
-        editPreparacion.setText(preparacion)
-        editIngredientes.setText(ingredientes.joinToString("\n"))
-        editTiempo.setText(tiempo.toString())
-        editPorciones.setText(porciones.toString())
-        editDificultad.setText(obtenerTextoDificultad(dificultad.toString()))
-
-        if (urlImagen.isNotEmpty()) {
-            Glide.with(this).load(urlImagen).into(imagenReceta)
+        if (idReceta.isEmpty()) {
+            mostrarToast("No se encontró la receta")
+            finish()
+            return
         }
+        cargarDatosReceta()
+    }
+
+    private fun cargarDatosReceta() {
+        baseDatos.collection("Receta").document(idReceta).get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    // Cargar datos de Firestore
+                    urlImagen = document.getString("imagenUrl") ?: ""
+                    val tiempo = document.getLong("tiempo") ?: 0
+                    val dificultad = document.getLong("dificultad") ?: 0
+                    val porciones = document.getLong("porciones") ?: 0
+                    val calorias = document.getLong("calorias") ?: 0
+                    val preparacion = document.getString("preparacion") ?: ""
+                    val ingredientes = document.get("ingredientes") as? List<String> ?: emptyList()
+                    val nombre = document.getString("nombre") ?: ""
+
+                    // Configurar vistas con datos
+                    nombreReceta.text = nombre
+                    editPreparacion.setText(preparacion)
+                    editIngredientes.setText(ingredientes.joinToString("\n"))
+                    editTiempo.setText(tiempo.toString())
+                    editPorciones.setText(porciones.toString())
+                    editCalorias.setText(calorias.toString())
+                    editDificultad.setText(obtenerTextoDificultad(dificultad.toString()))
+
+                    if (urlImagen.isNotEmpty()) {
+                        Glide.with(this).load(urlImagen).into(imagenReceta)
+                    }
+                } else {
+                    mostrarToast("La receta no existe")
+                    finish()
+                }
+            }
+            .addOnFailureListener { e ->
+                mostrarToast("Error al cargar receta: ${e.message}")
+                finish()
+            }
     }
 
     private fun configurarListeners() {
@@ -106,6 +137,10 @@ class EditarReceta : AppCompatActivity() {
 
         botonTerminado.setOnClickListener {
             guardarCambios()
+        }
+
+        botonAtras.setOnClickListener {
+            onBackPressed()
         }
 
         val escuchadorTexto = object : TextWatcher {
@@ -121,6 +156,7 @@ class EditarReceta : AppCompatActivity() {
         editTiempo.addTextChangedListener(escuchadorTexto)
         editPorciones.addTextChangedListener(escuchadorTexto)
         editDificultad.addTextChangedListener(escuchadorTexto)
+        editCalorias.addTextChangedListener(escuchadorTexto)
     }
 
     private fun obtenerTextoDificultad(dificultad: String): String {
@@ -148,20 +184,22 @@ class EditarReceta : AppCompatActivity() {
 
     private fun guardarCambios() {
         val preparacion = editPreparacion.text.toString().trim()
-        val ingredientes = editIngredientes.text.toString().trim().split("\n")
+        val ingredientes = editIngredientes.text.toString().trim().split("\n").filter { it.isNotBlank() }
         val tiempo = editTiempo.text.toString().trim().toLongOrNull() ?: 0
         val porciones = editPorciones.text.toString().trim().toLongOrNull() ?: 0
+        val calorias = editCalorias.text.toString().trim().toLongOrNull() ?: 0
         val dificultad = obtenerNumeroDificultad(editDificultad.text.toString().trim())
 
-        if (preparacion.isEmpty() || ingredientes.isEmpty() || tiempo <= 0 || porciones <= 0 || dificultad == 0) {
+        if (preparacion.isEmpty() || ingredientes.isEmpty() || tiempo <= 0 ||
+            porciones <= 0 || dificultad == 0 || calorias <= 0) {
             mostrarToast("Complete todos los campos correctamente")
             return
         }
 
         if (uriImagen != null) {
-            subirImagenYGuardar(preparacion, ingredientes, tiempo, porciones, dificultad)
+            subirImagenYGuardar(preparacion, ingredientes, tiempo, porciones, dificultad, calorias)
         } else {
-            actualizarReceta(preparacion, ingredientes, tiempo, porciones, dificultad, urlImagen)
+            actualizarReceta(preparacion, ingredientes, tiempo, porciones, dificultad, calorias, urlImagen)
         }
     }
 
@@ -170,7 +208,8 @@ class EditarReceta : AppCompatActivity() {
         ingredientes: List<String>,
         tiempo: Long,
         porciones: Long,
-        dificultad: Int
+        dificultad: Int,
+        calorias: Long
     ) {
         val idUsuario = autenticacion.currentUser?.uid ?: return
         val referenciaAlmacenamiento = almacenamiento.reference
@@ -180,7 +219,7 @@ class EditarReceta : AppCompatActivity() {
             referenciaImagen.putFile(uri)
                 .addOnSuccessListener {
                     referenciaImagen.downloadUrl.addOnSuccessListener { urlDescarga ->
-                        actualizarReceta(preparacion, ingredientes, tiempo, porciones, dificultad, urlDescarga.toString())
+                        actualizarReceta(preparacion, ingredientes, tiempo, porciones, dificultad, calorias, urlDescarga.toString())
                     }
                 }
                 .addOnFailureListener { e ->
@@ -195,10 +234,10 @@ class EditarReceta : AppCompatActivity() {
         tiempo: Long,
         porciones: Long,
         dificultad: Int,
+        calorias: Long,
         urlImagen: String
     ) {
-        val idUsuario = autenticacion.currentUser?.uid ?: return
-        val nombre = intent.getStringExtra("receta_nombre") ?: ""
+        val nombre = nombreReceta.text.toString()
 
         val recetaActualizada = hashMapOf(
             "nombre" to nombre,
@@ -208,7 +247,7 @@ class EditarReceta : AppCompatActivity() {
             "tiempo" to tiempo,
             "porciones" to porciones,
             "dificultad" to dificultad,
-            "userId" to idUsuario,
+            "calorias" to calorias,
             "fechaCreacion" to FieldValue.serverTimestamp()
         )
 

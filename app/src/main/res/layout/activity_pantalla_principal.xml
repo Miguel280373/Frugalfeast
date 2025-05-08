@@ -228,7 +228,7 @@
                             android:text="@string/explorar_recetas"/>
                     </LinearLayout>
 
-                    <!-- Layout para contenido (nuevo diseño igual a Receta del Día) -->
+                    <!-- Layout para contenido -->
                     <LinearLayout
                         android:id="@+id/layout_visto_recientemente_contenido"
                         android:layout_width="match_parent"
@@ -361,21 +361,21 @@
                         android:layout_marginStart="8dp"
                         app:cardCornerRadius="8dp">
 
+                        <!-- Cuando no hay receta añadida -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:padding="16dp">
-
                             <TextView
-                                android:layout_width="match_parent"
+                                android:id="@+id/tituloDesayunoSin"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/desayuno"
-                                android:textColor="@color/black"
                                 android:textSize="20sp"
+                                android:textColor="@color/black"
                                 android:textStyle="bold"/>
 
-                            <!-- Cuando no hay receta añadida -->
                             <LinearLayout
                                 android:id="@+id/layout_desayuno_vacio"
                                 android:layout_width="match_parent"
@@ -383,6 +383,7 @@
                                 android:orientation="horizontal"
                                 android:gravity="center"
                                 android:paddingTop="8dp">
+
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -401,44 +402,112 @@
                                     android:backgroundTint="@color/white"
                                     android:background="@drawable/rounded_circle"/>
                             </LinearLayout>
+                        </LinearLayout>
+                        <!--Cuando hay receta -->
+                    <LinearLayout
+                        android:id="@+id/layout_desayuno_con_receta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+                        android:gravity="center_vertical"
+                        android:padding="8dp"
+                        android:layout_margin="4dp"
+                        android:weightSum="3">
 
-                            <!-- Estado con receta -->
+                            <!-- Sección izquierda: Texto descriptivo -->
                             <LinearLayout
-                                android:id="@+id/layout_desayuno_con_receta"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:orientation="vertical"
-                                android:visibility="gone"
-                                android:paddingTop="8dp">
+                                android:padding="4dp">
 
                                 <TextView
-                                    android:id="@+id/tv_desayuno_tiempo"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:text="@string/desayuno"
                                     android:textColor="@color/black"
-                                    android:textSize="16sp"
-                                    android:drawablePadding="8dp"
-                                    app:drawableStartCompat="@drawable/baseline_access_time_24"
-                                    app:drawableTint="@color/black" />
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"/>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginTop="8dp"
+                                    android:gravity="center_vertical">
+
+                                    <ImageView
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
+                                        android:src="@drawable/baseline_access_time_24" />
+
+                                    <TextView
+                                        android:id="@+id/tv_desayuno_tiempo"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/_1_hora"
+                                        android:textColor="@color/black"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:layout_marginStart="8dp"/>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginTop="8dp"
+                                    android:gravity="center_vertical">
+
+                                    <ImageView
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
+                                        android:src="@drawable/baseline_query_stats_24"/>
+
+                                    <TextView
+                                        android:id="@+id/tv_desayuno_dificultad"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/black"
+                                        android:text="medio"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:layout_marginStart="8dp"/>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <!-- Sección derecha: Nombre e imagen -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:padding="4dp">
 
                                 <TextView
                                     android:id="@+id/tv_desayuno_nombre"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textColor="@color/black"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold"
-                                    android:maxLines="1"
-                                    android:ellipsize="end"
-                                    android:layout_marginTop="4dp"/>
-
-                                <TextView
-                                    android:id="@+id/tv_desayuno_dificultad"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:text="@string/fricas_de_pollo"
                                     android:textColor="@color/black"
                                     android:textSize="16sp"
-                                    android:layout_marginTop="4dp"/>
+                                    android:textStyle="bold"
+                                    android:maxLines="2"
+                                    android:ellipsize="end"
+                                    android:layout_marginBottom="4dp"
+                                    android:gravity="center"/>
+
+                                <ImageView
+                                    android:id="@+id/img_desayuno"
+                                    android:layout_width="70dp"
+                                    android:layout_height="70dp"
+                                    android:scaleType="centerCrop"
+                                    android:background="@drawable/rounded_image"
+                                    android:src="@drawable/baseline_image_24"
+                                    android:contentDescription="@string/imagen_placeholder"/>
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -454,7 +523,7 @@
                         android:layout_marginStart="8dp"
                         app:cardCornerRadius="8dp">
 
-                        <!-- Almuerzo sin llenar -->
+                        <!-- Cuando no hay receta añadida -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -462,11 +531,12 @@
                             android:padding="16dp">
 
                             <TextView
-                                android:layout_width="match_parent"
+                                android:id="@+id/tituloAlmuerzoSin"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/almuerzo"
-                                android:textColor="@color/black"
                                 android:textSize="20sp"
+                                android:textColor="@color/black"
                                 android:textStyle="bold"/>
 
                             <LinearLayout
@@ -494,44 +564,113 @@
                                     android:backgroundTint="@color/white"
                                     android:background="@drawable/rounded_circle"/>
                             </LinearLayout>
+                        </LinearLayout>
 
-                            <!--Almuerzo con receta -->
+                        <!-- Cuando hay receta -->
+                        <LinearLayout
+                            android:id="@+id/layout_almuerzo_con_receta"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:visibility="gone"
+                            android:gravity="center_vertical"
+                            android:padding="8dp"
+                            android:layout_margin="4dp"
+                            android:weightSum="3">
+
+                            <!-- Sección izquierda: Texto descriptivo -->
                             <LinearLayout
-                                android:id="@+id/layout_almuerzo_con_receta"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:orientation="vertical"
-                                android:visibility="gone"
-                                android:paddingTop="8dp">
+                                android:padding="4dp">
 
                                 <TextView
-                                    android:id="@+id/tv_almuerzo_tiempo"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:text="@string/almuerzo"
                                     android:textColor="@color/black"
-                                    android:textSize="16sp"
-                                    android:drawablePadding="8dp"
-                                    app:drawableTint="@color/black"
-                                    app:drawableStartCompat="@drawable/baseline_access_time_24" />
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"/>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginTop="8dp"
+                                    android:gravity="center_vertical">
+
+                                    <ImageView
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
+                                        android:src="@drawable/baseline_access_time_24" />
+
+                                    <TextView
+                                        android:id="@+id/tv_almuerzo_tiempo"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/_1_hora"
+                                        android:textColor="@color/black"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:layout_marginStart="8dp"/>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginTop="8dp"
+                                    android:gravity="center_vertical">
+
+                                    <ImageView
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
+                                        android:src="@drawable/baseline_query_stats_24"/>
+
+                                    <TextView
+                                        android:id="@+id/tv_almuerzo_dificultad"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/black"
+                                        android:text="medio"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:layout_marginStart="8dp"/>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <!-- Sección derecha: Nombre e imagen -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:padding="4dp">
 
                                 <TextView
                                     android:id="@+id/tv_almuerzo_nombre"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textColor="@color/black"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold"
-                                    android:maxLines="1"
-                                    android:ellipsize="end"
-                                    android:layout_marginTop="4dp"/>
-
-                                <TextView
-                                    android:id="@+id/tv_almuerzo_dificultad"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:text="@string/fricas_de_pollo"
                                     android:textColor="@color/black"
                                     android:textSize="16sp"
-                                    android:layout_marginTop="4dp"/>
+                                    android:textStyle="bold"
+                                    android:maxLines="2"
+                                    android:ellipsize="end"
+                                    android:layout_marginBottom="4dp"
+                                    android:gravity="center"/>
+
+                                <ImageView
+                                    android:id="@+id/img_almuerzo"
+                                    android:layout_width="70dp"
+                                    android:layout_height="70dp"
+                                    android:scaleType="centerCrop"
+                                    android:background="@drawable/rounded_image"
+                                    android:src="@drawable/baseline_image_24"
+                                    android:contentDescription="@string/imagen_placeholder"/>
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -542,11 +681,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginStart="8dp"
                         android:backgroundTint="@color/Naranja"
                         app:cardElevation="4dp"
+                        android:layout_marginStart="8dp"
                         app:cardCornerRadius="8dp">
 
+                        <!-- Cuando no hay receta añadida -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -554,11 +694,12 @@
                             android:padding="16dp">
 
                             <TextView
-                                android:layout_width="match_parent"
+                                android:id="@+id/tituloCenaSin"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/cena"
-                                android:textColor="@color/black"
                                 android:textSize="20sp"
+                                android:textColor="@color/black"
                                 android:textStyle="bold"/>
 
                             <LinearLayout
@@ -582,47 +723,116 @@
                                     android:layout_marginStart="8dp"
                                     android:contentDescription="@string/a_ade_tu_receta"
                                     android:src="@drawable/baseline_add_24"
+                                    app:tint="@color/black"
                                     android:backgroundTint="@color/white"
-                                    android:background="@drawable/rounded_circle"
-                                    app:tint="@color/black" />
+                                    android:background="@drawable/rounded_circle"/>
                             </LinearLayout>
+                        </LinearLayout>
 
+                        <!-- Cuando hay receta -->
+                        <LinearLayout
+                            android:id="@+id/layout_cena_con_receta"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:visibility="gone"
+                            android:gravity="center_vertical"
+                            android:padding="8dp"
+                            android:layout_margin="4dp"
+                            android:weightSum="3">
+
+                            <!-- Sección izquierda: Texto descriptivo -->
                             <LinearLayout
-                                android:id="@+id/layout_cena_con_receta"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:orientation="vertical"
-                                android:visibility="gone"
-                                android:paddingTop="8dp">
+                                android:padding="4dp">
 
                                 <TextView
-                                    android:id="@+id/tv_cena_tiempo"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:text="@string/cena"
                                     android:textColor="@color/black"
-                                    android:textSize="16sp"
-                                    android:drawablePadding="8dp"
-                                    app:drawableStartCompat="@drawable/baseline_access_time_24"
-                                    app:drawableTint="@color/black" />
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"/>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginTop="8dp"
+                                    android:gravity="center_vertical">
+
+                                    <ImageView
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
+                                        android:src="@drawable/baseline_access_time_24" />
+
+                                    <TextView
+                                        android:id="@+id/tv_cena_tiempo"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/_1_hora"
+                                        android:textColor="@color/black"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:layout_marginStart="8dp"/>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginTop="8dp"
+                                    android:gravity="center_vertical">
+
+                                    <ImageView
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
+                                        android:src="@drawable/baseline_query_stats_24"/>
+
+                                    <TextView
+                                        android:id="@+id/tv_cena_dificultad"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/black"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:layout_marginStart="8dp"/>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <!-- Sección derecha: Nombre e imagen -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:padding="4dp">
 
                                 <TextView
                                     android:id="@+id/tv_cena_nombre"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textColor="@color/black"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold"
-                                    android:maxLines="1"
-                                    android:ellipsize="end"
-                                    android:layout_marginTop="4dp"/>
-
-                                <TextView
-                                    android:id="@+id/tv_cena_dificultad"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:text="@string/fricas_de_pollo"
                                     android:textColor="@color/black"
                                     android:textSize="16sp"
-                                    android:layout_marginTop="4dp"/>
+                                    android:textStyle="bold"
+                                    android:maxLines="2"
+                                    android:ellipsize="end"
+                                    android:layout_marginBottom="4dp"
+                                    android:gravity="center"/>
+
+                                <ImageView
+                                    android:id="@+id/img_cena"
+                                    android:layout_width="70dp"
+                                    android:layout_height="70dp"
+                                    android:scaleType="centerCrop"
+                                    android:background="@drawable/rounded_image"
+                                    android:src="@drawable/baseline_image_24"
+                                    android:contentDescription="@string/imagen_placeholder"/>
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>

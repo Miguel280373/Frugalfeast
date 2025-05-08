@@ -18,10 +18,10 @@ class MiMenu : AppCompatActivity() {
             insets
         }
 
-        val imgVolver = findViewById<ImageView>(R.id.imageView25)
+        val imgVolver = findViewById<ImageView>(R.id.btn_atras_mi_menu)
 
         imgVolver.setOnClickListener {
-            finish() // Regresa a la actividad anterior
+            finish()
         }
 
     }

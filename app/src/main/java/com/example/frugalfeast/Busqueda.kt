@@ -1,6 +1,5 @@
 package com.example.frugalfeast
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -26,12 +25,13 @@ class Busqueda : AppCompatActivity(), AdaptadorBusqueda.OnItemClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_busqueda)
 
-        // Inicializar vistas con findViewById
         recyclerViewBusqueda = findViewById(R.id.recyclerViewBusqueda)
         barraBusqueda = findViewById(R.id.barraBusqueda)
 
         setupRecyclerView()
-        cargarRecetasDesdeFirebase()
+
+        val queryText = intent.getStringExtra("query") ?: ""
+        barraBusqueda.setText(queryText)
 
         val botonIA: ImageView = findViewById(R.id.imageView58)
         botonIA.setOnClickListener {
@@ -41,17 +41,30 @@ class Busqueda : AppCompatActivity(), AdaptadorBusqueda.OnItemClickListener {
 
         val btnAtras: ImageView = findViewById(R.id.btnAtrasBusqueda)
         btnAtras.setOnClickListener {
-            onBackPressed()
+            finish()
         }
 
         barraBusqueda.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val query = s.toString().trim().lowercase()
-                filterList(query)
+                if (query.isNotEmpty()) {
+                    filterList(query)
+                } else {
+                    listaBusquedaFiltrada.clear()
+                    adaptador.notifyDataSetChanged()
+                }
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
+
+        if (queryText.isNotEmpty()) {
+            barraBusqueda.post {
+                filterList(queryText)
+            }
+        }
     }
 
     private fun setupRecyclerView() {
@@ -60,36 +73,40 @@ class Busqueda : AppCompatActivity(), AdaptadorBusqueda.OnItemClickListener {
         recyclerViewBusqueda.adapter = adaptador
     }
 
-    private fun cargarRecetasDesdeFirebase() {
-        db.collection("Receta")
-            .get()
-            .addOnSuccessListener { result ->
-                listaBusquedaOriginal.clear()
-                for (document in result) {
-                    val receta = document.toObject(BarraBusqueda::class.java)?.copy(id = document.id) ?: BarraBusqueda()
-                    listaBusquedaOriginal.add(receta)
-                }
-                listaBusquedaFiltrada.clear()
-                listaBusquedaFiltrada.addAll(listaBusquedaOriginal)
-                adaptador.notifyDataSetChanged()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Error al cargar recetas: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
-    }
-
     private fun filterList(query: String) {
         listaBusquedaFiltrada.clear()
-        if (query.isEmpty()) {
-            listaBusquedaFiltrada.addAll(listaBusquedaOriginal)
-        } else {
-            for (receta in listaBusquedaOriginal) {
-                if (receta.nombre?.lowercase()?.contains(query) == true) {
-                    listaBusquedaFiltrada.add(receta)
+
+        if (listaBusquedaOriginal.isEmpty()) {
+            db.collection("Receta")
+                .get()
+                .addOnSuccessListener { result ->
+                    listaBusquedaOriginal.clear()
+                    for (document in result) {
+                        val receta = document.toObject(BarraBusqueda::class.java)?.copy(id = document.id) ?: BarraBusqueda()
+                        listaBusquedaOriginal.add(receta)
+                    }
+                    actualizarListaFiltrada(query)
                 }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error al cargar recetas: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        } else {
+            actualizarListaFiltrada(query)
+        }
+    }
+
+    private fun actualizarListaFiltrada(query: String) {
+        listaBusquedaFiltrada.clear()
+        for (receta in listaBusquedaOriginal) {
+            if (receta.nombre?.lowercase()?.contains(query) == true) {
+                listaBusquedaFiltrada.add(receta)
             }
         }
         adaptador.notifyDataSetChanged()
+
+        if (listaBusquedaFiltrada.isEmpty() && query.isNotEmpty()) {
+            Toast.makeText(this, "No se encontraron recetas", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onItemClick(receta: BarraBusqueda) {
