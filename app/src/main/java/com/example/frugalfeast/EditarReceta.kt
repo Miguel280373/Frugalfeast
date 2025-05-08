@@ -97,7 +97,6 @@ class EditarReceta : AppCompatActivity() {
         baseDatos.collection("Receta").document(idReceta).get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
-                    // Cargar datos de Firestore
                     urlImagen = document.getString("imagenUrl") ?: ""
                     val tiempo = document.getLong("tiempo") ?: 0
                     val dificultad = document.getLong("dificultad") ?: 0
@@ -107,14 +106,13 @@ class EditarReceta : AppCompatActivity() {
                     val ingredientes = document.get("ingredientes") as? List<String> ?: emptyList()
                     val nombre = document.getString("nombre") ?: ""
 
-                    // Configurar vistas con datos
                     nombreReceta.text = nombre
                     editPreparacion.setText(preparacion)
                     editIngredientes.setText(ingredientes.joinToString("\n"))
                     editTiempo.setText(tiempo.toString())
                     editPorciones.setText(porciones.toString())
                     editCalorias.setText(calorias.toString())
-                    editDificultad.setText(obtenerTextoDificultad(dificultad.toString()))
+                    editDificultad.setText(dificultad.toString())
 
                     if (urlImagen.isNotEmpty()) {
                         Glide.with(this).load(urlImagen).into(imagenReceta)
@@ -159,19 +157,6 @@ class EditarReceta : AppCompatActivity() {
         editCalorias.addTextChangedListener(escuchadorTexto)
     }
 
-    private fun obtenerTextoDificultad(dificultad: String): String {
-        return try {
-            when(dificultad.toInt()) {
-                1 -> "Fácil"
-                2 -> "Media"
-                3 -> "Difícil"
-                else -> ""
-            }
-        } catch (e: NumberFormatException) {
-            Log.e("EditarReceta", "Error al convertir dificultad: ${e.message}")
-            ""
-        }
-    }
 
     private fun obtenerNumeroDificultad(textoDificultad: String): Int {
         return when(textoDificultad) {
@@ -191,7 +176,7 @@ class EditarReceta : AppCompatActivity() {
         val dificultad = obtenerNumeroDificultad(editDificultad.text.toString().trim())
 
         if (preparacion.isEmpty() || ingredientes.isEmpty() || tiempo <= 0 ||
-            porciones <= 0 || dificultad == 0 || calorias <= 0) {
+            porciones <= 0 || dificultad !in 1..3  || calorias <= 0) {
             mostrarToast("Complete todos los campos correctamente")
             return
         }

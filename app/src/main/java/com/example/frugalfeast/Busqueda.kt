@@ -17,8 +17,8 @@ class Busqueda : AppCompatActivity(), AdaptadorBusqueda.OnItemClickListener {
     private lateinit var recyclerViewBusqueda: RecyclerView
     private lateinit var barraBusqueda: EditText
     private lateinit var adaptador: AdaptadorBusqueda
-    private var listaBusquedaOriginal = ArrayList<BarraBusqueda>()
-    private var listaBusquedaFiltrada = ArrayList<BarraBusqueda>()
+    private var listaBusquedaOriginal = ArrayList<Receta>()
+    private var listaBusquedaFiltrada = ArrayList<Receta>()
     private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,7 +82,7 @@ class Busqueda : AppCompatActivity(), AdaptadorBusqueda.OnItemClickListener {
                 .addOnSuccessListener { result ->
                     listaBusquedaOriginal.clear()
                     for (document in result) {
-                        val receta = document.toObject(BarraBusqueda::class.java)?.copy(id = document.id) ?: BarraBusqueda()
+                        val receta = document.toObject(Receta::class.java).copy(id = document.id)
                         listaBusquedaOriginal.add(receta)
                     }
                     actualizarListaFiltrada(query)
@@ -98,7 +98,7 @@ class Busqueda : AppCompatActivity(), AdaptadorBusqueda.OnItemClickListener {
     private fun actualizarListaFiltrada(query: String) {
         listaBusquedaFiltrada.clear()
         for (receta in listaBusquedaOriginal) {
-            if (receta.nombre?.lowercase()?.contains(query) == true) {
+            if (receta.nombre.lowercase().contains(query)) {
                 listaBusquedaFiltrada.add(receta)
             }
         }
@@ -109,7 +109,7 @@ class Busqueda : AppCompatActivity(), AdaptadorBusqueda.OnItemClickListener {
         }
     }
 
-    override fun onItemClick(receta: BarraBusqueda) {
+    override fun onItemClick(receta: Receta) {
         val intent = Intent(this, PantallaPrincipalReceta::class.java)
         intent.putExtra("recetaId", receta.id)
         startActivity(intent)

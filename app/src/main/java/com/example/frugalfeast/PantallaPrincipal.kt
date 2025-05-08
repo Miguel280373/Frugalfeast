@@ -269,7 +269,6 @@ class PantallaPrincipal : AppCompatActivity() {
                     val tiempo = document.getLong("tiempo")?.toInt() ?: 0
                     val dificultad = document.getLong("dificultad")?.toInt() ?: 1
 
-                    // Actualizar UI
                     tvNombreRecetaDia.text = nombreReceta
                     tvPorcionesRecetaDia.text = "$porciones porc."
                     tvTiempoRecetaDia.text = "$tiempo h"
