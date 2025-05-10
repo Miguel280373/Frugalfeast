@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -35,6 +36,13 @@ class RecetasGuardadas : AppCompatActivity() {
         setupRecyclerView()
         setupBackButton()
         cargarRecetasGuardadas()
+
+       /*adapterGuardadas.notifyDataSetChanged()
+
+        if (recetasGuardadas.isEmpty()) {
+            Toast.makeText(this, "No tienes recetas guardadas aún", Toast.LENGTH_SHORT).show()
+        }*/
+
     }
 
     private fun setupRecyclerView() {
@@ -78,6 +86,9 @@ class RecetasGuardadas : AppCompatActivity() {
                 }
 
                 adapterGuardadas.notifyDataSetChanged()
+
+                val prefs = getSharedPreferences("frugalfeast_prefs", Context.MODE_PRIVATE)
+                prefs.edit().putInt("contador_guardadas", recetasGuardadas.size).apply()
 
                 if (recetasGuardadas.isEmpty()) {
                     Toast.makeText(this, "No tienes recetas guardadas aún", Toast.LENGTH_SHORT).show()
@@ -132,4 +143,5 @@ class RecetasGuardadas : AppCompatActivity() {
             })
         }
     }
+
 }

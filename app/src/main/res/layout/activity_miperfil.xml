@@ -82,6 +82,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.475" />
 
+    <ImageView
+        android:id="@+id/imageView52"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView67"
+        app:layout_constraintEnd_toEndOf="@+id/textView67"
+        app:layout_constraintStart_toStartOf="@+id/textView67"
+        app:layout_constraintTop_toTopOf="@+id/textView67"
+        app:srcCompat="@drawable/gorro_chef" />
+
     <TextView
         android:id="@+id/textView68"
         android:layout_width="100dp"
@@ -97,7 +107,32 @@
         app:layout_constraintHorizontal_bias="0.212"
         app:layout_constraintStart_toEndOf="@+id/textView67"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.475" />
+        app:layout_constraintVertical_bias="0.475" />*/
+
+    <ImageView
+        android:id="@+id/imageView53"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView68"
+        app:layout_constraintEnd_toEndOf="@+id/textView68"
+        app:layout_constraintStart_toStartOf="@+id/textView68"
+        app:layout_constraintTop_toTopOf="@+id/textView68"
+        app:srcCompat="@drawable/guardado" />
+
+    <TextView
+        android:id="@+id/contadorGuardadas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circulo_dorado"
+        android:padding="8dp"
+        android:text="0"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        app:layout_constraintTop_toTopOf="@+id/textView68"
+        app:layout_constraintEnd_toEndOf="@+id/textView68"
+        android:translationX="8dp"
+        android:translationY="-8dp" />
 
     <TextView
         android:id="@+id/textView69"
@@ -216,26 +251,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.874"
         app:srcCompat="@drawable/igual" />
-
-    <ImageView
-        android:id="@+id/imageView52"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView67"
-        app:layout_constraintEnd_toEndOf="@+id/textView67"
-        app:layout_constraintStart_toStartOf="@+id/textView67"
-        app:layout_constraintTop_toTopOf="@+id/textView67"
-        app:srcCompat="@drawable/gorro_chef" />
-
-    <ImageView
-        android:id="@+id/imageView53"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView68"
-        app:layout_constraintEnd_toEndOf="@+id/textView68"
-        app:layout_constraintStart_toStartOf="@+id/textView68"
-        app:layout_constraintTop_toTopOf="@+id/textView68"
-        app:srcCompat="@drawable/guardado" />
 
     <ImageView
         android:id="@+id/imageView54"
