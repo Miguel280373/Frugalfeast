@@ -39,7 +39,7 @@ class ConfiguracionyPrivacidad : AppCompatActivity() {
             val intent = Intent(this, SobreApp::class.java)
             startActivity(intent)
         }
-        val btnIrcon = findViewById<Button>(R.id.button15)
+        val btnIrcon = findViewById<Button>(R.id.button16)
 
         btnIrcon.setOnClickListener {
             val intent = Intent(this, Contactanos::class.java)
