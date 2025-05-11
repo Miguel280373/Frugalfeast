@@ -28,20 +28,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.036" />
 
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="174dp"
-            android:layout_height="178dp"
-            android:contentDescription="@string/logo_frugal_feast"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registroLabel"
-            app:layout_constraintVertical_bias="0.01"
-            app:srcCompat="@drawable/logo"
-            tools:ignore="ImageContrastCheck" />
-
         <TextView
             android:id="@+id/nombreLabel"
             android:layout_width="257dp"
@@ -54,7 +40,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.22"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView9"
+            app:layout_constraintTop_toBottomOf="@+id/imageView8"
             app:layout_constraintVertical_bias="0.033"
             tools:ignore="TextSizeCheck" />
 
@@ -281,6 +267,19 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/baseline_arrow_back_24"
             tools:ignore="TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="174dp"
+            android:layout_height="174dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registroLabel"
+            app:layout_constraintVertical_bias="0.03"
+            app:srcCompat="@drawable/blend0502250934281" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
