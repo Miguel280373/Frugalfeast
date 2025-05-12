@@ -4,7 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 class CalcularCalorias : AppCompatActivity() {
@@ -100,6 +104,32 @@ class CalcularCalorias : AppCompatActivity() {
             val intent = Intent(this, CaloriasResultado::class.java)
             intent.putExtra("totalCalorias", totalCalorias)
             startActivity(intent)
+
+            val uid = FirebaseAuth.getInstance().currentUser?.uid
+            val fechaActual = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+
+            if (uid != null) {
+                val db = FirebaseFirestore.getInstance()
+                val caloriasData = hashMapOf(
+                    "fecha" to fechaActual,
+                    "totalCalorias" to totalCalorias
+                )
+
+                db.collection("usuarios")
+                    .document(uid)
+                    .collection("calorias")
+                    .document(fechaActual)
+                    .set(caloriasData)
+                    .addOnSuccessListener {
+                        val intent = Intent(this, CaloriasResultado::class.java)
+                        intent.putExtra("totalCalorias", totalCalorias)
+                        startActivity(intent)
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Error al guardar calorías", Toast.LENGTH_SHORT).show()
+                    }
+            }
+
         }
         val imgVolver = findViewById<ImageView>(R.id.ivBack)
 

@@ -217,6 +217,22 @@ class PantallaPrincipal : AppCompatActivity() {
 
         // Configurar header del drawer
         val headerView = navigationView.getHeaderView(0)
+        val imageViewHeader = headerView.findViewById<ImageView>(R.id.imageViewNavHeader)
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        //imagen
+        if (uid != null) {
+            val db = FirebaseFirestore.getInstance()
+            db.collection("usuarios").document(uid).get()
+                .addOnSuccessListener { document ->
+                    val fotoUrl = document.getString("fotoPerfil")
+                    if (!fotoUrl.isNullOrEmpty()) {
+                        Glide.with(this)
+                            .load(fotoUrl)
+                            //.placeholder(R.drawable.avatar1) // Imagen por defecto
+                            .into(imageViewHeader)
+                    }
+                }
+        }
         headerView.setOnClickListener {
             startActivity(Intent(this, Miperfil::class.java))
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -232,7 +248,7 @@ class PantallaPrincipal : AppCompatActivity() {
                     startActivity(Intent(this, MiMenu::class.java))
                 }
                 R.id.nav_configuracion -> {
-                    startActivity(Intent(this,PantallaPrincipal::class.java)) // reemplazar por configuracion
+                    startActivity(Intent(this,ConfiguracionyPrivacidad::class.java)) // reemplazar por configuracion
                 }
                 R.id.nav_cerrar_sesion -> {
                     FirebaseAuth.getInstance().signOut()
@@ -249,6 +265,8 @@ class PantallaPrincipal : AppCompatActivity() {
         val usuario = FirebaseAuth.getInstance().currentUser
         txtNombreUsuario.text = usuario?.displayName ?: "Invitado"
     }
+
+
 
     //RECETA DEL DIA
 
@@ -693,5 +711,9 @@ class PantallaPrincipal : AppCompatActivity() {
 
     companion object {
         private const val REQUEST_SELECCIONAR_RECETA = 1001
+    }
+    override fun onResume() {
+        super.onResume()
+        setupNavigationDrawer()
     }
 }
