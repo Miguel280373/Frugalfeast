@@ -1,6 +1,8 @@
 package com.example.frugalfeast
 
+import android.app.DatePickerDialog
 import android.content.Intent
+import android.icu.util.Calendar
 import android.net.Uri
 import android.os.Bundle
 import android.widget.*
@@ -42,6 +44,20 @@ class EditarPerfil : AppCompatActivity() {
         val editNombre = findViewById<EditText>(R.id.editTextText)
         val editApodo = findViewById<EditText>(R.id.editTextText2)
         val editFecha = findViewById<EditText>(R.id.editTextText3)
+        val calendar = Calendar.getInstance()
+        editFecha.setOnClickListener {
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val datePicker = DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
+                // Formato: dd/MM/yyyy
+                val fechaFormateada = String.format("%02d/%02d/%04d", selectedDay, selectedMonth + 1, selectedYear)
+                editFecha.setText(fechaFormateada)
+            }, year, month, day)
+
+            datePicker.show()
+        }
         val editCorreo = findViewById<EditText>(R.id.editTextText4)
         val editTelefono = findViewById<EditText>(R.id.editTextText5)
         val editNewContraseña = findViewById<EditText>(R.id.editTextText6)
@@ -63,8 +79,9 @@ class EditarPerfil : AppCompatActivity() {
                     if (document.exists()) {
                         editNombre.setText(document.getString("nombre") ?: "")
                         editApodo.setText(document.getString("apodo") ?: "")
-                        editCorreo.setText(document.getString("correo") ?: "")
-                        // Puedes cargar más campos si lo deseas
+                        editCorreo.setText(document.getString("Correo") ?: "")
+                        editFecha.setText(document.getString("Fecha") ?: "")
+                        editTelefono.setText(document.getString("Telefono") ?: "")
                     }
                 }
                 .addOnFailureListener {
@@ -80,6 +97,8 @@ class EditarPerfil : AppCompatActivity() {
             val nuevoNombre = editNombre.text.toString()
             val nuevoApodo = editApodo.text.toString()
             val nuevoCorreo = editCorreo.text.toString()
+            val nuevoTelefono = editTelefono.text.toString()
+            val nuevaFecha = editFecha.text.toString()
             val nuevaContrasena = editNewContraseña.text.toString()
             val confirmarContrasena = editConfirmarc.text.toString()
 
@@ -87,7 +106,9 @@ class EditarPerfil : AppCompatActivity() {
                 val userUpdates = hashMapOf(
                     "nombre" to nuevoNombre,
                     "apodo" to nuevoApodo,
-                    "correo" to nuevoCorreo
+                    "Correo" to nuevoCorreo,
+                    "Telefono" to nuevoTelefono,
+                    "Fecha" to nuevaFecha
                 )
 
                 db.collection("usuarios").document(uid).update(userUpdates as Map<String, Any>)
@@ -131,6 +152,12 @@ class EditarPerfil : AppCompatActivity() {
                     .addOnFailureListener {
                         Toast.makeText(this, "Error al subir imagen", Toast.LENGTH_SHORT).show()
                     }
+            }
+
+            val nuevo_telefono = editTelefono.text.toString()
+            if (!nuevo_telefono.matches(Regex("^\\d{7,10}\$"))) {
+                Toast.makeText(this, "Ingrese un número de teléfono válido (solo números)", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
             // Finalizar actividad

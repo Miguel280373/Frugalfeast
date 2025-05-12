@@ -3,6 +3,7 @@ package com.example.frugalfeast
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -108,6 +109,7 @@ class Miperfil : AppCompatActivity() {
             startActivity(irAGuardados)
         }
     }
+
     override fun onResume() {
         super.onResume()
         val prefs = getSharedPreferences("frugalfeast_prefs", Context.MODE_PRIVATE)
@@ -115,5 +117,11 @@ class Miperfil : AppCompatActivity() {
 
         val contadorTextView = findViewById<TextView>(R.id.contadorGuardadas)
         contadorTextView.text = "$cantidadGuardadas"
+
+        val creadas = prefs.getInt("contador_creadas", 0)
+
+        val circulo = findViewById<TextView>(R.id.circulo_RecetasCreadas)
+        circulo.text = creadas.toString()
+        circulo.visibility = if (creadas > 0) View.VISIBLE else View.GONE
     }
 }

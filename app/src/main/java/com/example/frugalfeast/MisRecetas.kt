@@ -48,17 +48,21 @@ class MisRecetas : AppCompatActivity() {
     private fun cargarMisRecetas() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
-        db.collection("usuarios").document(userId).collection("MisRecetas")
+        db.collection("Receta")
+            .whereEqualTo("userId", userId)
             .get()
             .addOnSuccessListener { documents ->
                 misRecetas.clear()
                 for (document in documents) {
-                    val receta = document.toObject<Receta>()
+                    val receta = document.toObject<Receta>().apply { id = document.id }
                     misRecetas.add(receta)
                 }
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Error al cargar las recetas: $e", Toast.LENGTH_SHORT).show()
+                adapterMisRecetas.notifyDataSetChanged()
+
+                // Guardamos el conteo
+                getSharedPreferences("frugalfeast_prefs", MODE_PRIVATE).edit()
+                    .putInt("contador_creadas", misRecetas.size)
+                    .apply()
             }
 
         val imgVolver = findViewById<ImageView>(R.id.imageView22)
