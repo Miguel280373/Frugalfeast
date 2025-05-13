@@ -65,7 +65,7 @@ class MisRecetas : AppCompatActivity() {
                     .apply()
             }
 
-        val imgVolver = findViewById<ImageView>(R.id.imageView22)
+        val imgVolver = findViewById<ImageView>(R.id.btn_atras_mis_recetas)
 
         imgVolver.setOnClickListener {
             finish()

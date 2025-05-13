@@ -106,17 +106,14 @@ class Registro : AppCompatActivity() {
 
                     user?.updateProfile(profileUpdates)?.addOnCompleteListener { updateTask ->
                         if (updateTask.isSuccessful) {
-                            // Información adicional para Firestore
                             val db = FirebaseFirestore.getInstance()
 
-                            // Guardar la información del usuario en Firestore
                             val usuario = hashMapOf(
                                 "nombre" to nombre,
                                 "apodo" to apodo,
                                 "email" to email
                             )
 
-                            // Usar el UID del usuario como ID en la colección "usuarios"
                             db.collection("usuarios").document(user.uid)
                                 .set(usuario)
                                 .addOnSuccessListener {
@@ -143,54 +140,3 @@ class Registro : AppCompatActivity() {
     }
 }
 
-/**
- *
- *ANTERIOR
-private fun registrarUsuario() {
-val email = findViewById<EditText>(R.id.correoCampo).text.toString().trim()
-val contraseña = findViewById<EditText>(R.id.contraseñaCampo).text.toString().trim()
-val nombre = findViewById<EditText>(R.id.nombreCampo).text.toString().trim()
-val apodo = findViewById<EditText>(R.id.apodoCampo).text.toString().trim()
-val confirmarContraseña = findViewById<EditText>(R.id.confirmarContraCampo).text.toString().trim()
-val checkBoxTerminos = findViewById<CheckBox>(R.id.checkBoxTerminos)
-
-if (nombre.isEmpty() || email.isEmpty() || contraseña.isEmpty() || confirmarContraseña.isEmpty()) {
-Toast.makeText(this, "Por favor llena todos los campos", Toast.LENGTH_SHORT).show()
-return
-}
-
-if (contraseña != confirmarContraseña) {
-Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
-return
-}
-
-if (!checkBoxTerminos.isChecked) {
-Toast.makeText(this, "Debes aceptar los términos y condiciones", Toast.LENGTH_SHORT).show()
-return
-}
-
-val nombreParaPerfil = if (apodo.isNotEmpty()) apodo else nombre
-
-auth.createUserWithEmailAndPassword(email, contraseña)
-.addOnCompleteListener { task ->
-if (task.isSuccessful) {
-val user = auth.currentUser
-val profileUpdates = UserProfileChangeRequest.Builder()
-.setDisplayName(nombreParaPerfil)
-.build()
-
-user?.updateProfile(profileUpdates)?.addOnCompleteListener { updateTask ->
-if (updateTask.isSuccessful) {
-Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
-startActivity(Intent(this, IniciarSesion::class.java))
-finish()
-} else {
-Toast.makeText(this, "No se pudo guardar el nombre", Toast.LENGTH_SHORT).show()
-}
-}
-} else {
-Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
-}
-}
-}
- */

@@ -157,4 +157,7 @@
     <string name="no_tienes_recetas">No tienes recetas\n :(</string>
     <string name="buscar_receta2">Buscar receta...</string>
     <string name="imagen_receta">imagen receta</string>
+    <string name="reemplazar_receta">Reemplazar receta\n</string>
+    <string name="eliminar_del_men">Eliminar del menú</string>
+    <string name="mis_recetas2">Mis Recetas</string>
 </resources>

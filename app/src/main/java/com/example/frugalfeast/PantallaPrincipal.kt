@@ -1,7 +1,6 @@
 package com.example.frugalfeast
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -11,12 +10,12 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import androidx.core.content.edit
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.Glide
@@ -25,6 +24,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.Source
@@ -98,6 +98,8 @@ class PantallaPrincipal : AppCompatActivity() {
     private lateinit var btnAgregarReceta: ImageView
     private lateinit var btnCrearReceta: Button
     private lateinit var btnCalularCalorias: Button
+    private val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+    private val userRef = FirebaseFirestore.getInstance().collection("usuarios").document(currentUserId)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -122,6 +124,7 @@ class PantallaPrincipal : AppCompatActivity() {
         btnCrearReceta.setOnClickListener {
             navegarAgregarReceta()
         }
+
 
 
     }
@@ -193,6 +196,7 @@ class PantallaPrincipal : AppCompatActivity() {
         btnCrearReceta = findViewById(R.id.btn_crear_receta)
         btnCalularCalorias = findViewById(R.id.btn_calcular_calorias)
 
+
     }
     // BUSQUEDA
     private fun setupSearchView() {
@@ -217,22 +221,6 @@ class PantallaPrincipal : AppCompatActivity() {
 
         // Configurar header del drawer
         val headerView = navigationView.getHeaderView(0)
-        val imageViewHeader = headerView.findViewById<ImageView>(R.id.imageViewNavHeader)
-        val uid = FirebaseAuth.getInstance().currentUser?.uid
-        //imagen
-        if (uid != null) {
-            val db = FirebaseFirestore.getInstance()
-            db.collection("usuarios").document(uid).get()
-                .addOnSuccessListener { document ->
-                    val fotoUrl = document.getString("fotoPerfil")
-                    if (!fotoUrl.isNullOrEmpty()) {
-                        Glide.with(this)
-                            .load(fotoUrl)
-                            //.placeholder(R.drawable.avatar1) // Imagen por defecto
-                            .into(imageViewHeader)
-                    }
-                }
-        }
         headerView.setOnClickListener {
             startActivity(Intent(this, Miperfil::class.java))
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -248,7 +236,7 @@ class PantallaPrincipal : AppCompatActivity() {
                     startActivity(Intent(this, MiMenu::class.java))
                 }
                 R.id.nav_configuracion -> {
-                    startActivity(Intent(this,ConfiguracionyPrivacidad::class.java)) // reemplazar por configuracion
+                    startActivity(Intent(this,PantallaPrincipal::class.java)) // reemplazar por configuracion
                 }
                 R.id.nav_cerrar_sesion -> {
                     FirebaseAuth.getInstance().signOut()
@@ -260,13 +248,10 @@ class PantallaPrincipal : AppCompatActivity() {
             true
         }
 
-        // Configurar nombre de usuario
         val txtNombreUsuario = headerView.findViewById<TextView>(R.id.txtNombreUsuario)
         val usuario = FirebaseAuth.getInstance().currentUser
         txtNombreUsuario.text = usuario?.displayName ?: "Invitado"
     }
-
-
 
     //RECETA DEL DIA
 
@@ -318,59 +303,64 @@ class PantallaPrincipal : AppCompatActivity() {
 
     //VISTO RECIENTEMENTE
 
+
     private fun cargarVistoRecientemente() {
-        val sharedPref = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        val recetaId = sharedPref.getString("ultima_receta_vista", null)
+        userRef.collection("visto_recientemente")
+            .orderBy("fecha", Query.Direction.DESCENDING)
+            .limit(1)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+                    val doc = querySnapshot.documents[0]
+                    val recetaId = doc.getString("recetaId") ?: return@addOnSuccessListener
 
-        val layoutVacio = findViewById<LinearLayout>(R.id.layout_visto_recientemente_vacio)
-        val layoutContenido = findViewById<LinearLayout>(R.id.layout_visto_recientemente_contenido)
-
-        if (recetaId != null) {
-            layoutVacio.visibility = View.GONE
-            layoutContenido.visibility = View.VISIBLE
-
-            db.collection("Receta")
-                .document(recetaId)
-                .get()
-                .addOnSuccessListener { document ->
-                    val nombre = document.getString("nombre") ?: ""
-                    val imagenUrl = document.getString("imagenUrl") ?: ""
-                    val porciones = document.getLong("porciones")?.toString() ?: "0"
-                    val tiempo = document.getLong("tiempo")?.toString() ?: "0"
-                    val dificultad = document.getLong("dificultad")?.toString() ?: "1"
-
-
-                    // Actualizar UI
-                    tvNombreRecetaReciente.text = nombre
-                    tvTiempoRecetaReciente.text = "$tiempo h"
-                    tvPorcionesRecetaReciente.text = "$porciones porc."
-                    tvDificultadRecetaReciente.text = obtenerDificultad(dificultad)
-
-                    if (imagenUrl.isNotEmpty()) {
-                        Glide.with(this)
-                            .load(imagenUrl)
-                            .placeholder(R.drawable.baseline_image_24)
-                            .into(imgVistoRecientemente)
-                    }
-
-                    cardVistoRecientemente.setOnClickListener {
-                        val intent = Intent(this, PantallaPrincipalReceta::class.java).apply {
-                            putExtra("receta_id", document.id)
-                        }
-                        startActivity(intent)
-                    }
-                }
-                .addOnFailureListener { e ->
-                    Toast.makeText(this, "Error al cargar receta reciente", Toast.LENGTH_SHORT).show()
+                    cargarDetallesRecetaVistaReciente(recetaId)
+                } else {
                     mostrarEstadoVacioVistoRecientemente()
                 }
-        } else {
-            mostrarEstadoVacioVistoRecientemente()
-        }
+            }
+            .addOnFailureListener {
+                mostrarEstadoVacioVistoRecientemente()
+            }
+    }
 
-        findViewById<Button>(R.id.btn_explorar_recetas)?.setOnClickListener {
-            startActivity(Intent(this, Busqueda::class.java))
-        }
+    private fun cargarDetallesRecetaVistaReciente(recetaId: String) {
+        db.collection("Receta").document(recetaId).get()
+            .addOnSuccessListener { document ->
+                val layoutVacio = findViewById<LinearLayout>(R.id.layout_visto_recientemente_vacio)
+                val layoutContenido = findViewById<LinearLayout>(R.id.layout_visto_recientemente_contenido)
+
+                layoutVacio.visibility = View.GONE
+                layoutContenido.visibility = View.VISIBLE
+
+                val nombre = document.getString("nombre") ?: ""
+                val imagenUrl = document.getString("imagenUrl") ?: ""
+                val porciones = document.getLong("porciones")?.toString() ?: "0"
+                val tiempo = document.getLong("tiempo")?.toString() ?: "0"
+                val dificultad = document.getLong("dificultad")?.toString() ?: "1"
+
+                tvNombreRecetaReciente.text = nombre
+                tvTiempoRecetaReciente.text = "$tiempo h"
+                tvPorcionesRecetaReciente.text = "$porciones porc."
+                tvDificultadRecetaReciente.text = obtenerDificultad(dificultad)
+
+                if (imagenUrl.isNotEmpty()) {
+                    Glide.with(this)
+                        .load(imagenUrl)
+                        .placeholder(R.drawable.baseline_image_24)
+                        .into(imgVistoRecientemente)
+                }
+
+                cardVistoRecientemente.setOnClickListener {
+                    val intent = Intent(this, PantallaPrincipalReceta::class.java).apply {
+                        putExtra("receta_id", document.id)
+                    }
+                    startActivity(intent)
+                }
+            }
+            .addOnFailureListener {
+                mostrarEstadoVacioVistoRecientemente()
+            }
     }
 
 
@@ -384,22 +374,125 @@ class PantallaPrincipal : AppCompatActivity() {
 
     // MENU DEL DIA
     private fun setupMenuDelDia() {
-        cardDesayuno.setOnClickListener { manejarClickMenu("desayuno") }
-        cardAlmuerzo.setOnClickListener { manejarClickMenu("almuerzo") }
-        cardCena.setOnClickListener { manejarClickMenu("cena") }
-
         cargarMenuDelDia()
+
+        cardDesayuno.setOnLongClickListener {
+            mostrarMenuContextual("desayuno", it)
+            true
+        }
+
+        cardAlmuerzo.setOnLongClickListener {
+            mostrarMenuContextual("almuerzo", it)
+            true
+        }
+
+        cardCena.setOnLongClickListener {
+            mostrarMenuContextual("cena", it)
+            true
+        }
+
+        cardDesayuno.setOnClickListener {
+            userRef.collection("mi_menu").document("desayuno").get()
+                .addOnSuccessListener { doc ->
+                    doc.getString("recetaId")?.let { id ->
+                        abrirDetallesReceta(id)
+                    }
+                }
+        }
+
+        cardAlmuerzo.setOnClickListener {
+            userRef.collection("mi_menu").document("almuerzo").get()
+                .addOnSuccessListener { doc ->
+                    doc.getString("recetaId")?.let { id ->
+                        abrirDetallesReceta(id)
+                    }
+                }
+        }
+
+        cardCena.setOnClickListener {
+            userRef.collection("mi_menu").document("cena").get()
+                .addOnSuccessListener { doc ->
+                    doc.getString("recetaId")?.let { id ->
+                        abrirDetallesReceta(id)
+                    }
+                }
+        }
     }
 
-    private fun manejarClickMenu(tipoComida: String) {
-        val sharedPref = getSharedPreferences("menu_del_dia", Context.MODE_PRIVATE)
-        val recetaId = sharedPref.getString("${tipoComida}_id", null)
-
-        if (recetaId != null) {
-            abrirDetallesReceta(recetaId)
-        } else {
-            abrirSelectorReceta(tipoComida)
+    private fun actualizarVistaMenu(tipoComida: String, recetaId: String?) {
+        runOnUiThread {
+            when (tipoComida) {
+                "desayuno" -> {
+                    if (recetaId == null) {
+                        tituloDesayunoSin.visibility = View.VISIBLE
+                        layoutDesayunoVacio.visibility = View.VISIBLE
+                        layoutDesayunoConReceta.visibility = View.GONE
+                        cardDesayuno.setOnClickListener { mostrarMenuContextual("desayuno", it) }
+                    } else {
+                        cargarRecetaParaMenu(recetaId, "desayuno")
+                    }
+                }
+                "almuerzo" -> {
+                    if (recetaId == null) {
+                        tituloAlmuerzoSin.visibility = View.VISIBLE
+                        layoutAlmuerzoVacio.visibility = View.VISIBLE
+                        layoutAlmuerzoConReceta.visibility = View.GONE
+                        cardAlmuerzo.setOnClickListener { mostrarMenuContextual("almuerzo", it) }
+                    } else {
+                        cargarRecetaParaMenu(recetaId, "almuerzo")
+                    }
+                }
+                "cena" -> {
+                    if (recetaId == null) {
+                        tituloCenaSin.visibility = View.VISIBLE
+                        layoutCenaVacio.visibility = View.VISIBLE
+                        layoutCenaConReceta.visibility = View.GONE
+                        cardCena.setOnClickListener { mostrarMenuContextual("cena", it) }
+                    } else {
+                        cargarRecetaParaMenu(recetaId, "cena")
+                    }
+                }
+            }
         }
+    }
+
+    private fun mostrarMenuContextual(tipoComida: String, anchorView: View) {
+        userRef.collection("mi_menu").document(tipoComida).get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val recetaId = document.getString("recetaId")
+
+                    val menu = PopupMenu(this, anchorView).apply {
+                        menuInflater.inflate(R.menu.menu_contextual_receta, menu)
+
+                        menu.findItem(R.id.menu_reemplazar).setOnMenuItemClickListener {
+                            abrirSelectorReceta(tipoComida)
+                            true
+                        }
+
+                        menu.findItem(R.id.menu_eliminar).setOnMenuItemClickListener {
+                            mostrarDialogoConfirmacionEliminar(tipoComida)
+                            true
+                        }
+                    }
+                    menu.show()
+                } else {
+                    abrirSelectorReceta(tipoComida)
+                }
+            }
+    }
+
+
+    private fun eliminarDelMenu(tipoComida: String) {
+        userRef.collection("mi_menu").document(tipoComida).delete()
+            .addOnSuccessListener {
+                Toast.makeText(this, "Receta eliminada", Toast.LENGTH_SHORT).show()
+                when(tipoComida) {
+                    "desayuno" -> mostrarEstadoVacioMiMenu("desayuno")
+                    "almuerzo" -> mostrarEstadoVacioMiMenu("almuerzo")
+                    "cena" -> mostrarEstadoVacioMiMenu("cena")
+                }
+            }
     }
 
     private fun abrirSelectorReceta(tipoComida: String) {
@@ -418,54 +511,43 @@ class PantallaPrincipal : AppCompatActivity() {
     }
 
     private fun cargarMenuDelDia() {
-        val sharedPref = getSharedPreferences("menu_del_dia", Context.MODE_PRIVATE)
+        userRef.collection("mi_menu").get()
+            .addOnSuccessListener { querySnapshot ->
+                querySnapshot.documents.forEach { document ->
+                    val tipoComida = document.id
+                    val recetaId = document.getString("recetaId")
 
-        listOf("desayuno", "almuerzo", "cena").forEach { tipoComida ->
-            sharedPref.getString("${tipoComida}_id", null)?.let { recetaId ->
-                cargarRecetaParaMenu(recetaId, tipoComida)
-
-                // Configurar click listeners para abrir detalles
-                when (tipoComida) {
-                    "desayuno" -> cardDesayuno.setOnClickListener { abrirDetallesReceta(recetaId) }
-                    "almuerzo" -> cardAlmuerzo.setOnClickListener { abrirDetallesReceta(recetaId) }
-                    "cena" -> cardCena.setOnClickListener { abrirDetallesReceta(recetaId) }
+                    if (recetaId != null) {
+                        cargarRecetaParaMenu(recetaId, tipoComida)
+                    } else {
+                        mostrarEstadoVacioMiMenu(tipoComida)
+                    }
                 }
-            } ?: run {
-                // Mostrar estado vacío si no hay receta
-                when (tipoComida) {
-                    "desayuno" -> {
-                        tituloDesayunoSin.visibility = View.VISIBLE
-                        layoutDesayunoVacio.visibility = View.VISIBLE
-                        layoutDesayunoConReceta.visibility = View.GONE
-                    }
-                    "almuerzo" -> {
-                        tituloAlmuerzoSin.visibility = View.VISIBLE
-                        layoutAlmuerzoVacio.visibility = View.VISIBLE
-                        layoutAlmuerzoConReceta.visibility = View.GONE
-                    }
-                    "cena" -> {
-                        tituloCenaSin.visibility = View.VISIBLE
-                        layoutCenaVacio.visibility = View.VISIBLE
-                        layoutCenaConReceta.visibility = View.GONE
+
+                val comidasCargadas = querySnapshot.documents.map { it.id }
+                listOf("desayuno", "almuerzo", "cena").forEach { comida ->
+                    if (!comidasCargadas.contains(comida)) {
+                        mostrarEstadoVacioMiMenu(comida)
                     }
                 }
             }
-        }
     }
 
     private fun guardarRecetaEnMenu(recetaId: String, tipoComida: String) {
-        val sharedPref = getSharedPreferences("menu_del_dia", Context.MODE_PRIVATE)
-        sharedPref.edit {
-            putString("${tipoComida}_id", recetaId)
-            apply()
-        }
-        cargarRecetaParaMenu(recetaId, tipoComida)
+        val menuData = hashMapOf(
+            "recetaId" to recetaId,
+            "fechaAgregado" to FieldValue.serverTimestamp()
+        )
 
-        when (tipoComida) {
-            "desayuno" -> cardDesayuno.setOnClickListener { abrirDetallesReceta(recetaId) }
-            "almuerzo" -> cardAlmuerzo.setOnClickListener { abrirDetallesReceta(recetaId) }
-            "cena" -> cardCena.setOnClickListener { abrirDetallesReceta(recetaId) }
-        }
+        userRef.collection("mi_menu").document(tipoComida)
+            .set(menuData)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Receta agregada a tu menú", Toast.LENGTH_SHORT).show()
+                cargarRecetaParaMenu(recetaId, tipoComida)
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Error al guardar en menú: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun cargarRecetaParaMenu(recetaId: String, tipoComida: String) {
@@ -485,7 +567,6 @@ class PantallaPrincipal : AppCompatActivity() {
                             tvDesayunoTiempo.text = "${r.tiempo} h."
                             tvDesayunoDificultad.text = obtenerDificultad(r.dificultad.toString())
 
-                            // Cargar imagen usando imagenUrl
                             if (r.imagenUrl.isNotEmpty()) {
                                 Glide.with(this)
                                     .load(r.imagenUrl)
@@ -494,6 +575,14 @@ class PantallaPrincipal : AppCompatActivity() {
                                     .into(imgDesayuno)
                             } else {
                                 imgDesayuno.setImageResource(R.drawable.baseline_image_24)
+                            }
+
+                            // Listener simplificado que solo envía el ID
+                            cardDesayuno.setOnClickListener {
+                                val intent = Intent(this, PantallaPrincipalReceta::class.java).apply {
+                                    putExtra("receta_id", recetaId)
+                                }
+                                startActivity(intent)
                             }
                         }
                         "almuerzo" -> {
@@ -514,6 +603,14 @@ class PantallaPrincipal : AppCompatActivity() {
                             } else {
                                 imgAlmuerzo.setImageResource(R.drawable.baseline_image_24)
                             }
+
+                            // Listener simplificado que solo envía el ID
+                            cardAlmuerzo.setOnClickListener {
+                                val intent = Intent(this, PantallaPrincipalReceta::class.java).apply {
+                                    putExtra("receta_id", recetaId)
+                                }
+                                startActivity(intent)
+                            }
                         }
                         "cena" -> {
                             tituloCenaSin.visibility = View.GONE
@@ -532,6 +629,14 @@ class PantallaPrincipal : AppCompatActivity() {
                                     .into(imgCena)
                             } else {
                                 imgCena.setImageResource(R.drawable.baseline_image_24)
+                            }
+
+                            // Listener simplificado que solo envía el ID
+                            cardCena.setOnClickListener {
+                                val intent = Intent(this, PantallaPrincipalReceta::class.java).apply {
+                                    putExtra("receta_id", recetaId)
+                                }
+                                startActivity(intent)
                             }
                         }
                     }
@@ -574,37 +679,59 @@ class PantallaPrincipal : AppCompatActivity() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
+        when (requestCode) {
+            REQUEST_SELECCIONAR_RECETA -> {
+                if (resultCode == RESULT_OK) {
+                    data?.let {
+                        val tipoComida = it.getStringExtra("TIPO_COMIDA")
+                        val recetaId = it.getStringExtra("RECETA_ID")
+
+                        if (tipoComida != null && recetaId != null) {
+                            mostrarDialogoConfirmacion(recetaId, tipoComida)
+                        }
+                    }
+                }
+            }
+            REQUEST_CODE_AGREGAR_RECETA -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    cargarMisRecetas(true)
+                }
+            }
+        }
+    }
     private fun mostrarDialogoConfirmacion(recetaId: String, tipoComida: String) {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Confirmar receta")
-            .setMessage("¿Deseas agregar esta receta a tu menú?")
+        AlertDialog.Builder(this)
+            .setTitle("Agregar al menú")
+            .setMessage("¿Deseas agregar esta receta a tu $tipoComida?")
             .setPositiveButton("Sí") { dialog, which ->
                 guardarRecetaEnMenu(recetaId, tipoComida)
-                cargarRecetaParaMenu(recetaId, tipoComida)
+
+                db.collection("Receta").document(recetaId).get()
+                    .addOnSuccessListener { document ->
+                        val receta = document.toObject(Receta::class.java)
+                        receta?.let {
+                            actualizarVistaMenu(tipoComida, recetaId)
+                            abrirDetallesReceta(recetaId)
+                        }
+                    }
             }
             .setNegativeButton("Cancelar", null)
             .create()
             .show()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_SELECCIONAR_RECETA && resultCode == RESULT_OK) {
-            data?.let {
-                val tipoComida = it.getStringExtra("TIPO_COMIDA")
-                val recetaId = it.getStringExtra("RECETA_ID")
-
-                if (tipoComida != null && recetaId != null) {
-                    mostrarDialogoConfirmacion(recetaId, tipoComida)
-                }
+    private fun mostrarDialogoConfirmacionEliminar(tipoComida: String) {
+        AlertDialog.Builder(this)
+            .setTitle("Eliminar receta")
+            .setMessage("¿Deseas eliminar esta receta de tu menú?")
+            .setPositiveButton("Eliminar") { _, _ ->
+                eliminarDelMenu(tipoComida)
             }
-        }
-
-        if (requestCode == REQUEST_CODE_AGREGAR_RECETA && resultCode == Activity.RESULT_OK) {
-            cargarMisRecetas()
-        }
-
+            .setNegativeButton("Cancelar", null)
+            .show()
     }
 
     override fun onBackPressed() {
@@ -711,9 +838,5 @@ class PantallaPrincipal : AppCompatActivity() {
 
     companion object {
         private const val REQUEST_SELECCIONAR_RECETA = 1001
-    }
-    override fun onResume() {
-        super.onResume()
-        setupNavigationDrawer()
     }
 }

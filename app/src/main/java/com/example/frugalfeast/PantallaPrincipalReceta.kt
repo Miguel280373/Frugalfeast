@@ -138,7 +138,7 @@ class PantallaPrincipalReceta : AppCompatActivity() {
                     guardarRecetaFavorita()
                 }
             }
-            guardarRecetaVista()
+            guardarComoVistoRecientemente(currentReceta.id)
         }
     }
 
@@ -236,9 +236,21 @@ class PantallaPrincipalReceta : AppCompatActivity() {
         )
     }
 
-    private fun guardarRecetaVista() {
-        getSharedPreferences("app_prefs", Context.MODE_PRIVATE).edit {
-            putString("ultima_receta_vista", currentReceta.id)
-        }
+    private fun guardarComoVistoRecientemente(recetaId: String) {
+        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+
+        val vistoData = hashMapOf(
+            "recetaId" to recetaId,
+            "fecha" to FieldValue.serverTimestamp()
+        )
+
+        FirebaseFirestore.getInstance()
+            .collection("usuarios")
+            .document(currentUserId)
+            .collection("visto_recientemente")
+            .add(vistoData)
+            .addOnFailureListener { e ->
+                Log.e("VistoReciente", "Error al guardar receta vista", e)
+            }
     }
 }

@@ -8,43 +8,43 @@
     android:layout_height="match_parent"
     android:background="@color/Fondo">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
+    <LinearLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="85dp"
-        android:background="@color/Naranja">
+        android:layout_height="100dp"
+        android:background="@color/Naranja"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_atras_mis_recetas"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="@string/atras"
+            android:src="@drawable/baseline_arrow_back_24" />
 
         <TextView
-            android:id="@+id/tituloMisRecetas"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:text="Mis Recetas"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/mis_recetas2"
             android:textColor="#000000"
-            android:textSize="30sp"
-            android:textStyle="bold|italic" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/imageView22"
-            android:layout_width="5dp"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/tituloMisRecetas"
-            android:layout_alignBottom="@+id/tituloMisRecetas"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="-55dp"
-            android:layout_marginEnd="335dp"
-            android:layout_marginBottom="6dp"
-            android:clickable="true"
-            android:focusable="true"
-            app:srcCompat="@drawable/baseline_arrow_back_24"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/relativeLayout"
+        android:layout_below="@id/header"
         android:layout_marginBottom="85dp"
         android:fillViewport="true">
 

@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_reemplazar"
+        android:title="@string/reemplazar_receta" />
+    <item
+        android:id="@+id/menu_eliminar"
+        android:title="@string/eliminar_del_men" />
+</menu>
