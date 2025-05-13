@@ -236,7 +236,7 @@ class PantallaPrincipal : AppCompatActivity() {
                     startActivity(Intent(this, MiMenu::class.java))
                 }
                 R.id.nav_configuracion -> {
-                    startActivity(Intent(this,PantallaPrincipal::class.java)) // reemplazar por configuracion
+                    startActivity(Intent(this,ConfiguracionyPrivacidad::class.java))
                 }
                 R.id.nav_cerrar_sesion -> {
                     FirebaseAuth.getInstance().signOut()

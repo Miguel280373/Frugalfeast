@@ -17,9 +17,7 @@ class Politicadeprivacidad : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val imgVolver = findViewById<ImageView>(R.id.imageView15)
-
-        imgVolver.setOnClickListener {
+       findViewById<ImageView>(R.id.btn_atras_privacidad).setOnClickListener {
             finish()
         }
 

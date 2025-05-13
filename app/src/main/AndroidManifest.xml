@@ -41,10 +41,12 @@
             android:exported="false" />
         <activity
             android:name=".EditarPerfil"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".PantallaPrincipalReceta"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".AgregarReceta"
             android:exported="false" />
@@ -66,7 +68,8 @@
             android:exported="false" />
         <activity
             android:name=".CalcularCalorias"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".TerminosyCondiciones"
             android:exported="false" />
@@ -88,7 +91,8 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Registro"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".Login"
             android:exported="false" />

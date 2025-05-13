@@ -38,7 +38,7 @@ class EditarPerfil : AppCompatActivity() {
         }
 
 
-        val imgVolver = findViewById<ImageView>(R.id.imageView24)
+        val imgVolver = findViewById<ImageView>(R.id.btn_atras_editar_perfil)
         val btnGuardar = findViewById<Button>(R.id.button2)
 
         val editNombre = findViewById<EditText>(R.id.editTextText)
@@ -72,22 +72,19 @@ class EditarPerfil : AppCompatActivity() {
             return
         }
 
-        // Cargar datos existentes desde Firebase
-        if (uid != null) {
-            db.collection("usuarios").document(uid).get()
-                .addOnSuccessListener { document ->
-                    if (document.exists()) {
-                        editNombre.setText(document.getString("nombre") ?: "")
-                        editApodo.setText(document.getString("apodo") ?: "")
-                        editCorreo.setText(document.getString("Correo") ?: "")
-                        editFecha.setText(document.getString("Fecha") ?: "")
-                        editTelefono.setText(document.getString("Telefono") ?: "")
-                    }
+        db.collection("usuarios").document(uid).get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    editNombre.setText(document.getString("nombre") ?: "")
+                    editApodo.setText(document.getString("apodo") ?: "")
+                    editCorreo.setText(document.getString("Correo") ?: "")
+                    editFecha.setText(document.getString("Fecha") ?: "")
+                    editTelefono.setText(document.getString("Telefono") ?: "")
                 }
-                .addOnFailureListener {
-                    Toast.makeText(this, "Error al cargar datos", Toast.LENGTH_SHORT).show()
-                }
-        }
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Error al cargar datos", Toast.LENGTH_SHORT).show()
+            }
 
         imgVolver.setOnClickListener {
             finish()
@@ -102,35 +99,33 @@ class EditarPerfil : AppCompatActivity() {
             val nuevaContrasena = editNewContraseña.text.toString()
             val confirmarContrasena = editConfirmarc.text.toString()
 
-            if (uid != null) {
-                val userUpdates = hashMapOf(
-                    "nombre" to nuevoNombre,
-                    "apodo" to nuevoApodo,
-                    "Correo" to nuevoCorreo,
-                    "Telefono" to nuevoTelefono,
-                    "Fecha" to nuevaFecha
-                )
+            val userUpdates = hashMapOf(
+                "nombre" to nuevoNombre,
+                "apodo" to nuevoApodo,
+                "Correo" to nuevoCorreo,
+                "Telefono" to nuevoTelefono,
+                "Fecha" to nuevaFecha
+            )
 
-                db.collection("usuarios").document(uid).update(userUpdates as Map<String, Any>)
-                    .addOnSuccessListener {
-                        Toast.makeText(this, "Perfil actualizado", Toast.LENGTH_SHORT).show()
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(this, "Error al actualizar perfil", Toast.LENGTH_SHORT).show()
-                    }
-
-                // Actualizar contraseña si se ingresaron ambas iguales
-                if (nuevaContrasena.isNotEmpty() && nuevaContrasena == confirmarContrasena) {
-                    auth.currentUser?.updatePassword(nuevaContrasena)
-                        ?.addOnSuccessListener {
-                            Toast.makeText(this, "Contraseña actualizada", Toast.LENGTH_SHORT).show()
-                        }
-                        ?.addOnFailureListener {
-                            Toast.makeText(this, "Error al actualizar contraseña", Toast.LENGTH_SHORT).show()
-                        }
-                } else if (nuevaContrasena != confirmarContrasena) {
-                    Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
+            db.collection("usuarios").document(uid).update(userUpdates as Map<String, Any>)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Perfil actualizado", Toast.LENGTH_SHORT).show()
                 }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Error al actualizar perfil", Toast.LENGTH_SHORT).show()
+                }
+
+            // Actualizar contraseña si se ingresaron ambas iguales
+            if (nuevaContrasena.isNotEmpty() && nuevaContrasena == confirmarContrasena) {
+                auth.currentUser?.updatePassword(nuevaContrasena)
+                    ?.addOnSuccessListener {
+                        Toast.makeText(this, "Contraseña actualizada", Toast.LENGTH_SHORT).show()
+                    }
+                    ?.addOnFailureListener {
+                        Toast.makeText(this, "Error al actualizar contraseña", Toast.LENGTH_SHORT).show()
+                    }
+            } else if (nuevaContrasena != confirmarContrasena) {
+                Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
             }
 
             //imagen
@@ -160,7 +155,6 @@ class EditarPerfil : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Finalizar actividad
             finish()
         }
     }
@@ -168,7 +162,7 @@ class EditarPerfil : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1001 && resultCode == RESULT_OK) {
             selectedImageUri = data?.data
-            imageViewPerfil.setImageURI(selectedImageUri) // vista previa
+            imageViewPerfil.setImageURI(selectedImageUri)
         }
     }
 

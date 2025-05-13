@@ -15,84 +15,84 @@
         android:layout_marginTop="80dp"
         android:gravity="center"
         android:textStyle="italic|bold"
-        android:text="Configuracion y privacidad"
+        android:text="@string/configuraci_n_y_privacidad"
         android:textColor="#000000"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button3"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginTop="72dp"
-        android:backgroundTint="@color/Naranja"
-        android:text="Politicas de privacidad"
+        android:background = "@drawable/rounded_corner_naranja"
+        android:text="@string/pol_ticas_de_privacidad"
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button4"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
-        android:backgroundTint="@color/Naranja"
-        android:text="Terminos y condiciones"
+        android:background = "@drawable/rounded_corner_naranja"
+        android:text="@string/t_rminos_y_condiciones2"
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button3" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button15"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
-        android:backgroundTint="@color/Naranja"
-        android:text="Sobre la app"
+        android:background = "@drawable/rounded_corner_naranja"
+        android:text="@string/sobre_la_app"
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button4" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button16"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:textColor="#000000"
-        android:backgroundTint="@color/Naranja"
-        android:text="Contactanos"
+        android:background = "@drawable/rounded_corner_naranja"
+        android:text="@string/cont_ctanos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button15" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button17"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:textColor="#000000"
-        android:backgroundTint="@color/Naranja"
+        android:background = "@drawable/rounded_corner_naranja"
         android:layout_marginTop="20dp"
-        android:text="Eliminar cuenta"
+        android:text="@string/eliminar_cuenta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button16" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button19"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:textColor="#000000"
-        android:backgroundTint="@color/Naranja"
+        android:background = "@drawable/rounded_corner_naranja"
         android:layout_marginTop="20dp"
-        android:text="Editar perfil"
+        android:text="@string/editar_perfil"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button17" />
@@ -100,14 +100,14 @@
     <ImageButton
         android:id="@+id/button18"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="48dp"
         android:backgroundTint="@color/Fondo"
+        android:contentDescription="@string/atras"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.139"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/baseline_arrow_back_24"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        app:srcCompat="@drawable/baseline_arrow_back_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
