@@ -51,6 +51,9 @@
             android:name=".AgregarReceta"
             android:exported="false" />
         <activity
+            android:name=".AgregarRecetaSeg"
+            android:exported="false" />
+        <activity
             android:name=".RecetasGuardadas"
             android:exported="false" />
         <activity
