@@ -1,5 +1,6 @@
 package com.example.frugalfeast
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -142,10 +143,22 @@ class PantallaPrincipalReceta : AppCompatActivity() {
         }
     }
 
+    private val REQUEST_EDIT_RECETA = 123
+
     private fun abrirPantallaEdicion() {
         val intent = Intent(this, EditarReceta::class.java)
         intent.putExtra("receta_id", currentReceta.id)
-        startActivity(intent)
+        startActivityForResult(intent, REQUEST_EDIT_RECETA)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_EDIT_RECETA) {
+            if (resultCode == Activity.RESULT_OK) {
+                val recetaId = currentReceta.id
+                cargarRecetaDesdeFirestore(recetaId)
+            }
+        }
     }
 
     private fun verificarRecetaFavorita() {

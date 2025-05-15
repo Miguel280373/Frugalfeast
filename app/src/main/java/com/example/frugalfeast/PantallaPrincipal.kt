@@ -36,6 +36,7 @@ class PantallaPrincipal : AppCompatActivity() {
     private lateinit var navigationView: NavigationView
     private lateinit var searchView: EditText
     private lateinit var btnMenu: ImageButton
+    private lateinit var headerView: View // Referencia al header view
 
     // Receta del día
     private lateinit var cardRecetaDia: CardView
@@ -68,7 +69,6 @@ class PantallaPrincipal : AppCompatActivity() {
     private lateinit var tvAlmuerzoNombre: TextView
     private lateinit var tvAlmuerzoTiempo: TextView
     private lateinit var imgAlmuerzo: ImageView
-
     private lateinit var tvAlmuerzoDificultad: TextView
 
     private lateinit var cardCena: CardView
@@ -77,7 +77,6 @@ class PantallaPrincipal : AppCompatActivity() {
     private lateinit var tvCenaNombre: TextView
     private lateinit var tvCenaTiempo: TextView
     private lateinit var imgCena: ImageView
-
     private lateinit var tvCenaDificultad: TextView
 
     private lateinit var tituloDesayunoSin: TextView
@@ -107,13 +106,13 @@ class PantallaPrincipal : AppCompatActivity() {
 
         initViews()
         setupSearchView()
-        setupNavigationDrawer()
+        setupNavigationDrawer() // Llama a setupNavigationDrawer primero
         setupMenuDelDia()
         cargarRecetaDelDia()
         cargarVistoRecientemente()
         cargarMisRecetas()
 
-        btnCalularCalorias.setOnClickListener(){
+        btnCalularCalorias.setOnClickListener {
             val intent = Intent(this, CalcularCalorias::class.java)
             startActivity(intent)
         }
@@ -124,14 +123,9 @@ class PantallaPrincipal : AppCompatActivity() {
         btnCrearReceta.setOnClickListener {
             navegarAgregarReceta()
         }
-
-
-
     }
 
-
     private fun initViews() {
-
         // Views principales
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_drawer)
@@ -168,7 +162,7 @@ class PantallaPrincipal : AppCompatActivity() {
         layoutAlmuerzoConReceta = findViewById(R.id.layout_almuerzo_con_receta)
         tvAlmuerzoNombre = findViewById(R.id.tv_almuerzo_nombre)
         tvAlmuerzoTiempo = findViewById(R.id.tv_almuerzo_tiempo)
-        imgAlmuerzo= findViewById(R.id.img_almuerzo)
+        imgAlmuerzo = findViewById(R.id.img_almuerzo)
         tvAlmuerzoDificultad = findViewById(R.id.tv_almuerzo_dificultad)
 
         cardCena = findViewById(R.id.card_cena)
@@ -195,9 +189,8 @@ class PantallaPrincipal : AppCompatActivity() {
         btnAgregarReceta = findViewById(R.id.btn_agregar_receta)
         btnCrearReceta = findViewById(R.id.btn_crear_receta)
         btnCalularCalorias = findViewById(R.id.btn_calcular_calorias)
-
-
     }
+
     // BUSQUEDA
     private fun setupSearchView() {
         val editTextBusqueda = findViewById<EditText>(R.id.edit_text_busqueda)
@@ -219,14 +212,12 @@ class PantallaPrincipal : AppCompatActivity() {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
-        // Configurar header del drawer
-        val headerView = navigationView.getHeaderView(0)
+        headerView = navigationView.getHeaderView(0)
         headerView.setOnClickListener {
             startActivity(Intent(this, Miperfil::class.java))
             drawerLayout.closeDrawer(GravityCompat.START)
         }
 
-        // Configurar items del menú
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_recetas_guardadas -> {
@@ -236,7 +227,7 @@ class PantallaPrincipal : AppCompatActivity() {
                     startActivity(Intent(this, MiMenu::class.java))
                 }
                 R.id.nav_configuracion -> {
-                    startActivity(Intent(this,ConfiguracionyPrivacidad::class.java))
+                    startActivity(Intent(this, ConfiguracionyPrivacidad::class.java))
                 }
                 R.id.nav_cerrar_sesion -> {
                     FirebaseAuth.getInstance().signOut()
@@ -248,9 +239,57 @@ class PantallaPrincipal : AppCompatActivity() {
             true
         }
 
+        cargarNombreUsuarioHeader(headerView)
+        cargarFotoPerfilHeader(headerView)
+    }
+
+    private fun cargarNombreUsuarioHeader(headerView: View) {
         val txtNombreUsuario = headerView.findViewById<TextView>(R.id.txtNombreUsuario)
-        val usuario = FirebaseAuth.getInstance().currentUser
-        txtNombreUsuario.text = usuario?.displayName ?: "Invitado"
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            FirebaseFirestore.getInstance().collection("usuarios").document(currentUser.uid)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document.exists() && document.contains("apodo")) {
+                        val apodo = document.getString("apodo")
+                        txtNombreUsuario.text = apodo ?: "Invitado"
+                    } else {
+                        txtNombreUsuario.text = currentUser.displayName ?: "Invitado"
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.e("PantallaPrincipal", "Error al cargar el apodo del usuario", e)
+                    txtNombreUsuario.text = currentUser.displayName ?: "Invitado"
+                }
+        } else {
+            txtNombreUsuario.text = getString(R.string.invitado)
+        }
+    }
+
+    private fun cargarFotoPerfilHeader(headerView: View) {
+        val headerImageView = headerView.findViewById<ImageView>(R.id.imageViewNavHeader)
+
+        db.collection("usuarios").document(currentUserId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val fotoPerfilUrl = document.getString("fotoPerfil")
+                    if (!fotoPerfilUrl.isNullOrEmpty()) {
+                        Glide.with(this)
+                            .load(fotoPerfilUrl)
+                            .placeholder(R.drawable.avatar1)
+                            .error(R.drawable.avatar1)
+                            .into(headerImageView)
+                    }
+                }
+            }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        cargarFotoPerfilHeader(headerView)
+        val headerView = navigationView.getHeaderView(0)
+        cargarNombreUsuarioHeader(headerView)
     }
 
     //RECETA DEL DIA

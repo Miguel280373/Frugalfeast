@@ -40,9 +40,10 @@
 
         <TextView
             android:id="@+id/textView6"
-            android:layout_width="390dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_margin="16dp"
             android:text="✨🍽️ ¡Frugby AI: Tu Asistente de Cocina Inteligente! 🍽️✨\n\n ¿Tienes ingredientes pero no sabes qué preparar? Frugby AI te ayuda a encontrar recetas deliciosas y te muestra cómo hacerlas paso a paso.\n\n 🔍 ¿Cómo funciona?\n\n Frugby tiene el poder de Gemini para ofrecerte:\n\n ✅ Recetas personalizadas con los ingredientes que tienes en casa 🍅🥦\n\n✅ Sugerencias inteligentes según tus gustos y necesidades 🌱👩‍🍳\n\n✅ Consejos de cocina para mejorar cada platillo 🍽️✨\n\n✅ Videos tutoriales para que aprendas a cocinar viendo cómo se hace 🎥👀\n\n✅ Ideas creativas y económicas para aprovechar mejor tus alimentos 💰🔥\n\n 💡 Con Frugby AI, cocinar es más fácil, rápido y divertido.\n\n 🔗 Descárgala ahora y cocina como un experto con la ayuda de la IA. 🚀🍕"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +55,8 @@
             android:id="@+id/buttonpreia"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="50dp"
             android:background="@drawable/rounded_corner_naranja"
             android:text="@string/continuar"
             android:textColor="#000000"

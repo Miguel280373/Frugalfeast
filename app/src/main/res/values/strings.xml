@@ -143,7 +143,7 @@
     <string name="ingredientes">Ingredientes:</string>
     <string name="agregar_ingrediente">Agregar ingrediente</string>
     <string name="tiempo_horas">Tiempo (Horas):</string>
-    <string name="dificultad">Dificultad:</string>
+    <string name="dificultad">Dificultad (1 fácil, 2 medio, 3 difícil):</string>
     <string name="porciones">Porciones:</string>
     <string name="calor_as">Calorías:</string>
     <string name="receta">Receta</string>
@@ -170,4 +170,6 @@
     <string name="inicio_de_sesi_n">Inicio de sesión</string>
     <string name="ltima_actualizaci_n_fecha">Última actualización: [Fecha]</string>
     <string name="foto_de_perfil">Foto de perfil</string>
+    <string name="guardar_cambios">Guardar cambios</string>
+    <string name="invitado">Invitado</string>
 </resources>

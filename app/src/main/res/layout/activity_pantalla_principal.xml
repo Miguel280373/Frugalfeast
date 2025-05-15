@@ -88,8 +88,9 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:scaleType="centerCrop"
+                            android:clipToOutline="true"
                             android:background="@drawable/rounded_image"
-                            android:src="@drawable/baseline_image_24"
+                            app:srcCompat="@drawable/baseline_image_24"
                             android:contentDescription="@string/imagen_placeholder"
                             android:layout_marginEnd="8dp" />
 
@@ -243,7 +244,8 @@
                             android:layout_height="100dp"
                             android:scaleType="centerCrop"
                             android:background="@drawable/rounded_image"
-                            android:src="@drawable/baseline_image_24"
+                            android:clipToOutline="true"
+                            app:srcCompat="@drawable/baseline_image_24"
                             android:contentDescription="@string/imagen_placeholder"
                             android:layout_marginEnd="8dp"/>
 
@@ -505,8 +507,9 @@
                                     android:layout_width="70dp"
                                     android:layout_height="70dp"
                                     android:scaleType="centerCrop"
+                                    android:clipToOutline="true"
                                     android:background="@drawable/rounded_image"
-                                    android:src="@drawable/baseline_image_24"
+                                    app:srcCompat="@drawable/baseline_image_24"
                                     android:contentDescription="@string/imagen_placeholder"/>
                             </LinearLayout>
                         </LinearLayout>
@@ -668,8 +671,9 @@
                                     android:layout_width="70dp"
                                     android:layout_height="70dp"
                                     android:scaleType="centerCrop"
+                                    android:clipToOutline="true"
                                     android:background="@drawable/rounded_image"
-                                    android:src="@drawable/baseline_image_24"
+                                    app:srcCompat="@drawable/baseline_image_24"
                                     android:contentDescription="@string/imagen_placeholder"/>
                             </LinearLayout>
                         </LinearLayout>
@@ -831,7 +835,8 @@
                                     android:layout_height="70dp"
                                     android:scaleType="centerCrop"
                                     android:background="@drawable/rounded_image"
-                                    android:src="@drawable/baseline_image_24"
+                                    android:clipToOutline="true"
+                                    app:srcCompat="@drawable/baseline_image_24"
                                     android:contentDescription="@string/imagen_placeholder"/>
                             </LinearLayout>
                         </LinearLayout>
@@ -925,7 +930,8 @@
                             android:layout_height="100dp"
                             android:scaleType="centerCrop"
                             android:background="@drawable/rounded_image"
-                            android:src="@drawable/baseline_image_24"
+                            android:clipToOutline="true"
+                            app:srcCompat="@drawable/baseline_image_24"
                             android:contentDescription="@string/imagen_placeholder"
                             android:layout_marginEnd="8dp"/>
 

@@ -2,7 +2,6 @@ package com.example.frugalfeast
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -20,7 +19,6 @@ import java.util.*
 
 class EditarReceta : AppCompatActivity() {
 
-    // Variables de vista
     private lateinit var imagenReceta: ImageView
     private lateinit var editDificultad: EditText
     private lateinit var editPreparacion: EditText
@@ -33,7 +31,6 @@ class EditarReceta : AppCompatActivity() {
     private lateinit var botonAtras: ImageView
     private lateinit var nombreReceta: TextView
 
-    // Variables de control
     private var hayCambios = false
     private var uriImagen: Uri? = null
     private var idReceta: String = ""
@@ -44,7 +41,6 @@ class EditarReceta : AppCompatActivity() {
     private val almacenamiento = FirebaseStorage.getInstance()
     private val autenticacion = FirebaseAuth.getInstance()
 
-    // Lanzador para seleccionar imagen
     private val lanzadorSeleccionImagen = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let {
             try {
@@ -91,6 +87,7 @@ class EditarReceta : AppCompatActivity() {
             return
         }
         cargarDatosReceta()
+        configurarListeners()
     }
 
     private fun cargarDatosReceta() {
@@ -112,7 +109,7 @@ class EditarReceta : AppCompatActivity() {
                     editTiempo.setText(tiempo.toString())
                     editPorciones.setText(porciones.toString())
                     editCalorias.setText(calorias.toString())
-                    editDificultad.setText(dificultad.toString())
+                    editDificultad.setText(dificultad.toString()) // Mostrar dificultad como número
 
                     if (urlImagen.isNotEmpty()) {
                         Glide.with(this).load(urlImagen).into(imagenReceta)
@@ -127,6 +124,8 @@ class EditarReceta : AppCompatActivity() {
                 finish()
             }
     }
+
+
 
     private fun configurarListeners() {
         botonCambiarImagen.setOnClickListener {
@@ -158,25 +157,17 @@ class EditarReceta : AppCompatActivity() {
     }
 
 
-    private fun obtenerNumeroDificultad(textoDificultad: String): Int {
-        return when(textoDificultad) {
-            "Fácil" -> 1
-            "Media" -> 2
-            "Difícil" -> 3
-            else -> 0
-        }
-    }
-
     private fun guardarCambios() {
         val preparacion = editPreparacion.text.toString().trim()
         val ingredientes = editIngredientes.text.toString().trim().split("\n").filter { it.isNotBlank() }
         val tiempo = editTiempo.text.toString().trim().toLongOrNull() ?: 0
         val porciones = editPorciones.text.toString().trim().toLongOrNull() ?: 0
         val calorias = editCalorias.text.toString().trim().toLongOrNull() ?: 0
-        val dificultad = obtenerNumeroDificultad(editDificultad.text.toString().trim())
+        val dificultadTexto = editDificultad.text.toString().trim()
+        val dificultad = dificultadTexto.toIntOrNull() ?: 0
 
         if (preparacion.isEmpty() || ingredientes.isEmpty() || tiempo <= 0 ||
-            porciones <= 0 || dificultad !in 1..3  || calorias <= 0) {
+            porciones <= 0 || dificultad !in 1..3 || calorias <= 0) {
             mostrarToast("Complete todos los campos correctamente")
             return
         }
