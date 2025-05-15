@@ -5,6 +5,7 @@ import android.content.Intent
 import android.icu.util.Calendar
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.*
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
@@ -55,9 +56,7 @@ class EditarPerfil : AppCompatActivity() {
         val calendar = Calendar.getInstance()
 
         imageViewPerfil.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
-            startActivityForResult(intent, 1001)
+            seleccionarImagenPerfil(it)
         }
 
         editFecha.setOnClickListener {
@@ -87,6 +86,13 @@ class EditarPerfil : AppCompatActivity() {
         btnGuardar.setOnClickListener {
             guardarCambios()
         }
+    }
+
+    // Nueva función para seleccionar la imagen de perfil
+    fun seleccionarImagenPerfil(view: View) {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, 1001)
     }
 
     private fun cargarDatosUsuario() {
